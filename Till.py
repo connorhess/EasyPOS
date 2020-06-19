@@ -16,14 +16,7 @@ x2 = PrettyTable()
 
 TimeDate = (time.strftime("%H:%M--%d/%m/%Y"))
 
-DEF1 = "0000"
 
-NAME1 = "Admin"
-PASS1 = "99562281"
-NAME2 = "Cashier 1"
-PASS2 = DEF1
-NAME3 = "Cashier 2"
-PASS3 = DEF1
 TIME = (time.strftime("%H:%M"))
 DATE = (time.strftime("%d-%m-%Y"))
 
