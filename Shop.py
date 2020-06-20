@@ -14,6 +14,9 @@ import tempfile
 import SETUP
 import webbrowser
 from idle_time import IdleMonitor
+from tkinter import messagebox
+import Error
+from datetime import datetime, timedelta
 
 
 #not Built In
@@ -155,10 +158,30 @@ def RUN1():
     Page1.title("Shop Database")
     Page1.configure(background="cadet blue")
     Page1.attributes("-fullscreen", True)
+    Page1.iconbitmap('Till.ico')
+
 
 #=========================================================#Add_User#==================================================================
 
-##Till.add_account("Name","1234",2)
+    def Add_User():
+        Add_user = Tk()
+        Add_user.title("Shop Database")
+        Add_user.configure(background="cadet blue")
+        Add_user.attributes("-fullscreen", True)
+
+        Label(Add_user, text="Name", bd=2).place(x=1,y=1)
+        User_Name = Entry(Add_user, bd=2)
+        User_Name.place(x=100,y=1)
+        
+        def Commit_user():
+            if len(User_Name) <= 0:
+                MsgBox_004 = messagebox.showerror ('ERROR',Error.Error_004,icon = Error.Error_icon)
+            elif len(User_Password) <= 0:
+                MsgBox_005 = messagebox.showerror ('ERROR',Error.Error_005,icon = Error.Error_icon)
+            elif User_Role == None:
+                MsgBox_006 = messagebox.showerror ('ERROR',Error.Error_006,icon = Error.Error_icon)
+            else:
+                Till.add_account("Name","1234",2)
 
 #=========================================================#Remove_User#==================================================================
 
@@ -390,10 +413,15 @@ def RUN1():
 
         
         def Reset2():
-            B1 = AM3.get()
-            c.execute('''DELETE FROM Starters WHERE Item_PLU=?''',(B1,))
-            conn.commit()
-            PageAM.destroy()
+            if len(AM3.get()) <= 0:
+                MsgBox_009 = messagebox.showerror ('ERROR',Error.Error_009,icon = Error.Error_icon)
+            else:
+                MsgBox = messagebox.askquestion ('Warning','Are you sure you want save this Item',icon = 'warning')
+                if MsgBox == 'yes':
+                    B1 = AM3.get()
+                    c.execute('''DELETE FROM Starters WHERE Item_PLU=?''',(B1,))
+                    conn.commit()
+                    PageAM.destroy()
         def Add_Menu2(Current_value):
             print("Add current: " + str(Current_value))
             Bbb1 = AM4.get()
@@ -401,13 +429,25 @@ def RUN1():
             Bbb3 = str(AM2.get()) + " "
             Bbb4 = str(Current_value)
             print(Bbb4)
-            GEN.ItemAdd(Bbb1, Bbb2, Bbb3, Bbb4)
-            PageAM.destroy()
+            if len(AM1.get()) <= 0:
+                MsgBox_004 = messagebox.showerror ('ERROR',Error.Error_004,icon = Error.Error_icon)
+            elif len(AM2.get()) <= 0:
+                MsgBox_007 = messagebox.showerror ('ERROR',Error.Error_007,icon = Error.Error_icon)
+            elif len(AM4.get()) <= 0:
+                MsgBox_008 = messagebox.showerror ('ERROR',Error.Error_008,icon = Error.Error_icon)
+            else:
+                MsgBox = messagebox.askquestion ('Warning','Are you sure you want save this Item',icon = 'warning')
+                if MsgBox == 'yes':
+                    GEN.ItemAdd(Bbb1, Bbb2, Bbb3, Bbb4)
+                    PageAM.destroy()
 
         def delete_all():
-            c.execute('''DELETE FROM Starters''')
-            conn.commit()
-            PageAM.destroy()
+            MsgBox = messagebox.askquestion ('Warning','Are you sure you want to Delete All\nThis will delete everything and can not be undone',icon = 'warning')
+            if MsgBox == 'yes':
+                Lb1.delete(1, 200)
+                c.execute('''DELETE FROM Starters''')
+                conn.commit()
+                PageAM.destroy()
 
         Label(PageAM, text="Add", bd=2, width=20, height=1, bg='yellow', fg='red').place(x=1,y=55)
 ##        Button(PageAM, text="Add", width=20, height=1, fg="white", bg="green", command=partial(Add_Menu2,Current_value), bd=2).place(x=1,y=55)
@@ -430,11 +470,24 @@ def RUN1():
     def CRJ1():
 ##        GRAPH()
         def Reset1():
-            c.execute('''DROP TABLE CRJ''')
-            conn.commit()
-            c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Date REAL, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT)''')
-            PCRJ.destroy()
-            CRJ1()
+            MsgBox = messagebox.askquestion ('Warning','Are you sure you want clear the sales History',icon = 'warning')
+            if MsgBox == 'yes':
+                c.execute('''DROP TABLE CRJ''')
+                conn.commit()
+                c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Date REAL, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT)''')
+                c.execute('''DROP TABLE Sales''')
+                conn.commit()
+                c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
+                            "ID"	INTEGER,
+                            "Date"	INTEGER,
+                            "Time"	INTEGER,
+                            "Item"	TEXT,
+                            "Price"	INTEGER,
+                            "Qty"	INTEGER,
+                            "Weight" REAL)''')
+                PCRJ.destroy()
+                CRJ1()
+                
         sqlite3.connect('Shop_Database.db')
         DATE2 = (time.strftime("%d/%m/%Y"))
         PCRJ = Tk()
@@ -443,58 +496,49 @@ def RUN1():
         PCRJ.geometry("1980x1080")
         Button(PCRJ, text="Clear", width=12, fg="white", bg="red", command=Reset1, bd=2).place(x=1,y=1)
         
-        text = Text(PCRJ, width=145)
-##        text.insert(INSERT, "ID          |Time   Date      |Description|Amount|Bank  |" + ("\n" +
-##                                                                                                                 ("=" * 12) + "|"
-##                                                                                                                 + ("=" * 17) + "|"
-##                                                                                                                 + ("=" * 11) + "|"
-##                                                                                                                 + ("=" * 6) + "|"
-##                                                                                                                 + ("=" * 6) + "|\n"))
+        text = Text(PCRJ, width=170)
+
         BZ = PrettyTable()
         c.execute("SELECT * FROM CRJ")
         for row in c.fetchall():
-            BZ.field_names = ["ID", "Time + Date", "Description", "Amount paid", "Bank", "Item", "QTY"]
+            BZ.field_names = ["ID", "Time + Date", "Description", "Amount paid", "Bank", "Item", "QTY","Payment Type","Cashier"]
             BZB = (row)
             BZ.add_row((BZB))
         print(BZ)
         text.insert(INSERT, BZ)
-##            print (row)
-##            b1 = 12 - (len(str(row[0])))
-##            c1 = ((str(row[0])) + (" " * b1) + "|")
-##            text.insert(INSERT, (c1))
-##            
-##            b2 = 17 - (len(str(row[1])))
-##            c2 = ((str(row[1])) + (" " * b2) + "|")
-##            text.insert(INSERT, (c2))
-##            
-##            b3 = 11 - (len(str(row[2])))
-##            c3 = ((str(row[2])) + (" " * b3) + "|")
-##            text.insert(INSERT, (c3))
-##
-##            b4 = 6 - (len(str(row[3])))
-##            c4 = ((str(row[3])) + (" " * b4) + "|")
-##            text.insert(INSERT, (c4))
-##
-##            b5 = 6 - (len(str(row[4])))
-##            c5 = ((str(row[4])) + (" " * b5) + "|")
-##            text.insert(INSERT, (c5))
-##
-####            b6 = 80 - (len(str(row[5])))
-####            c6 = ((str(row[5])) + (" " * b6) + "|")
-####            text.insert(INSERT, (c6))
-####
-####            b7 = 3 - (len(str(row[6])))
-####            c7 = ((str(row[6])) + (" " * b7) + "|")
-####            text.insert(INSERT, (c7))
-##            text.insert(INSERT, ("\n" +
-##                                 ("-" * 12) + "+"
-##                                 + ("-" * 17) + "+"
-##                                 + ("-" * 11) + "+"
-##                                 + ("-" * 6) + "+"
-##                                 + ("-" * 6) + "+\n"))
+        
+        text.pack(side="top")
+
+        text_I = Text(PCRJ, width=130)
+
+        Query_Date_T = time.strftime("%d-%m-%Y")
+        date1 = datetime.strptime(Query_Date_T, "%d-%m-%Y")
+        modified_date = date1 + timedelta(days=-1)
+        Query_Date_Y = datetime.strftime(modified_date, "%d-%m-%Y")
+
+        BZ = PrettyTable()
+        
+        Total_Tenderd_Cash_Yesterday = 0.0
+        Total_Meat_Yesterday = 0.0
+        Total_Meat_Today = 0.0
+        Total_Tenderd_Cash_Today = 0.0
 
         
-        text.pack()
+        c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_Y,))
+        for row in c.fetchall():
+            Total_Meat_Yesterday = float(Total_Meat_Yesterday) + float(row[6])
+            Total_Tenderd_Cash_Yesterday = float(Total_Tenderd_Cash_Yesterday) + float(row[4])
+        
+        c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_T,))
+        for row in c.fetchall():
+            Total_Meat_Today = float(Total_Meat_Today) + float(row[6])
+            Total_Tenderd_Cash_Today = float(Total_Tenderd_Cash_Today) + float(row[4])
+
+        BZ.field_names = ["Total Meat In KG [Yesterday]", "Total Cash Recived [Yesterday]", "Total Meat In KG [Today]", "Total Cash Recived [Today]",]
+        BZ.add_row([Total_Meat_Yesterday, Total_Tenderd_Cash_Yesterday, Total_Meat_Today, Total_Tenderd_Cash_Today])
+        text_I.insert(INSERT, BZ)
+        
+        text_I.pack(side="bottom")
 
         
 #==========================================================#Restorant System#===================================================================
@@ -560,12 +604,17 @@ def RUN1():
         Button(Page21, text="Cancel", width=12, fg="white", bg="red", command=Cancel, bd=2).place(x=90,y=30)
         
         def data_entry1():
-            sqlite3.connect('Shop_Database.db')
-            B1 = e1.get()
-            c.execute('''DELETE FROM Product_List WHERE Code=?''',(B1,))
-            conn.commit()
-            Page21.destroy()
-            Page1.destroy()
+            if len(e1.get()) <= 0:
+                MsgBox_008 = messagebox.showerror ('ERROR',Error.Error_008,icon = Error.Error_icon)
+            else:
+                MsgBox = messagebox.askquestion ('Warning','Are you sure you want Delete this Item',icon = 'warning')
+                if MsgBox == 'yes':
+                    sqlite3.connect('Shop_Database.db')
+                    B1 = e1.get()
+                    c.execute('''DELETE FROM Product_List WHERE Code=?''',(B1,))
+                    conn.commit()
+                    Page21.destroy()
+                    Page1.destroy()
             
         Button(Page21, text="Delete", width=12, fg="white", bg="green", command=data_entry1, bd=2).place(x=1,y=30)
 
@@ -608,7 +657,7 @@ def RUN1():
 
         Label(Page2, text="Code", bd=2).place(x=1,y=40)
         Label(Page2, text="Price", bd=2).place(x=1,y=20)
-        Label(Page2, text="Item", bd=2).place(x=1,y=1)
+        Label(Page2, text="Item Name", bd=2).place(x=1,y=1)
         Label(Page2, text="Cost Price", bd=2).place(x=250,y=1)
 
         e1 = Entry(Page2, bd=2)
@@ -628,11 +677,22 @@ def RUN1():
             B2 = e2.get()
             B3 = e3.get()
             B4 = e33.get()
-            c.execute('''INSERT INTO Product_List(Code, Price, Item, Cost_Price) VALUES(?, ? ,? ,?)''',(B3, B2, B1, B4))
-            conn.commit()
-            Page2.destroy()
-            Page1.destroy()
-            RUN1()
+            if len(e1.get()) <= 0:
+                MsgBox_009 = messagebox.showerror ('ERROR',Error.Error_009,icon = Error.Error_icon)
+            elif len(e2.get()) <= 0:
+                MsgBox_007 = messagebox.showerror ('ERROR',Error.Error_007,icon = Error.Error_icon)
+            elif len(e3.get()) <= 0:
+                MsgBox_010 = messagebox.showerror ('ERROR',Error.Error_010,icon = Error.Error_icon)
+            elif len(e33.get) <= 0:
+                MsgBox_011 = messagebox.showerror ('ERROR',Error.Error_011,icon = Error.Error_icon)
+            else:
+                MsgBox = messagebox.askquestion ('Warning','Are you sure you want save this Item',icon = 'warning')
+                if MsgBox == 'yes':
+                    c.execute('''INSERT INTO Product_List(Code, Price, Item, Cost_Price) VALUES(?, ? ,? ,?)''',(B3, B2, B1, B4))
+                    conn.commit()
+                    Page2.destroy()
+                    Page1.destroy()
+                    RUN1()
         Button(Page2, text="Add", width=12, fg="white", bg="green", command=data_entry2, bd=2).place(x=1,y=70)
 
         
@@ -650,7 +710,7 @@ def RUN1():
             sheet = wb[DATE]
         except KeyError:
             sheet = wb.create_sheet(DATE)
-        c.execute("SELECT * FROM CRJ")
+        c.execute("SELECT * FROM Sales")
         for row in c.fetchall():
             sheet.append(row)
         
@@ -687,7 +747,7 @@ def RUN1():
         P3 = P2 + 30
         PA1 = 180
         
-        LEVEL3 = Button(Page1, text="New Normal Product", width=12, command=New_product, bd=2).place(x=PA1,y=P1)
+        LEVEL3 = Button(Page1, text="New Product", width=12, command=New_product, bd=2).place(x=PA1,y=P1)
 
         LEVEL4 = Button(Page1, text="Product list", width=12, height=1, fg="white", bg="green", command=P_List, bd=2).place(x=PA1,y=P2)
 
@@ -720,13 +780,13 @@ def RUN1():
         F7 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
         F7.place(x=1,y=340)
 
-        LEVEL10 = Button(Page1, text="First time wiz", width=12, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
+##        LEVEL10 = Button(Page1, text="First time wiz", width=12, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
         
 
         F8 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
         F8.place(x=1,y=425)
 
-        LEVEL10 = Button(Page1, text="Ticket System", width=12, height=1, fg="white", bg="green", command=TicketSYS, bd=2).place(x=20,y=433)
+##        LEVEL10 = Button(Page1, text="Ticket System", width=12, height=1, fg="white", bg="green", command=TicketSYS, bd=2).place(x=20,y=433)
 
         
     elif LEVL == 2:
@@ -790,7 +850,7 @@ def RUN1():
         F7 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
         F7.place(x=1,y=340)
 
-        LEVEL10 = Button(Page1, text="First time wiz", width=12, state=DISABLED, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
+##        LEVEL10 = Button(Page1, text="First time wiz", width=12, state=DISABLED, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
         
 
         F8 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
@@ -855,13 +915,11 @@ def RUN1():
         F7 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
         F7.place(x=1,y=340)
 
-        LEVEL10 = Button(Page1, text="First time wiz", state=DISABLED, width=12, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
+##        LEVEL10 = Button(Page1, text="First time wiz", state=DISABLED, width=12, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
         
 
         F8 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
         F8.place(x=1,y=425)
-
-
 
 
 ##RUN1()
