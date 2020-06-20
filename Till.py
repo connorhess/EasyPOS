@@ -10,6 +10,9 @@ import os
 from datetime import timedelta
 import datetime
 from idle_time import IdleMonitor
+import Error
+from tkinter import messagebox
+
 
 x = PrettyTable()
 x2 = PrettyTable()
@@ -283,77 +286,83 @@ def Cart1(Logged_In="admin"):
         def K10():
             text2.delete(1.0, 1000.0)
 
-        F101 = Frame(Page4, bd=8, bg="grey", relief="raise")
-        F101.place(x=1,y=300)
+        F102 = Frame(Page4, bd=8, bg="grey", relief="raise")
+        F102.place(x=150,y=1)
 
         scale_1 = 3
 
         W = 2*scale_1
         H = 1*scale_1
 
-        Button(F101, text="9", width=W, height=H, bg="blue", fg="white", command=K9, bd=2).grid(row=1,column=2)
-        Button(F101, text="8", width=W, height=H, bg="blue", fg="white", command=K8, bd=2).grid(row=1,column=1)
-        Button(F101, text="7", width=W, height=H, bg="blue", fg="white", command=K7, bd=2).grid(row=1,column=0)
-        Button(F101, text="6", width=W, height=H, bg="blue", fg="white", command=K6, bd=2).grid(row=2,column=2)
-        Button(F101, text="5", width=W, height=H, bg="blue", fg="white", command=K5, bd=2).grid(row=2,column=1)
-        Button(F101, text="4", width=W, height=H, bg="blue", fg="white", command=K4, bd=2).grid(row=2,column=0)
-        Button(F101, text="3", width=W, height=H, bg="blue", fg="white", command=K3, bd=2).grid(row=3,column=2)
-        Button(F101, text="2", width=W, height=H, bg="blue", fg="white", command=K2, bd=2).grid(row=3,column=1)
-        Button(F101, text="1", width=W, height=H, bg="blue", fg="white", command=K1, bd=2).grid(row=3,column=0)
-        Button(F101, text="0", width=W, height=H, bg="blue", fg="white", command=K0, bd=2).grid(row=4,column=1)
-        Button(F101, text=".", width=W, height=H, bg="blue", fg="white", command=K, bd=2).grid(row=4,column=0)
-        Button(F101, text="C", width=W, height=H, bg="blue", fg="white", command=K10, bd=2).grid(row=4,column=2)
+        Button(F102, text="9", width=W, height=H, bg="blue", fg="white", command=K9, bd=2).grid(row=1,column=2)
+        Button(F102, text="8", width=W, height=H, bg="blue", fg="white", command=K8, bd=2).grid(row=1,column=1)
+        Button(F102, text="7", width=W, height=H, bg="blue", fg="white", command=K7, bd=2).grid(row=1,column=0)
+        Button(F102, text="6", width=W, height=H, bg="blue", fg="white", command=K6, bd=2).grid(row=2,column=2)
+        Button(F102, text="5", width=W, height=H, bg="blue", fg="white", command=K5, bd=2).grid(row=2,column=1)
+        Button(F102, text="4", width=W, height=H, bg="blue", fg="white", command=K4, bd=2).grid(row=2,column=0)
+        Button(F102, text="3", width=W, height=H, bg="blue", fg="white", command=K3, bd=2).grid(row=3,column=2)
+        Button(F102, text="2", width=W, height=H, bg="blue", fg="white", command=K2, bd=2).grid(row=3,column=1)
+        Button(F102, text="1", width=W, height=H, bg="blue", fg="white", command=K1, bd=2).grid(row=3,column=0)
+        Button(F102, text="0", width=W, height=H, bg="blue", fg="white", command=K0, bd=2).grid(row=4,column=1)
+        Button(F102, text=".", width=W, height=H, bg="blue", fg="white", command=K, bd=2).grid(row=4,column=0)
+        Button(F102, text="C", width=W, height=H, bg="blue", fg="white", command=K10, bd=2).grid(row=4,column=2)
 
         text2.place(x=60,y=30)
         
         def PAID(Payment_Type):
-            def OK1():
-                Login_Page()
-                Page4.destroy()
-                Page3.destroy()
-                Page5.destroy()
-            Page5 = Tk()
-            Page5.title("Shop Database")
-            Page5.configure(background="grey")
-            Page5.geometry("400x300")
-            Page5.attributes('-topmost', True)
-
-            Label(Page5, text="Change", bd=2).place(x=1,y=1)
-##                EE1 = e7.get()
             EE2 = (text2.get(1.0, 1000.0))
             CHANGE = float(EE2) - float(count)
-            Label(Page5, text=(CHANGE), bd=2).place(x=100,y=1)
-            Button(Page5, text="OK", width=10, height=2, fg="white", bg="green", command=OK1, bd=2).place(x=1,y=70)
-            #===========================#
-            RR1 = Sale_ID
-            Bb1 = RR1
-            Bb2 = TimeDate
-            Bb3 = "sales"
-            Bb5 = (str(round(count,2)))
-            Bb4 = (str(EE2))
-            print(Bb4)
-            print(type(Bb4))
-            Bb6 = (text.get(1.0, 1000.0))
-            Bb7 = 1
-            Payment_type = Payment_Type
-            c.execute('''INSERT INTO CRJ(ID, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?)''',(Bb1, Bb2, Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
-            conn.commit()
-            #===========================#
-            def iprint():
-                Q = (text.get(1.0, 1000.0)) + "\n\nThank you for shopping by us.                Software Made By Connor Hess"
-                filename = tempfile.mktemp(".txt")
-                open (filename, "w").write(Q)
-                os.startfile(filename, "print")
+            if float(EE2) < count:
+                print("error 1")
+                MsgBox_001 = messagebox.showerror ('ERROR',Error.Error_001,icon = Error.Error_icon)
 
-            Button(Page5, text="Print", width=15, height=1, fg="white", bg="green", command=iprint, bd=2).place(x=1,y=140)
+            else:
+                Page4.destroy()
+                def OK1():
+                    Login_Page()
+##                    Page4.destroy()
+                    Page3.destroy()
+                    Page5.destroy()
+                    #===========================#
+                    RR1 = Sale_ID
+                    Bb1 = RR1
+                    Bb2 = TimeDate
+                    Bb3 = "sales"
+                    Bb5 = (str(round(count,2)))
+                    Bb4 = (str(EE2))
+                    print(Bb4)
+                    print(type(Bb4))
+                    Bb6 = (text.get(1.0, 1000.0))
+                    Bb7 = 1
+                    Payment_type = Payment_Type
+                    c.execute('''INSERT INTO CRJ(ID, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?)''',(Bb1, Bb2, Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
+                    conn.commit()
+                    #===========================#
+                Page5 = Tk()
+                Page5.title("Shop Database")
+                Page5.configure(background="grey")
+                Page5.geometry("400x300")
+                Page5.attributes('-topmost', True)
+
+                Label(Page5, text="Change", bd=2).place(x=1,y=1)
+    ##                EE1 = e7.get()
+                Label(Page5, text=(CHANGE), bd=2).place(x=100,y=1)
+                Button(Page5, text="OK", width=10, height=2, fg="white", bg="green", command=OK1, bd=2).place(x=1,y=70)
+                
+                def iprint():
+                    Q = (text.get(1.0, 1000.0)) + "\n\nThank you for shopping by us.                Software Made By Connor Hess"
+                    filename = tempfile.mktemp(".txt")
+                    open (filename, "w").write(Q)
+                    os.startfile(filename, "print")
+
+                Button(Page5, text="Print", width=15, height=1, fg="white", bg="green", command=iprint, bd=2).place(x=1,y=140)
         def cancel5():
-            Page5.destroy()
             Page4.destroy()
 
         Button(Page4, text="PAY - Card", width=20, height=1, fg="white", bg="green", command=partial(PAID,"Card"), bd=2).place(x=1,y=60)
         Button(Page4, text="PAY - Cash", width=20, height=1, fg="white", bg="green", command=partial(PAID,"Cash"), bd=2).place(x=1,y=60+25)
         Button(Page4, text="PAY - Account", width=20, height=1, fg="white", bg="green", command=partial(PAID,"Account"), bd=2).place(x=1,y=60+50)
-        Button(Page4, text="Cancel", width=20, height=1, fg="white", bg="green", command=cancel5, bd=2).place(x=140,y=60)
+        Button(Page4, text="Cancel", width=20, height=1, fg="white", bg="green", command=cancel5, bd=2).place(x=1,y=60+100)
 
     text.place(x=1,y=1)
     Button(Page3, text="Add Normal", width=12, fg="white", bg="green", command=ADD1, bd=2).place(x=510,y=25)
@@ -443,7 +452,10 @@ def Login_Page():
 
 
     def ENTER():
-        User = LbN1.get(LbN1.curselection())
+        try:
+            User = LbN1.get(LbN1.curselection())
+        except:
+            MsgBox_003 = messagebox.showerror ('ERROR',Error.Error_003,icon = Error.Error_icon)
         print(LbN1.curselection())
         print(User)
         c.execute("SELECT * FROM Cashiers WHERE Name = ?",(User,))
@@ -456,6 +468,7 @@ def Login_Page():
                 Cart1(User)
             else:
                 print("NO")
+                MsgBox_002 = messagebox.showerror ('ERROR',Error.Error_002,icon = Error.Error_icon)
 
     Button(Login_page, text="Login", width=10, height=1, bg="blue", fg="white", command=ENTER, bd=2).place(x=180+X_Distance,y=560)
 
