@@ -523,7 +523,7 @@ def TableNumberGenerate(Title,tableNO):
 ##        ADA = "2"
 ##        if ADA == "2":
 
-    
+
 ##        def F3():
 ##            a2 = Tk()
 ##            a2.title("Starters")

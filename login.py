@@ -3,6 +3,9 @@ import sqlite3
 from tkinter import *
 import Shop
 import SETUP
+import Error
+from tkinter import messagebox
+
 
 R = Shop
 
@@ -93,9 +96,11 @@ def Login_Page():
     Label(F1, text="User", bd=2).pack(side="top")
     LbN1.pack(side="top")
 
-
     def ENTER():
-        User = LbN1.get(LbN1.curselection())
+        try:
+            User = LbN1.get(LbN1.curselection())
+        except:
+            MsgBox_003 = messagebox.showerror ('ERROR',Error.Error_003,icon = Error.Error_icon)
         print(User)
         c.execute("SELECT * FROM Cashiers WHERE Name = ?",(User,))
         for row in c.fetchall():
@@ -112,192 +117,9 @@ def Login_Page():
                     R.LEV3()
             else:
                 print("NO")
+                MsgBox_002 = messagebox.showerror ('ERROR',Error.Error_002,icon = Error.Error_icon)
 
     Button(Login_page, text="Done", width=10, height=1, bg="blue", fg="white", command=ENTER, bd=2).place(x=180+X_Distance,y=560)
 
 
 Login_Page()
-
-##def STAFF():
-##    Page10 = Tk()
-##    Page10.title("Shop Database login")
-##    Page10.geometry("450x200")
-##    c.execute('''CREATE TABLE IF NOT EXISTS Staff_Login(Name TEXT, Password TEXT)''')
-##
-##    
-##
-##
-##
-##
-##
-##    def Admin():
-##        Page14 = Tk()
-##        Page14.configure(background="grey")
-##        Page14.title("Shop Database login")
-##        Page14.geometry("450x200")
-##        Label(Page14, text="Password", bd=2).place(x=1,y=1)
-##        e200 = Entry(Page14, bd=2, show='*')
-##        e200.place(x=70,y=1)
-##        def DONE1():
-##            c.execute("SELECT * FROM Settings WHERE ID=2")
-##            for row in c.fetchall():
-##                AAA = (row[3])
-##                Password3 = e200.get()
-##                if Password3 == AAA:
-##                    print ("OK")
-##                    R.LEV1()
-##                    Page14.destroy()
-##                    Page10.destroy()
-##        Button(Page14, text="OK", width=6, height=1, fg="white", bg="green", command=DONE1, bd=2).place(x=1,y=25)
-##
-##    def Managment1():
-##        Page14 = Tk()
-##        Page14.configure(background="grey")
-##        Page14.title("Shop Database login")
-##        Page14.geometry("450x200")
-##        Label(Page14, text="Password", bd=2).place(x=1,y=1)
-##        e200 = Entry(Page14, bd=2, show='*')
-##        e200.place(x=70,y=1)
-##        def DONE1():
-##            c.execute("SELECT * FROM Settings WHERE ID=3")
-##            for row in c.fetchall():
-##                AAA = (row[3])
-##                Password3 = e200.get()
-##                if Password3 == AAA:
-##                    print ("OK")
-##                    R.LEV2()
-##                    Page14.destroy()
-##                    Page10.destroy()
-##        Button(Page14, text="OK", width=6, height=1, fg="white", bg="green", command=DONE1, bd=2).place(x=1,y=25)
-##
-##    def Managment2():
-##        Page14 = Tk()
-##        Page14.configure(background="grey")
-##        Page14.title("Shop Database login")
-##        Page14.geometry("450x200")
-##        Label(Page14, text="Password", bd=2).place(x=1,y=1)
-##        e200 = Entry(Page14, bd=2, show='*')
-##        e200.place(x=70,y=1)
-##        def DONE1():
-##            c.execute("SELECT * FROM Settings WHERE ID=4")
-##            for row in c.fetchall():
-##                AAA = (row[3])
-##                Password3 = e200.get()
-##                if Password3 == AAA:
-##                    print ("OK")
-##                    R.LEV2()
-##                    Page14.destroy()
-##                    Page10.destroy()
-##        Button(Page14, text="OK", width=6, height=1, fg="white", bg="green", command=DONE1, bd=2).place(x=1,y=25)
-##
-##    def Cashier1():
-##        Page14 = Tk()
-##        Page14.configure(background="grey")
-##        Page14.title("Shop Database login")
-##        Page14.geometry("450x200")
-##        Label(Page14, text="Password", bd=2).place(x=1,y=1)
-##        e200 = Entry(Page14, bd=2, show='*')
-##        e200.place(x=70,y=1)
-##        def DONE1():
-##            c.execute("SELECT * FROM Settings WHERE ID=5")
-##            for row in c.fetchall():
-##                AAA = (row[3])
-##                Password3 = e200.get()
-##                if Password3 == AAA:
-##                    print ("OK")
-##                    R.LEV3()
-##                    Page14.destroy()
-##                    Page10.destroy()
-##        Button(Page14, text="OK", width=6, height=1, fg="white", bg="green", command=DONE1, bd=2).place(x=1,y=25)
-##
-##    def Cashier2():
-##        Page14 = Tk()
-##        Page14.configure(background="grey")
-##        Page14.title("Shop Database login")
-##        Page14.geometry("450x200")
-##        Label(Page14, text="Password", bd=2).place(x=1,y=1)
-##        e200 = Entry(Page14, bd=2, show='*')
-##        e200.place(x=70,y=1)
-##        def DONE1():
-##            c.execute("SELECT * FROM Settings WHERE ID=6")
-##            for row in c.fetchall():
-##                AAA = (row[3])
-##                Password3 = e200.get()
-##                if Password3 == AAA:
-##                    print ("OK")
-##                    R.LEV3()
-##                    Page14.destroy()
-##                    Page10.destroy()
-##        Button(Page14, text="OK", width=6, height=1, fg="white", bg="green", command=DONE1, bd=2).place(x=1,y=25)
-##
-##
-##    
-##    var = IntVar()
-##    
-##    def sel():
-##        print(var.get())
-##        if (var.get()) == 1:
-##            print ("admin")
-##            Admin()
-##        elif (var.get()) == 2:
-##            print ("Managment 1")
-##            Managment1()
-##        elif (var.get()) == 3:
-##            print ("Managment 2")
-##            Managment2()
-##        elif (var.get()) == 4:
-##            print ("Cashier 1")
-##            Cashier1()
-##        elif (var.get()) == 5:
-##            print ("Cashier 2")
-##            Cashier2()
-##        else:
-##            print ("No")
-##        print(str(var.get()))
-##
-##       
-##
-##    root = Page10
-##
-##
-##    
-##    
-##    R1 = Radiobutton(root, text="Admin", variable=var, value=1,
-##                      command=sel)
-##    R1.pack( anchor = W )
-##
-##    R2 = Radiobutton(root, text="Managment 1", variable=var, value=2,
-##                      command=sel)
-##    R2.pack( anchor = W )
-##
-##    R3 = Radiobutton(root, text="Managment 2", variable=var, value=3,
-##                      command=sel)
-##    R3.pack( anchor = W)
-##
-##    R4 = Radiobutton(root, text="cashier 1", variable=var, value=4,
-##                      command=sel)
-##    R4.pack( anchor = W)
-##
-##    R5 = Radiobutton(root, text="Cashier 2", variable=var, value=5,
-##                      command=sel)
-##    R5.pack( anchor = W)
-##               
-##
-##        
-####    #Button(Page10, text="Login", width=6, height=1, fg="white", bg="green", command=LOG1, bd=2).place(x=200,y=1)
-####    Button(Page10, text="Cancel", width=6, height=1, fg="white", bg="red", command=RUN2, bd=2).place(x=200,y=25)
-##    #Button(Page10, text="Create", width=6, height=1, fg="black", bg="white", command=RUN3, bd=2).place(x=200,y=50)
-##
-##
-##
-##
-##    Page10.mainloop()
-##
-##
-##
-##
-##
-##
-##
-##
-##STAFF()

@@ -388,7 +388,6 @@ def RUN1():
         
         
 
-
 ##        R1 = Radiobutton(PageAM, text=button_1, variable=var4, value=1, command=ER)
 ##        R1.place(x=Radio_x,y=1)
 ##
