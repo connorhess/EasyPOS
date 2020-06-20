@@ -19,6 +19,8 @@ import Error
 from datetime import datetime, timedelta
 
 
+Version = 0.7
+
 #not Built In
 from openpyxl import Workbook
 from openpyxl import load_workbook
@@ -156,7 +158,7 @@ def LEV3():
 def RUN1():
     Page1 = Tk()
     Page1.title("Shop Database")
-    Page1.configure(background="cadet blue")
+    Page1.configure(background="#BEBEBE")
     Page1.attributes("-fullscreen", True)
     Page1.iconbitmap('Till.ico')
 
@@ -164,10 +166,13 @@ def RUN1():
 #=========================================================#Add_User#==================================================================
 
     def Add_User():
-        Add_user = Tk()
+        Add_user = Toplevel()
         Add_user.title("Shop Database")
         Add_user.configure(background="cadet blue")
-        Add_user.attributes("-fullscreen", True)
+        Add_user.geometry("500x300")
+        Add_user.transient([Page1])
+
+##        Add_user.attributes("-topmost", True)
 
         Label(Add_user, text="Name", bd=2).place(x=1,y=1)
         User_Name = Entry(Add_user, bd=2)
@@ -203,7 +208,7 @@ def RUN1():
 
 
     def TicketSYS():
-        TS = Tk()
+        TS = Toplevel()
         TS.title("Shop Database")
         TS.geometry("1980x1080")
 
@@ -237,7 +242,7 @@ def RUN1():
 #=========================================================#Help#==================================================================
 
     def Help():
-##        top = Tk()
+##        top = Toplevel()
 ##        top.title("Shop Database")
 ##        top.configure(background="cadet blue")
 ##        top.geometry("1980x1080")
@@ -258,11 +263,12 @@ def RUN1():
 #=========================================================#restorant items#===========================================================
 
     def Add_Menu1():
-        PageAM = Tk()
+        PageAM = Toplevel()
         PageAM.title("Shop Database")
         PageAM.configure(background="grey")
         PageAM.geometry("650x500")
-        PageAM.attributes('-topmost', True)
+        PageAM.transient([Page1])
+
 
 
         Label(PageAM, text="Name", bd=2).place(x=1,y=1)
@@ -459,7 +465,7 @@ def RUN1():
 #==========================================================#Income graph#=======================================================================
 
     def GRAPH():
-        PCRJ2 = Tk()
+        PCRJ2 = Toplevel()
         PCRJ2.title("Shop Database")
         PCRJ2.configure(background="green")
         PCRJ2.geometry("1980x1080")
@@ -489,10 +495,13 @@ def RUN1():
                 
         sqlite3.connect('Shop_Database.db')
         DATE2 = (time.strftime("%d/%m/%Y"))
-        PCRJ = Tk()
+        PCRJ = Toplevel()
         PCRJ.title("Shop Database")
         PCRJ.configure(background="green")
         PCRJ.geometry("1980x1080")
+        PCRJ.transient([Page1])
+
+        
         Button(PCRJ, text="Clear", width=12, fg="white", bg="red", command=Reset1, bd=2).place(x=1,y=1)
         
         text = Text(PCRJ, width=170)
@@ -543,55 +552,17 @@ def RUN1():
 #==========================================================#Restorant System#===================================================================
 
     def RSYS():
-        def PASS(Table,NO):
-            GEN.TableNumberGenerate(Table,NO)
-        PageR = Tk()
-        PageR.title("Item Database")
-        PageR.configure(background="orange")
-##        PageR.geometry("1100x800")
-        PageR.attributes("-fullscreen", True)
-
-
-        def exit_PageR():
-            PageR.destroy()
-
-        Frame1 = Frame(PageR)
-        Frame1.grid(row=1,column=1)
-
-        GEN.ROWN(Frame1,"1","Room ", "Room\n","4","5","6","7","8","9","10","11")
-        
-        GEN.ROWN(Frame1,"2","Room ", "Room\n","12","14","15","16","17","18","19","20")
-
-        GEN.ROWN(Frame1,"3","Room ", "Room\n","21","22","201","202","203","204","0","0")
-
-        GEN.ROWN(Frame1,"4","Staff ", "Room\n","1001","1002","1003","0","0","0","0","0")
-
-##        GEN.ROWN(PageR,"5","Table ", "Table\n","41","42","43","44","45","46","47","48","49","50")
-
-##        GEN.ROWN(PageR,"6","Table ", "Table\n","41","42","43","44","45","46","47","48","49","50")
-
-##        GEN.ROWN(PageR,"7","Table ", "Table\n","51","52","53","54","55","56","57","58","59","60")
-
-##        GEN.ROWN(PageR,"8","Table ", "Table\n","61","62","63","64","65","66","67","68","69","70")
-    
-        Button(Frame1, text='Exit', width=10, height=4, fg="black", bg="green", command=exit_PageR, bd=2).grid(row=1,column=11)
-        Button(Frame1, text='Print All', width=10, height=4, fg="black", bg="green", command=GEN.print_all, bd=2).grid(row=2,column=11)
-
-        Frame2 = Frame(PageR)
-        Frame2.grid(row=2,column=1)
-
-        Label(Frame2, text="All shots that have the option:\n  - 1 or 2\n  e.g. default is 2 shots, change it to 1 if you used 1\ndefult - 2\n\n you will be charged for the extra shot if not.\n\ncontact Bernhard/Fida/Connor for asistance if you strugel.", bd=2, fg="Red", bg="orange").grid(row=1,column=1)
-
-
+        GEN.RSYS()
 
 #===========================================================#Delete product#===============================================================
     def Del_product():
         sqlite3.connect('Shop_Database.db')
-        Page21 = Tk()
+        Page21 = Toplevel()
         Page21.title("Item Database")
         Page21.configure(background="grey")
         Page21.geometry("800x700")
-        Page21.attributes('-topmost', True)
+        Page21.transient([Page1])
+        
 
         def Cancel():
             Page21.destroy()
@@ -622,11 +593,11 @@ def RUN1():
 #==============================================================#product list#============================================================
 
     def P_List():
-        Page22 = Tk()
+        Page22 = Toplevel()
         Page22.title("Item Database")
         Page22.configure(background="grey")
         Page22.geometry("800x700")
-        Page22.attributes('-topmost', True)
+        Page22.transient([Page1])
         
         text4 = Text(Page22)
         text4.insert(INSERT, "|Code        |Price |Name                 |\n")
@@ -645,11 +616,11 @@ def RUN1():
     
     def New_product():
         sqlite3.connect('Shop_Database.db')
-        Page2 = Tk()
+        Page2 = Toplevel()
         Page2.title("Item Database")
         Page2.configure(background="grey")
         Page2.geometry("800x700")
-        Page2.attributes('-topmost', True)
+        Page2.transient([Page1])
 
         def Cancel():
             Page2.destroy()
@@ -722,206 +693,205 @@ def RUN1():
 #======================================================================================================================================================================
 
     if LEVL == 1:
-        Label(Page1, text="Made By Connor Hess  V1.0", bd=2, fg="white", bg="gray").place(x=1400,y=1)
+        def donothing():
+            pass
+        def Page1_close():
+            Page1.destroy()
+           
+        menubar = Menu(Page1)
+        filemenu = Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Exit", command=Page1_close)
+        menubar.add_cascade(label="File", menu=filemenu)
 
-    ##    F1 = Frame(Page1, width=1970, height=1070, bd=8, relief="raise")
-    ##    F1.place(x=1,y=1)
+        Usermenu = Menu(menubar, tearoff=0)
+        Usermenu.add_command(label="User List", command=donothing)
+        Usermenu.add_separator()
+        Usermenu.add_command(label="Add User", command=Add_User)
+        Usermenu.add_command(label="Delete User", command=donothing)
+        Usermenu.add_separator()
+        Usermenu.add_command(label="Log(Login)", command=donothing)
+        menubar.add_cascade(label="User's", menu=Usermenu)
 
+        Posmenu = Menu(menubar, tearoff=0)
+        Posmenu.add_command(label="Product List", command=P_List)
+        Posmenu.add_separator()
+        Posmenu.add_command(label="New Product", command=New_product)
+        Posmenu.add_command(label="Delete Product", command=Del_product)
+        Posmenu.add_separator()
+        Posmenu.add_command(label="Add Scale Item", command=donothing)
+        Posmenu.add_command(label="Delete Scale Item", command=donothing)
+        menubar.add_cascade(label="POS System", menu=Posmenu)
 
+        Hotel_Mode = IntVar()
+        Restaurantmenu = Menu(menubar, tearoff=0)
+        Restaurantmenu.add_command(label="Item List", command=donothing)
+        Restaurantmenu.add_separator()
+        Restaurantmenu.add_command(label="New Item", command=Add_Menu1)
+        Restaurantmenu.add_command(label="Delete Item", command=Add_Menu1)
+        Restaurantmenu.add_separator()
+        Restaurantmenu.add_command(label="Add Menu category", command=donothing)
+        Restaurantmenu.add_command(label="Remove Menu category", command=donothing)
+        Restaurantmenu.add_separator()
+        Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
+        menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
+            
+        Salesmenu = Menu(menubar, tearoff=0)
+        submenu = Menu(Salesmenu)
+        submenu.add_command(label="Excel", command=ESC)
+        submenu.add_command(label="CSV", command=donothing)
+        submenu.add_command(label="Print", command=donothing)
 
-        F2 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F2.place(x=1,y=1)
+        Salesmenu.add_command(label="Sales", command=CRJ1)
+        Salesmenu.add_separator()
+        Salesmenu.add_cascade(label="Export", menu=submenu)
+        Salesmenu.add_separator()
+        Salesmenu.add_command(label="Search Sales By Date", command=donothing)
+        Salesmenu.add_command(label="Clear Sales", command=donothing)
+        menubar.add_cascade(label="Sales Data", menu=Salesmenu)
+
         
-        LEVEL1 = Button(Page1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).place(x=20,y=12)
-        LEVEL2 = Button(Page1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).place(x=20,y=42)
+        helpmenu = Menu(menubar, tearoff=0)
+        helpmenu.add_command(label="Help Index", command=Help)
+        helpmenu.add_command(label="About...", command=donothing)
+        menubar.add_cascade(label="Help", menu=helpmenu)
 
-
-
-
-        F3 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F3.place(x=155,y=1)
-
-        P1 = 12
-        P2 = P1 + 30
-        P3 = P2 + 30
-        PA1 = 180
+        Page1.config(menu=menubar)
         
-        LEVEL3 = Button(Page1, text="New Product", width=12, command=New_product, bd=2).place(x=PA1,y=P1)
-
-        LEVEL4 = Button(Page1, text="Product list", width=12, height=1, fg="white", bg="green", command=P_List, bd=2).place(x=PA1,y=P2)
-
-
-
-        F3 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F3.place(x=155 + 155,y=1)
-
-        LEVEL5 = Button(Page1, text="CRJ", width=12, command=CRJ1, bd=2).place(x=340,y=20)
-
+        F1 = Frame(Page1, height=100, width=(Page1.winfo_width()), bg="#E9E9E9", relief="raise")
+        F1.grid(row=0,column=0)
+        F1.grid_propagate(0)
         
-        F4 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F4.place(x=1,y=85)
+        Black_F = Frame(Page1, height=4, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
+        Black_F.grid(row=1,column=0,sticky='n')
         
-        LEVEL6 = Button(Page1, text="Delete product", width=12, fg="white", bg="red", command=Del_product, bd=2).place(x=25,y=105)
-        
-        F5 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F5.place(x=1,y=170)
+        Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1380,y=1)
 
-        LEVEL7 = Button(Page1, text="Add food item", width=12, height=1, fg="white", bg="green", command=Add_Menu1, bd=2).place(x=20,y=181)
+        F1_1 = LabelFrame(F1, text="Systems", height=100, width=108, bg="#E9E9E9", relief="raise")
+        F1_1.grid(row=0,column=0)
+        F1_1.grid_propagate(0)
 
-        
-
-        F6 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F6.place(x=1,y=255)
-
-        LEVEL8 = Button(Page1, text="Help", width=12, height=1, fg="white", bg="green", command=Help, bd=2).place(x=20,y=266)
-        LEVEL9 = Button(Page1, text="Create Excel Sheat", width=15, height=1, fg="white", bg="Red", command=ESC, bd=2).place(x=17,y=296)
-
-        F7 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F7.place(x=1,y=340)
-
-##        LEVEL10 = Button(Page1, text="First time wiz", width=12, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
-        
-
-        F8 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F8.place(x=1,y=425)
-
-##        LEVEL10 = Button(Page1, text="Ticket System", width=12, height=1, fg="white", bg="green", command=TicketSYS, bd=2).place(x=20,y=433)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=13, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=13, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
         
     elif LEVL == 2:
-        Label(Page1, text="Made By Connor Hess  V1.0", bd=2, fg="white", bg="gray").place(x=1400,y=1)
+        menubar = Menu(Page1)
+        filemenu = Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Exit", command=Page1_close)
+        menubar.add_cascade(label="File", menu=filemenu)
 
+        Usermenu = Menu(menubar, tearoff=0)
+        Usermenu.add_command(label="User List", command=donothing)
+        Usermenu.add_separator()
+        Usermenu.add_separator()
+        menubar.add_cascade(label="User's", menu=Usermenu)
 
-        Label(Page1, text="", bd=2, fg="white", bg="gray").place(x=1400,y=1)
+        Posmenu = Menu(menubar, tearoff=0)
+        Posmenu.add_command(label="Product List", command=P_List)
+        Posmenu.add_separator()
+        Posmenu.add_command(label="New Product", command=New_product)
+        Posmenu.add_command(label="Delete Product", command=Del_product)
+        Posmenu.add_separator()
+        Posmenu.add_command(label="Add Scale Item", command=donothing)
+        Posmenu.add_command(label="Delete Scale Item", command=donothing)
+        menubar.add_cascade(label="POS System", menu=Posmenu)
 
-    ##    F1 = Frame(Page1, width=1970, height=1070, bd=8, relief="raise")
-    ##    F1.place(x=1,y=1)
+        Hotel_Mode = IntVar()
+        Restaurantmenu = Menu(menubar, tearoff=0)
+        Restaurantmenu.add_command(label="Item List", command=donothing)
+        Restaurantmenu.add_separator()
+        Restaurantmenu.add_command(label="New Item", command=Add_Menu1)
+        Restaurantmenu.add_command(label="Delete Item", command=Add_Menu1)
+        Restaurantmenu.add_separator()
+        Restaurantmenu.add_command(label="Add Menu category", command=donothing)
+        Restaurantmenu.add_command(label="Remove Menu category", command=donothing)
+        Restaurantmenu.add_separator()
+        Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
+        menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
+            
+        Salesmenu = Menu(menubar, tearoff=0)
+        submenu = Menu(Salesmenu)
+        submenu.add_command(label="Excel", command=ESC)
+        submenu.add_command(label="CSV", command=donothing)
+        submenu.add_command(label="Print", command=donothing)
 
-
-
-        F2 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F2.place(x=1,y=1)
-        
-        LEVEL1 = Button(Page1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).place(x=20,y=12)
-        LEVEL2 = Button(Page1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).place(x=20,y=42)
-
-
-
-
-        F3 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F3.place(x=155,y=1)
-
-        P1 = 12
-        P2 = P1 + 30
-        P3 = P2 + 30
-        PA1 = 180
-        
-        LEVEL3 = Button(Page1, text="New Product", width=12, command=New_product, bd=2).place(x=PA1,y=P1)
-
-        LEVEL4 = Button(Page1, text="Product list", width=12, height=1, fg="white", bg="green", command=P_List, bd=2).place(x=PA1,y=P2)
-
-
-
-        F3 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F3.place(x=155 + 155,y=1)
-
-        LEVEL5 = Button(Page1, text="CRJ", width=12, command=CRJ1, bd=2).place(x=340,y=20)
-
-        
-        F4 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F4.place(x=1,y=85)
-        
-        LEVEL6 = Button(Page1, text="Delete product", width=12, fg="white", bg="red", command=Del_product, bd=2).place(x=25,y=105)
-        
-        F5 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F5.place(x=1,y=170)
-
-        LEVEL7 = Button(Page1, text="Add food item", width=12, height=1, fg="white", bg="green", command=Add_Menu1, bd=2).place(x=20,y=181)
+        Salesmenu.add_command(label="Sales", command=CRJ1)
+        Salesmenu.add_separator()
+        Salesmenu.add_cascade(label="Export", menu=submenu)
+        Salesmenu.add_separator()
+        Salesmenu.add_command(label="Search Sales By Date", command=donothing)
+        menubar.add_cascade(label="Sales Data", menu=Salesmenu)
 
         
+        helpmenu = Menu(menubar, tearoff=0)
+        helpmenu.add_command(label="Help Index", command=Help)
+        helpmenu.add_command(label="About...", command=donothing)
+        menubar.add_cascade(label="Help", menu=helpmenu)
 
-        F6 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F6.place(x=1,y=255)
-
-        LEVEL8 = Button(Page1, text="Help", width=12, height=1, fg="white", bg="green", command=Help, bd=2).place(x=20,y=266)
-        LEVEL9 = Button(Page1, text="Create Excel Sheat", width=15, height=1, fg="white", bg="Red", command=ESC, bd=2).place(x=17,y=296)
-
-        F7 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F7.place(x=1,y=340)
-
-##        LEVEL10 = Button(Page1, text="First time wiz", width=12, state=DISABLED, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
+        Page1.config(menu=menubar)
         
+        F1 = Frame(Page1, height=100, width=(Page1.winfo_width()), bg="#E9E9E9", relief="raise")
+        F1.grid(row=0,column=0)
+        F1.grid_propagate(0)
+        
+        Black_F = Frame(Page1, height=4, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
+        Black_F.grid(row=1,column=0,sticky='n')
+        
+        Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
 
-        F8 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F8.place(x=1,y=425)
+
+        F1_1 = LabelFrame(F1, text="hh", height=100, bg="#E9E9E9", relief="raise")
+        F1_1.grid(row=0,column=0)
+        F1_1.grid_propagate(0)
+
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
         
     elif LEVL == 3:
-        Label(Page1, text="Made By Connor Hess  V1.0", bd=2, fg="white", bg="gray").place(x=1400,y=1)
+        menubar = Menu(Page1)
+        filemenu = Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Exit", command=Page1_close)
+        menubar.add_cascade(label="File", menu=filemenu)
 
-    ##    F1 = Frame(Page1, width=1970, height=1070, bd=8, relief="raise")
-    ##    F1.place(x=1,y=1)
+        Usermenu = Menu(menubar, tearoff=0)
+        Usermenu.add_command(label="User List", command=donothing)
+        menubar.add_cascade(label="User's", menu=Usermenu)
 
+        Posmenu = Menu(menubar, tearoff=0)
+        Posmenu.add_command(label="Product List", command=P_List)
+        menubar.add_cascade(label="POS System", menu=Posmenu)
 
+        Hotel_Mode = IntVar()
+        Restaurantmenu = Menu(menubar, tearoff=0)
+        Restaurantmenu.add_command(label="Item List", command=donothing)
+        menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
 
-        F2 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F2.place(x=1,y=1)
+        helpmenu = Menu(menubar, tearoff=0)
+        helpmenu.add_command(label="Help Index", command=Help)
+        helpmenu.add_command(label="About...", command=donothing)
+        menubar.add_cascade(label="Help", menu=helpmenu)
+
+        Page1.config(menu=menubar)
         
-        LEVEL1 = Button(Page1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).place(x=20,y=12)
-        LEVEL2 = Button(Page1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).place(x=20,y=42)
-
-
-
-
-        F3 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F3.place(x=155,y=1)
-
-        P1 = 12
-        P2 = P1 + 30
-        P3 = P2 + 30
-        PA1 = 180
+        F1 = Frame(Page1, height=100, width=(Page1.winfo_width()), bg="#E9E9E9", relief="raise")
+        F1.grid(row=0,column=0)
+        F1.grid_propagate(0)
         
-        LEVEL3 = Button(Page1, text="New Product", width=12, state=DISABLED, command=New_product, bd=2).place(x=PA1,y=P1)
-
-        LEVEL4 = Button(Page1, text="Product list", width=12, height=1, fg="white", bg="green", command=P_List, bd=2).place(x=PA1,y=P2)
-
-
-
-        F3 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F3.place(x=155 + 155,y=1)
-
-        LEVEL5 = Button(Page1, text="CRJ", width=12, state=DISABLED, command=CRJ1, bd=2).place(x=340,y=20)
-
+        Black_F = Frame(Page1, height=4, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
+        Black_F.grid(row=1,column=0,sticky='n')
         
-        F4 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F4.place(x=1,y=85)
+        Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
         
-        LEVEL6 = Button(Page1, text="Delete product", state=DISABLED, width=12, fg="white", bg="red", command=Del_product, bd=2).place(x=25,y=105)
-        
-        F5 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F5.place(x=1,y=170)
+        F1_1 = LabelFrame(F1, text="hh", height=100, bg="#E9E9E9", relief="raise")
+        F1_1.grid(row=0,column=0)
+        F1_1.grid_propagate(0)
 
-        LEVEL7 = Button(Page1, text="Add food item", state=DISABLED, width=12, height=1, fg="white", bg="green", command=Add_Menu1, bd=2).place(x=20,y=181)
-
-        
-
-        F6 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F6.place(x=1,y=255)
-
-        LEVEL8 = Button(Page1, text="Help", width=12, height=1, fg="white", bg="green", command=Help, bd=2).place(x=20,y=266)
-        LEVEL9 = Button(Page1, text="Create Excel Sheat", state=DISABLED, width=15, height=1, fg="white", bg="Red", command=ESC, bd=2).place(x=17,y=296)
-
-        F7 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F7.place(x=1,y=340)
-
-##        LEVEL10 = Button(Page1, text="First time wiz", state=DISABLED, width=12, height=1, fg="white", bg="green", command=FTW, bd=2).place(x=20,y=348)
-        
-
-        F8 = Frame(Page1, width=150, height=80, bd=8, bg="light grey", relief="raise")
-        F8.place(x=1,y=425)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
 
-##RUN1()
+RUN1()
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================
