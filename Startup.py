@@ -31,7 +31,7 @@ def Update():
     pass
 
 def Update_manager():
-    response = requests.get('https://github.com/connorhess/EasyPOS/blob/master/version.txt')
+    response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt?token=AOTRDED7MQLF7HWMUSEW4RC656DHI')
     print(response)
     data = response.text
     print(data)
