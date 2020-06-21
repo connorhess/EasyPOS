@@ -14,34 +14,50 @@ import os
 import tkinter as tk
 from tkinter import ttk
 import requests
+import webbrowser
+import win32api
+import login
 
 
 __author__ = 'Connor Hess'
 __copyright__ = 'Copyright (C) 2020, Connor Hess'
 __credits__ = ['Connor Hess']
 __license__ = 'The MIT License (MIT)'
-__version__ = (0.75)
+version = (0.75)
 __maintainer__ = 'Connor Hess'
 __email__ = 'hessconnor41@gmail.com'
 __status__ = 'Alpha'
 
+_AppName_ = 'EasyPOS'
 
 
 def Update():
-    pass
+    win32api.ShellExecute(0, 'open', f'tmp\\{_AppName_}.msi', None, None, 10)
 
-def Update_manager():
-    response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt?token=AOTRDED7MQLF7HWMUSEW4RC656DHI')
-    print(response)
+def Update_manager(TEXT="Checking for update"):
+    Page1 = Tk()
+    Page1.title(TEXT)
+    Page1.configure(background="#BEBEBE")
+    Page1.iconbitmap('Till.ico')
+    Page1.attributes("-topmost", True)
+    Label(Page1, text=(TEXT+"\n\nMade By Connor Hess  V" + str(version)), fg="white", bg="gray").pack()
+    
+    response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt')
     data = response.text
     print(data)
-##    if float(data) > __version__:
-##        MsgBox = messagebox.askquestion ('Warning','Are you sure you want to Delete All\nThis will delete everything and can not be undone',icon = 'warning')
-##        if MsgBox == 'yes':
-##            Update()
-##        else:
-##            import login
-##            login.Login_Page()
+    if float(data) > version:
+        MsgBox = messagebox.askquestion ('Update!', f'{_AppName_} {version} needs to update to version {data}',icon = 'warning')
+        if MsgBox == 'yes':
+            webbrowser.open_new_tab('https://github.com/connorhess/EasyPOS/raw/master/'
+                                                'Update/Output/setup.msi?raw=true')
+            Page1.destroy()
+            Update()
+        else:
+            Page1.destroy()
+            login.Login_Page()
+    else:
+        Page1.destroy()
+        login.Login_Page()
 
 
 

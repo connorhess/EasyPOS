@@ -20,8 +20,9 @@ import Error
 from datetime import datetime, timedelta
 import keyboard
 import tkinter.font as tkFont
+import Startup
 
-Version = "0.7.5"
+Version = "0.75"
 
 #not Built In
 from openpyxl import Workbook
@@ -939,7 +940,7 @@ def RUN1():
 
 
 
-RUN1()
+##RUN1()
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================

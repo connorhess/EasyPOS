@@ -7,6 +7,7 @@ import Error
 from tkinter import messagebox
 
 
+
 R = Shop
 
 conn = sqlite3.connect('Shop_Database.db')
@@ -122,4 +123,3 @@ def Login_Page():
     Button(Login_page, text="Done", width=10, height=1, bg="blue", fg="white", command=ENTER, bd=2).place(x=180+X_Distance,y=560)
 
 
-Login_Page()

@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['login.py'],
-             pathex=['C:\\Users\\conno\\OneDrive\\Desktop\\Shop'],
+             pathex=['C:\\Users\\conno\\OneDrive\\Documents\\GitHub\\EasyPOS'],
              binaries=[],
              datas=[],
              hiddenimports=[],
