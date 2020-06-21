@@ -183,6 +183,8 @@ RSAPubKey = '''<RSAKeyValue>
 auth = "WyIyMzQ5MSIsIk9MY2xicDc5dVE5OUVmc0pFcWUwU2ZNTnB1c1F1dzVkeWtVSG5sTzgiXQ=="
 
 def New_key():
+    fk = open("Key.txt", "w")
+    fk.close()
     PageKey = Tk()
     PageKey.title("Shop Database")
     PageKey.configure(background="#BEBEBE")
@@ -239,6 +241,4 @@ try:
         print("The license is valid!")
         Update_manager()
 except:
-    fk = open("Key.txt", "w")
-    fk.close()
     New_key()
