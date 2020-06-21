@@ -840,7 +840,7 @@ def RUN1():
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
 
 
-        F1_1 = LabelFrame(F1, text="hh", height=100, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems", height=100, bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
         F1_1.grid_propagate(0)
 
@@ -883,12 +883,38 @@ def RUN1():
         
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
         
-        F1_1 = LabelFrame(F1, text="hh", height=100, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems", height=100, bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
         F1_1.grid_propagate(0)
 
         LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
         LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
+
+
+
+
+
+    m1 = PanedWindow(Page1, sashwidth=8, bd=2, bg="grey", height=(Page1.winfo_height() - 150), width=(Page1.winfo_width()))
+    m1.grid(row=2,column=0)
+
+    F2 = Frame(m1, width=250, bg="#E9E9E9", relief="raise")
+    F2.grid_propagate(0)
+    m1.add(F2)
+    
+    LEVEL3 = Button(F2, text="Button", width=12, height=1, fg="white", bg="green", command=donothing, bd=2).grid(row=0,column=0)
+
+    m2 = PanedWindow(m1, sashwidth=8, orient=VERTICAL, bd=2, bg="grey")
+    m1.add(m2)
+
+    F3 = Frame(m2, width=250, height=350 , bg="#E9E9E9", relief="raise")
+    F3.grid_propagate(0)
+    m2.add(F3)
+
+    F4 = Frame(m2, width=250, height=350, bg="#E9E9E9", relief="raise")
+    F4.grid_propagate(0)
+    m2.add(F4)
+
+
 
 
 RUN1()
