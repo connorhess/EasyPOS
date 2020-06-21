@@ -19,6 +19,10 @@ import win32api
 import login
 
 
+from licensing.models import *
+from licensing.methods import Key, Helpers
+
+
 home = os.path.expanduser('~')
 
 __author__ = 'Connor Hess'
@@ -63,5 +67,27 @@ def Update_manager(TEXT="Checking for update"):
         login.Login_Page()
 
 
+RSAPubKey = '''<RSAKeyValue>
+<Modulus>hWaA36UiW+Xt+NEqmt6XI1+1WV+hWbi8+C1IgI4NmvNP01Gb7ZjFcUUQZQBxwXfLTvSHJlAlUlbGk26n3Z0n5wrDMIPCB/x/EbI9yIueedKJB9VHMonIpXvAT+oSdoechFvasiE1q7khGUBLfEhsnYP2Q2JbQ2hToZ4eb+LqjuVOc54RkIup1OJ+Dur+WfqN+43QpLFQoFA7ydAg6gKpmGUKTgWR3q5UhDhHwIC1xYFKVnXA3BXVXOwTVa7D5tCCO/SauoetcXwPJwO0QXa7hQAR9fUCq25sy4Nm+hFPUYTs5UAO+H10ysenUqCFddhfrSzAakZzWpAnvZyDxPb5tw==
+</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>'''
+auth = "WyIyMzQ5MSIsIk9MY2xicDc5dVE5OUVmc0pFcWUwU2ZNTnB1c1F1dzVkeWtVSG5sTzgiXQ=="
 
-Update_manager()
+result = Key.activate(token=auth,\
+                   rsa_pub_key=RSAPubKey,\
+                   product_id=6725, \
+                   key="KZUGV-POPFG-DPCDH-USUAB",\
+                   machine_code=Helpers.GetMachineCode())
+
+if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
+    # an error occurred or the key is invalid or it cannot be activated
+    # (eg. the limit of activated devices was achieved)
+    print("The license does not work: {0}".format(result[1]))
+else:
+    # everything went fine if we are here!
+    print("The license is valid!")
+    Update_manager()
+
+
+
+
+
