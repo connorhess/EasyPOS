@@ -182,17 +182,59 @@ RSAPubKey = '''<RSAKeyValue>
 </Modulus><Exponent>AQAB</Exponent></RSAKeyValue>'''
 auth = "WyIyMzQ5MSIsIk9MY2xicDc5dVE5OUVmc0pFcWUwU2ZNTnB1c1F1dzVkeWtVSG5sTzgiXQ=="
 
-result = Key.activate(token=auth,\
-                   rsa_pub_key=RSAPubKey,\
-                   product_id=6725, \
-                   key="KZUGV-POPFG-DPCDH-USUAB",\
-                   machine_code=Helpers.GetMachineCode())
+def New_key():
+    PageKey = Tk()
+    PageKey.title("Shop Database")
+    PageKey.configure(background="#BEBEBE")
+    PageKey.iconbitmap('Till.ico')
 
-if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
-    # an error occurred or the key is invalid or it cannot be activated
-    # (eg. the limit of activated devices was achieved)
-    print("The license does not work: {0}".format(result[1]))
-else:
-    # everything went fine if we are here!
-    print("The license is valid!")
-    Update_manager()
+    label = Label(PageKey, text="Product key", relief=RAISED )
+    label.grid(row=0,column=0,anchor='e')
+
+    KEY = Entry(PageKey, bd =5)
+    KEY.grid(row=0,column=1)
+    
+    os.remove("Key.txt")
+    Prod_Key = KEY.get()
+    def Key_enter():
+        result = Key.activate(token=auth,\
+                           rsa_pub_key=RSAPubKey,\
+                           product_id=6725, \
+                           key=Prod_Key,\
+                           machine_code=Helpers.GetMachineCode())
+
+        if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
+            # an error occurred or the key is invalid or it cannot be activated
+            # (eg. the limit of activated devices was achieved)
+            print("The license does not work: {0}".format(result[1]))
+            New_key()
+        else:
+            # everything went fine if we are here!
+            print("The license is valid!")
+            Update_manager()
+            f = open("Key.txt", "a")
+            f.write(Prod_Key)
+            f.close()
+            
+    Tkinter.Button(PageKey, text="Hello", command=Key_enter).grid(row=0,column=1)
+
+
+try:
+    f = open("Key.txt", "r")
+    result = Key.activate(token=auth,\
+                       rsa_pub_key=RSAPubKey,\
+                       product_id=6725, \
+                       key=f.read(),\
+                       machine_code=Helpers.GetMachineCode())
+
+    if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
+        # an error occurred or the key is invalid or it cannot be activated
+        # (eg. the limit of activated devices was achieved)
+        print("The license does not work: {0}".format(result[1]))
+        New_key()
+    else:
+        # everything went fine if we are here!
+        print("The license is valid!")
+        Update_manager()
+except:
+    New_key()
