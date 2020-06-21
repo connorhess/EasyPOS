@@ -190,13 +190,13 @@ def New_key():
     PageKey.configure(background="#BEBEBE")
     PageKey.iconbitmap('Till.ico')
 
-    label = Label(PageKey, text="Product key", relief=RAISED )
+    label = Label(PageKey, text="Product key", relief=RAISED)
     label.grid(row=0,column=0,sticky='e')
 
-    KEY = Entry(PageKey, bd =5)
+    KEY = Entry(PageKey, bd =5, width=30)
     KEY.grid(row=0,column=1)
     
-    os.remove("Key.txt")
+##    os.remove("Key.txt")
     Prod_Key = KEY.get()
     def Key_enter():
         result = Key.activate(token=auth,\
