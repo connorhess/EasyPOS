@@ -19,6 +19,8 @@ import win32api
 import login
 
 
+home = os.path.expanduser('~')
+
 __author__ = 'Connor Hess'
 __copyright__ = 'Copyright (C) 2020, Connor Hess'
 __credits__ = ['Connor Hess']
@@ -30,9 +32,10 @@ __status__ = 'Alpha'
 
 _AppName_ = 'EasyPOS'
 
+Downloads_location = os.path.join(home, 'Downloads')
 
 def Update():
-    win32api.ShellExecute(0, 'open', f'tmp\\{_AppName_}.msi', None, None, 10)
+    win32api.ShellExecute(0, 'open', '{Downloads_location}\\setup.msi', None, None, 10)
 
 def Update_manager(TEXT="Checking for update"):
     Page1 = Tk()
