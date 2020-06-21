@@ -10,6 +10,7 @@ import webbrowser
 import win32api
 import sys
 import os
+import Info
 
 from licensing.models import *
 from licensing.methods import Key, Helpers
@@ -17,16 +18,16 @@ from licensing.methods import Key, Helpers
 
 home = os.path.expanduser('~')
 
-__author__ = 'Connor Hess'
-__copyright__ = 'Copyright (C) 2020, Connor Hess'
-__credits__ = ['Connor Hess']
-__license__ = 'The MIT License (MIT)'
-version = (0.75)
-__maintainer__ = 'Connor Hess'
-__email__ = 'hessconnor41@gmail.com'
-__status__ = 'Alpha'
+__author__ = Info.i_author
+__copyright__ = Info.i_copyright
+__credits__ = Info.i_credits
+__license__ = Info.i_license
+version = Info.i_version
+__maintainer__ = Info.i_maintainer
+__email__ = Info.i_email
+__status__ = Info.i_status
 
-_AppName_ = 'EasyPOS'
+_AppName_ = Info.i_AppName_
 
 Downloads_location = os.path.join(home, 'Downloads')
 

@@ -20,8 +20,9 @@ import Error
 from datetime import datetime, timedelta
 import keyboard
 import tkinter.font as tkFont
+import Info
 
-Version = "0.75"
+Version = Info.i_version
 
 #not Built In
 from openpyxl import Workbook
