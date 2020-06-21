@@ -189,6 +189,28 @@ def RUN1():
         Label(Add_user, text="Name", bd=2).place(x=1,y=1)
         User_Name = Entry(Add_user, bd=2)
         User_Name.place(x=100,y=1)
+
+        Label(Add_user, text="Password", bd=2).place(x=1,y=25)
+        User_Password = Entry(Add_user, bd=2)
+        User_Password.place(x=100,y=25)
+
+        def sel():
+            selection = "You selected the option " + str(var.get())
+            PERM = int(var.get())
+            label.config(text = selection)
+
+        var = IntVar()
+        R1 = Radiobutton(Add_user, text="Admin", variable=var, value=1,
+                          command=sel)
+        R1.place(x=250,y=1)
+
+        R2 = Radiobutton(Add_user, text="Manager", variable=var, value=2,
+                          command=sel)
+        R2.place(x=100,y=25)
+
+        R3 = Radiobutton(Add_user, text="Cashier", variable=var, value=3,
+                          command=sel)
+        R3.place(x=100,y=50)
         
         def Commit_user():
             if len(User_Name) <= 0:
@@ -198,7 +220,7 @@ def RUN1():
             elif User_Role == None:
                 MsgBox_006 = messagebox.showerror ('ERROR',Error.Error_006,icon = Error.Error_icon)
             else:
-                Till.add_account("Name","1234",2)
+                Till.add_account(User_Name.get(),User_Password.get(),PERM)
 
 #=========================================================#Remove_User#==================================================================
 
