@@ -20,7 +20,6 @@ import Error
 from datetime import datetime, timedelta
 import keyboard
 import tkinter.font as tkFont
-import Startup
 
 Version = "0.75"
 
