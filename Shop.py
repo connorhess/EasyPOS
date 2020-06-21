@@ -1,6 +1,7 @@
 import sqlite3
 from tkinter import *
 from tkinter import filedialog
+from tkinter import ttk
 import time
 import random
 import RSYSS
@@ -17,15 +18,20 @@ from idle_time import IdleMonitor
 from tkinter import messagebox
 import Error
 from datetime import datetime, timedelta
+import keyboard
+import tkinter.font as tkFont
 
-
-Version = 0.7
+Version = "0.7.5"
 
 #not Built In
 from openpyxl import Workbook
 from openpyxl import load_workbook
 
 x = PrettyTable()
+
+
+conn = sqlite3.connect('Shop_Database.db')
+c = conn.cursor()
 
 
 button_1 = "Beers & Ciders"
@@ -35,6 +41,7 @@ button_4 = "Gin"
 button_5 = "Spirits"
 button_6 = "Whiskey"
 button_7 = "Brandy"
+
 
 
 
@@ -81,15 +88,13 @@ print (time.strftime("%H:%M"))
 print (time.strftime("%d/%m/%Y"))
 print (random.randint(1,1000000000))
 
-conn = sqlite3.connect('Shop_Database.db')
-c = conn.cursor()
+
 
 
 c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Date REAL, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
 c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
 c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
 c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
-
 
 
 ##try:
@@ -161,6 +166,12 @@ def RUN1():
     Page1.configure(background="#BEBEBE")
     Page1.attributes("-fullscreen", True)
     Page1.iconbitmap('Till.ico')
+    Page1.attributes("-topmost", True)
+    
+    c.execute("SELECT * FROM Settings WHERE ID=1")
+    for row in c.fetchall():
+        fontStyle = tkFont.Font(size=int(row[2]))
+
 
 
 #=========================================================#Add_User#==================================================================
@@ -169,7 +180,7 @@ def RUN1():
         Add_user = Toplevel()
         Add_user.title("Shop Database")
         Add_user.configure(background="cadet blue")
-        Add_user.geometry("500x300")
+        Add_user.geometry("800x350+253+125")
         Add_user.transient([Page1])
 
 ##        Add_user.attributes("-topmost", True)
@@ -266,7 +277,7 @@ def RUN1():
         PageAM = Toplevel()
         PageAM.title("Shop Database")
         PageAM.configure(background="grey")
-        PageAM.geometry("650x500")
+        PageAM.geometry("800x350+253+125")
         PageAM.transient([Page1])
 
 
@@ -560,7 +571,7 @@ def RUN1():
         Page21 = Toplevel()
         Page21.title("Item Database")
         Page21.configure(background="grey")
-        Page21.geometry("800x700")
+        Page21.geometry("800x350+253+125")
         Page21.transient([Page1])
         
 
@@ -596,7 +607,7 @@ def RUN1():
         Page22 = Toplevel()
         Page22.title("Item Database")
         Page22.configure(background="grey")
-        Page22.geometry("800x700")
+        Page22.geometry("800x350+253+125")
         Page22.transient([Page1])
         
         text4 = Text(Page22)
@@ -619,7 +630,7 @@ def RUN1():
         Page2 = Toplevel()
         Page2.title("Item Database")
         Page2.configure(background="grey")
-        Page2.geometry("800x700")
+        Page2.geometry("800x350+253+125")
         Page2.transient([Page1])
 
         def Cancel():
@@ -697,63 +708,64 @@ def RUN1():
             pass
         def Page1_close():
             Page1.destroy()
+
            
         menubar = Menu(Page1)
         filemenu = Menu(menubar, tearoff=0)
-        filemenu.add_command(label="Exit", command=Page1_close)
-        menubar.add_cascade(label="File", menu=filemenu)
+        filemenu.add_command(label="Exit",font=fontStyle, command=Page1_close)
+        menubar.add_cascade(label="File",font=fontStyle, menu=filemenu)
 
         Usermenu = Menu(menubar, tearoff=0)
-        Usermenu.add_command(label="User List", command=donothing)
+        Usermenu.add_command(label="User List",font=fontStyle, command=donothing)
         Usermenu.add_separator()
-        Usermenu.add_command(label="Add User", command=Add_User)
-        Usermenu.add_command(label="Delete User", command=donothing)
+        Usermenu.add_command(label="Add User",font=fontStyle, command=Add_User)
+        Usermenu.add_command(label="Delete User",font=fontStyle, command=donothing)
         Usermenu.add_separator()
-        Usermenu.add_command(label="Log(Login)", command=donothing)
-        menubar.add_cascade(label="User's", menu=Usermenu)
+        Usermenu.add_command(label="Log(Login)",font=fontStyle, command=donothing)
+        menubar.add_cascade(label="User's",font=fontStyle, menu=Usermenu)
 
         Posmenu = Menu(menubar, tearoff=0)
-        Posmenu.add_command(label="Product List", command=P_List)
+        Posmenu.add_command(label="Product List",font=fontStyle, command=P_List)
         Posmenu.add_separator()
-        Posmenu.add_command(label="New Product", command=New_product)
-        Posmenu.add_command(label="Delete Product", command=Del_product)
+        Posmenu.add_command(label="New Product",font=fontStyle, command=New_product)
+        Posmenu.add_command(label="Delete Product",font=fontStyle, command=Del_product)
         Posmenu.add_separator()
-        Posmenu.add_command(label="Add Scale Item", command=donothing)
-        Posmenu.add_command(label="Delete Scale Item", command=donothing)
-        menubar.add_cascade(label="POS System", menu=Posmenu)
+        Posmenu.add_command(label="Add Scale Item",font=fontStyle, command=donothing)
+        Posmenu.add_command(label="Delete Scale Item",font=fontStyle, command=donothing)
+        menubar.add_cascade(label="POS System",font=fontStyle, menu=Posmenu)
 
         Hotel_Mode = IntVar()
         Restaurantmenu = Menu(menubar, tearoff=0)
-        Restaurantmenu.add_command(label="Item List", command=donothing)
+        Restaurantmenu.add_command(label="Item List",font=fontStyle, command=donothing)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_command(label="New Item", command=Add_Menu1)
-        Restaurantmenu.add_command(label="Delete Item", command=Add_Menu1)
+        Restaurantmenu.add_command(label="New Item",font=fontStyle, command=Add_Menu1)
+        Restaurantmenu.add_command(label="Delete Item",font=fontStyle, command=Add_Menu1)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_command(label="Add Menu category", command=donothing)
-        Restaurantmenu.add_command(label="Remove Menu category", command=donothing)
+        Restaurantmenu.add_command(label="Add Menu category",font=fontStyle, command=donothing)
+        Restaurantmenu.add_command(label="Remove Menu category",font=fontStyle, command=donothing)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
-        menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
+        Restaurantmenu.add_checkbutton(label="Hotel Mode",font=fontStyle, onvalue=1, offvalue=0, variable=Hotel_Mode)
+        menubar.add_cascade(label="Restaurant Manager",font=fontStyle, menu=Restaurantmenu)
             
         Salesmenu = Menu(menubar, tearoff=0)
         submenu = Menu(Salesmenu)
-        submenu.add_command(label="Excel", command=ESC)
-        submenu.add_command(label="CSV", command=donothing)
-        submenu.add_command(label="Print", command=donothing)
+        submenu.add_command(label="Excel",font=fontStyle, command=ESC)
+        submenu.add_command(label="CSV",font=fontStyle, command=donothing)
+        submenu.add_command(label="Print",font=fontStyle, command=donothing)
 
-        Salesmenu.add_command(label="Sales", command=CRJ1)
+        Salesmenu.add_command(label="Sales",font=fontStyle, command=CRJ1)
         Salesmenu.add_separator()
-        Salesmenu.add_cascade(label="Export", menu=submenu)
+        Salesmenu.add_cascade(label="Export",font=fontStyle, menu=submenu)
         Salesmenu.add_separator()
-        Salesmenu.add_command(label="Search Sales By Date", command=donothing)
-        Salesmenu.add_command(label="Clear Sales", command=donothing)
-        menubar.add_cascade(label="Sales Data", menu=Salesmenu)
+        Salesmenu.add_command(label="Search Sales By Date",font=fontStyle, command=donothing)
+        Salesmenu.add_command(label="Clear Sales",font=fontStyle, command=donothing)
+        menubar.add_cascade(label="Sales Data",font=fontStyle, menu=Salesmenu)
 
         
         helpmenu = Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Help Index", command=Help)
-        helpmenu.add_command(label="About...", command=donothing)
-        menubar.add_cascade(label="Help", menu=helpmenu)
+        helpmenu.add_command(label="Help Index",font=fontStyle, command=Help)
+        helpmenu.add_command(label="About...",font=fontStyle, command=donothing)
+        menubar.add_cascade(label="Help",font=fontStyle, menu=helpmenu)
 
         Page1.config(menu=menubar)
         
@@ -764,9 +776,9 @@ def RUN1():
         Black_F = Frame(Page1, height=4, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
         Black_F.grid(row=1,column=0,sticky='n')
         
-        Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1380,y=1)
+        Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1375,y=1)
 
-        F1_1 = LabelFrame(F1, text="Systems", height=100, width=108, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems",font=fontStyle, height=100, width=106, bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
         F1_1.grid_propagate(0)
 
@@ -897,7 +909,7 @@ def RUN1():
     m1 = PanedWindow(Page1, sashwidth=8, bd=2, bg="grey", height=(Page1.winfo_height() - 150), width=(Page1.winfo_width()))
     m1.grid(row=2,column=0)
 
-    F2 = Frame(m1, width=250, bg="#E9E9E9", relief="raise")
+    F2 = Frame(m1, width=220, bg="#E9E9E9", relief="raise")
     F2.grid_propagate(0)
     m1.add(F2)
     
@@ -906,13 +918,23 @@ def RUN1():
     m2 = PanedWindow(m1, sashwidth=8, orient=VERTICAL, bd=2, bg="grey")
     m1.add(m2)
 
-    F3 = Frame(m2, width=250, height=350 , bg="#E9E9E9", relief="raise")
+    F3 = Frame(m2, width=250, height=380 , bg="#E9E9E9", relief="raise")
     F3.grid_propagate(0)
     m2.add(F3)
 
-    F4 = Frame(m2, width=250, height=350, bg="#E9E9E9", relief="raise")
-    F4.grid_propagate(0)
-    m2.add(F4)
+
+    tabControl = ttk.Notebook(F3)
+
+    tab1 = ttk.Frame(tabControl)
+    tab2 = ttk.Frame(tabControl)
+
+    tabControl.add(tab1, text='Tab 1')
+    Button(tab1, text="Button", width=12, height=1, fg="white", bg="green", command=donothing, bd=2).grid(row=0,column=0)
+    
+    tabControl.add(tab2, text='Tab 2')
+
+    tabControl.pack(expand=1, fill="both")
+
 
 
 
