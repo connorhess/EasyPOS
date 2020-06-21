@@ -38,8 +38,11 @@ except:
     wb.save(filepath)
 
     
-TimeDate = (time.strftime("%H:%M  %d/%m/%Y"))
-DATE = (time.strftime("%m-%Y"))
+TIME = (time.strftime("%H:%M"))
+DATE = (time.strftime("%d-%m-%Y"))
+Day = (time.strftime("%d"))
+Month = (time.strftime("%m"))
+Year = (time.strftime("%Y"))
 
 conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
@@ -192,9 +195,9 @@ def RSYS():
             a2.configure(background="cyan")
             a2.geometry("850x600")
             a2.transient([PageR])
-            L1 = Label(a2, text="QTY    [^]Up= 2    [v]Down= 1")
+            L1 = Label(a2, text="QTY    [^]Up= 2    [v]Down= 1",font=Font(family='Helvetica',size=40,weight='bold'))
             L1.grid(row=1,column=2)
-            w1 = Spinbox(a2, from_=1, to=20, font=Font(family='Helvetica',size=50,weight='bold'), width=4)
+            w1 = Spinbox(a2, from_=1, to=20, font=Font(family='Helvetica',size=40,weight='bold'), width=4)
             w1.grid(row=1,column=1)
             QQTY = w1.get()
             def CLOSE_BPAGE():
@@ -441,7 +444,7 @@ def RSYS():
                             Bb5 = str(SUM)
                             Bb6 = str(Lb1.get(1, 200))
                             Bb7 = 1
-                            c.execute('''INSERT INTO CRJ(ID, Date, Description, Amount, Bank, Item, QTY) VALUES(?, ? ,? ,? ,? ,? ,?)''',(Bb1, Bb2, Bb3, Bb4, Bb5, Bb6, Bb7))
+                            c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY) VALUES(?, ?, ?, ?, ? ,? ,? ,? ,? ,?)''',(Bb1, Day, Month,Year,TIME, Bb3, Bb4, Bb5, Bb6, Bb7))
                             conn.commit()
                     
                     SUM = str(SUM)

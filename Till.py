@@ -29,6 +29,9 @@ NAME3 = "Cashier 2"
 PASS3 = DEF1
 TIME = (time.strftime("%H:%M"))
 DATE = (time.strftime("%d-%m-%Y"))
+Day = (time.strftime("%d"))
+Month = (time.strftime("%m"))
+Year = (time.strftime("%Y"))
 
 print (time.strftime("%H:%M"))
 print (time.strftime("%d/%m/%Y"))
@@ -42,7 +45,9 @@ c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TE
 c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
 c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
 	"ID"	INTEGER,
-	"Date"	INTEGER,
+	"Day"	INTEGER,
+	"Month"	INTEGER,
+	"Year"	INTEGER,
 	"Time"	INTEGER,
 	"Item"	TEXT,
 	"Price"	INTEGER,
@@ -199,7 +204,7 @@ def Cart1(Logged_In="admin"):
             x.add_row([(row[0]), (row[2]), (row[1])])
             Name_ADD_1 = (row[2])
             Price_ADD_1 = (row[1])
-            c.execute('''INSERT INTO Sales(ID, Date, Time, Item, Price, QTY, Weight) VALUES(?, ? ,? ,?, ?, ?, ?)''',(Sale_ID, DATE, TIME, Name_ADD_1, Price_ADD_1, "1", "0.000"))
+            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?)''',(Sale_ID, Day, Month, Year, TIME, Name_ADD_1, Price_ADD_1, "1", "0.000"))
             conn.commit()
             count = count + (row[1])
             text.insert(INSERT, x)
@@ -224,7 +229,7 @@ def Cart1(Logged_In="admin"):
             Price_per_KG = (row[2])
             weight = round((float(Price_1)/(Price_per_KG)),3)
             print(weight)
-            c.execute('''INSERT INTO Sales(ID, Date, Time, Item, Price, QTY, Weight) VALUES(?, ? ,? ,?, ?, ?, ?)''',(Sale_ID, DATE, TIME, Name_ADD_1, Price_1, "1", weight))
+            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ? ,? ,?, ?, ?, ?, ?, ?)''',(Sale_ID, Day, Month, Year, TIME, Name_ADD_1, Price_1, "1", weight))
             conn.commit()
             count = count + float(Price_1)
             text.insert(INSERT, x)
@@ -334,7 +339,7 @@ def Cart1(Logged_In="admin"):
                     Bb6 = (text.get(1.0, 1000.0))
                     Bb7 = 1
                     Payment_type = Payment_Type
-                    c.execute('''INSERT INTO CRJ(ID, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?)''',(Bb1, Bb2, Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
+                    c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?)''',(Bb1, Day, Month, Year, TIME, Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
                     conn.commit()
                     #===========================#
                 Page5 = Tk()

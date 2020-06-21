@@ -92,7 +92,7 @@ print (random.randint(1,1000000000))
 
 
 
-c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Date REAL, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
 c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
 c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
 c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
@@ -513,12 +513,14 @@ def RUN1():
             if MsgBox == 'yes':
                 c.execute('''DROP TABLE CRJ''')
                 conn.commit()
-                c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Date REAL, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT)''')
+                c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER, Month INTEGER, Year INTEGER, Time INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT)''')
                 c.execute('''DROP TABLE Sales''')
                 conn.commit()
                 c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
                             "ID"	INTEGER,
-                            "Date"	INTEGER,
+                            "Day"	INTEGER,
+                            "Month"	INTEGER,
+                            "Year"	INTEGER,
                             "Time"	INTEGER,
                             "Item"	TEXT,
                             "Price"	INTEGER,
@@ -538,12 +540,12 @@ def RUN1():
         
         Button(PCRJ, text="Clear", width=12, fg="white", bg="red", command=Reset1, bd=2).place(x=1,y=1)
         
-        text = Text(PCRJ, width=170)
+        text = Text(PCRJ, width=180)
 
         BZ = PrettyTable()
         c.execute("SELECT * FROM CRJ")
         for row in c.fetchall():
-            BZ.field_names = ["ID", "Time + Date", "Description", "Amount paid", "Bank", "Item", "QTY","Payment Type","Cashier"]
+            BZ.field_names = ["ID", "Day", "Month", "Year", "Time", "Description", "Amount paid", "Bank", "Item", "QTY","Payment Type","Cashier"]
             BZB = (row)
             BZ.add_row((BZB))
         print(BZ)
