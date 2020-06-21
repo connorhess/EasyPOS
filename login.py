@@ -38,12 +38,12 @@ R = Shop
 conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
 
-try:
-    c.execute("SELECT * FROM Settings")
-    for row in c.fetchall():
-        pass
-except:
-    SETUP.FIRSTTIME()
+##try:
+##    c.execute("SELECT * FROM Settings")
+##    for row in c.fetchall():
+##        pass
+##except:
+##    SETUP.FIRSTTIME()
 
 
 def Login_Page():
@@ -189,7 +189,7 @@ def New_key():
     PageKey.iconbitmap('Till.ico')
 
     label = Label(PageKey, text="Product key", relief=RAISED )
-    label.grid(row=0,column=0,anchor='e')
+    label.grid(row=0,column=0,sticky='e')
 
     KEY = Entry(PageKey, bd =5)
     KEY.grid(row=0,column=1)
@@ -207,16 +207,18 @@ def New_key():
             # an error occurred or the key is invalid or it cannot be activated
             # (eg. the limit of activated devices was achieved)
             print("The license does not work: {0}".format(result[1]))
+            PageKey.destroy()
             New_key()
         else:
             # everything went fine if we are here!
             print("The license is valid!")
             Update_manager()
-            f = open("Key.txt", "a")
-            f.write(Prod_Key)
-            f.close()
+            fke = open("Key.txt", "w")
+            fke.write(Prod_Key)
+            fke.close()
+            PageKey.destroy()
             
-    Tkinter.Button(PageKey, text="Hello", command=Key_enter).grid(row=0,column=1)
+    Button(PageKey, text="Enter", command=Key_enter).grid(row=1,column=1)
 
 
 try:
@@ -237,4 +239,6 @@ try:
         print("The license is valid!")
         Update_manager()
 except:
+    fk = open("Key.txt", "w")
+    fk.close()
     New_key()
