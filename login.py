@@ -197,8 +197,9 @@ def New_key():
     KEY.grid(row=0,column=1)
     
 ##    os.remove("Key.txt")
-    Prod_Key = KEY.get()
+    
     def Key_enter():
+        Prod_Key = KEY.get()
         result = Key.activate(token=auth,\
                            rsa_pub_key=RSAPubKey,\
                            product_id=6725, \
