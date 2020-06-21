@@ -28,7 +28,7 @@ from tkinter import ttk
 ##Page1.configure(background="#BEBEBE")
 ##Page1.geometry("500x300+300+300")
 ##Page1.iconbitmap('Till.ico')
-##Page1.attributes("-topmost", True)
+####Page1.attributes("-topmost", True)
 
 import tkinter as tk
 from tk_html_widgets import HTMLLabel
