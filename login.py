@@ -167,7 +167,7 @@ def Update_manager(TEXT="Checking for update"):
         MsgBox = messagebox.askquestion ('Update!', f'{_AppName_} {version} needs to update to version {data}',icon = 'warning')
         if MsgBox == 'yes':
             webbrowser.open_new_tab('https://github.com/connorhess/EasyPOS/raw/master/'
-                                                'Update/Output/setup.msi?raw=true')
+                                                'Update/Output/setup.exe?raw=true')
             Page1.destroy()
             Update()
         else:
