@@ -993,17 +993,14 @@ def RUN1():
         var.set((time.strftime("%H:%M")))
       
     def animate(i):
-        date1 = datetime.strptime(time.strftime("%d"), "%d-%m-%Y")
-        modified_date = date1 + timedelta(month=-1)
-        Query_Date_Y = datetime.strftime(modified_date, "%d-%m-%Y")
-        
+        print(time.strftime("%m"))
         Fig_plot.clear()
         xList = []
         yList = []
         
-        for DAY in range(30):
+        for DAY in range(31):
             Total_Day = 0
-            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Day=? TO Day=?',(time.strftime("%d"),Query_Date_Y))
+            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
             for row in c.fetchall():
                 print(row)
                 Total_Day += row[2]
@@ -1038,7 +1035,7 @@ def RUN1():
     tabControl.pack(expand=1, fill="both")
 
 
-    ani = animation.FuncAnimation(fig, animate, interval=900)
+    ani = animation.FuncAnimation(fig, animate, interval=30000)
     Page1.mainloop()
 
 
