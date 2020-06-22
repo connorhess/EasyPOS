@@ -13,6 +13,7 @@ from prettytable import PrettyTable
 from tkinter.font import Font
 from os.path import join as pjoin
 import Error
+from PIL import ImageTk,Image
 
 
 button_1 = "Beers & Ciders"
@@ -444,7 +445,7 @@ def RSYS():
                             Bb5 = str(SUM)
                             Bb6 = str(Lb1.get(1, 200))
                             Bb7 = 1
-                            c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY) VALUES(?, ?, ?, ?, ? ,? ,? ,? ,? ,?)''',(Bb1, Day, Month,Year,TIME, Bb3, Bb4, Bb5, Bb6, Bb7))
+                            c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY) VALUES(?, ?, ?, ?, ? ,? ,? ,? ,? ,?)''',(Bb1, (time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Bb3, Bb4, Bb5, Bb6, Bb7))
                             conn.commit()
                     
                     SUM = str(SUM)

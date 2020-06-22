@@ -21,6 +21,16 @@ from datetime import datetime, timedelta
 import keyboard
 import tkinter.font as tkFont
 import Info
+from PIL import ImageTk,Image
+
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+# Implement the default Matplotlib key bindings.
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
+
+import numpy as np
+
+
 
 Version = Info.i_version
 
@@ -710,12 +720,12 @@ def RUN1():
 
 
     def ESC():
-        print(DATE)
+        print((time.strftime("%m-%Y")))
         wb=load_workbook(filepath)
         try:
-            sheet = wb[DATE]
+            sheet = wb[(time.strftime("%m-%Y"))]
         except KeyError:
-            sheet = wb.create_sheet(DATE)
+            sheet = wb.create_sheet((time.strftime("%m-%Y")))
         c.execute("SELECT * FROM Sales")
         for row in c.fetchall():
             sheet.append(row)
@@ -954,8 +964,47 @@ def RUN1():
     tab2 = ttk.Frame(tabControl)
 
     tabControl.add(tab1, text='Tab 1')
-    Button(tab1, text="Button", width=12, height=1, fg="white", bg="green", command=donothing, bd=2).grid(row=0,column=0)
+
+    F5 = Frame(tab1, width=250, height=50 , bg="#E9E9E9", relief="raise")
+    F5.grid_propagate(0)
+    F5.grid(row=0,column=0)
     
+    var = StringVar()
+    label2 = Label(F5, textvariable=var, relief=RAISED )
+    var.set((time.strftime("%H:%M")))
+
+    F6 = Frame(tab1, width=250, height=250 , bg="#E9E9E9", relief="raise")
+    F6.grid_propagate(0)
+    F6.grid(row=1,column=0)
+    
+    fig = Figure(figsize=(13, 5), dpi=100)
+    t = np.arange(0, 3, .01)
+
+    def Refresh_Tab1():
+        print((time.strftime("%H:%M")))
+        var.set((time.strftime("%H:%M")))
+
+    Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=Refresh_Tab1, bd=2).grid(row=0,column=0)
+
+##    c.execute('SELECT Day, Bank
+##    for row in data
+    fig.add_subplot(111).plot([1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8])
+
+    canvas = FigureCanvasTkAgg(fig, master=F6)  # A tk.DrawingArea.
+    canvas.draw()
+    canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+    toolbar = NavigationToolbar2Tk(canvas, F6)
+##    toolbar.update()
+    canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+
+
+    
+    label2.grid(row=0,column=2)
+
+
+
+    
+
     tabControl.add(tab2, text='Tab 2')
 
     tabControl.pack(expand=1, fill="both")
@@ -964,7 +1013,7 @@ def RUN1():
 
 
 
-##RUN1()
+RUN1()
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================

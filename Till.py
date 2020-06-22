@@ -12,6 +12,7 @@ import datetime
 from idle_time import IdleMonitor
 import Error
 from tkinter import messagebox
+from PIL import ImageTk,Image
 
 
 x = PrettyTable()
@@ -204,7 +205,7 @@ def Cart1(Logged_In="admin"):
             x.add_row([(row[0]), (row[2]), (row[1])])
             Name_ADD_1 = (row[2])
             Price_ADD_1 = (row[1])
-            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?)''',(Sale_ID, Day, Month, Year, TIME, Name_ADD_1, Price_ADD_1, "1", "0.000"))
+            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?)''',(Sale_ID,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Name_ADD_1, Price_ADD_1, "1", "0.000"))
             conn.commit()
             count = count + (row[1])
             text.insert(INSERT, x)
@@ -229,7 +230,7 @@ def Cart1(Logged_In="admin"):
             Price_per_KG = (row[2])
             weight = round((float(Price_1)/(Price_per_KG)),3)
             print(weight)
-            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ? ,? ,?, ?, ?, ?, ?, ?)''',(Sale_ID, Day, Month, Year, TIME, Name_ADD_1, Price_1, "1", weight))
+            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ? ,? ,?, ?, ?, ?, ?, ?)''',(Sale_ID, (time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Name_ADD_1, Price_1, "1", weight))
             conn.commit()
             count = count + float(Price_1)
             text.insert(INSERT, x)
@@ -339,7 +340,7 @@ def Cart1(Logged_In="admin"):
                     Bb6 = (text.get(1.0, 1000.0))
                     Bb7 = 1
                     Payment_type = Payment_Type
-                    c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?)''',(Bb1, Day, Month, Year, TIME, Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
+                    c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
                     conn.commit()
                     #===========================#
                 Page5 = Tk()

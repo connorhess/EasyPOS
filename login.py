@@ -11,6 +11,7 @@ import win32api
 import sys
 import os
 import Info
+from PIL import ImageTk,Image
 
 from licensing.models import *
 from licensing.methods import Key, Helpers
