@@ -27,7 +27,8 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 # Implement the default Matplotlib key bindings.
 from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
-
+import matplotlib.animation as animation
+from matplotlib import style
 import numpy as np
 
 
@@ -177,7 +178,7 @@ def RUN1():
     Page1.configure(background="#BEBEBE")
     Page1.attributes("-fullscreen", True)
     Page1.iconbitmap('Till.ico')
-    Page1.attributes("-topmost", True)
+##    Page1.attributes("-topmost", True)
     
     c.execute("SELECT * FROM Settings WHERE ID=1")
     for row in c.fetchall():
@@ -512,7 +513,7 @@ def RUN1():
         PCRJ2 = Toplevel()
         PCRJ2.title("Shop Database")
         PCRJ2.configure(background="green")
-        PCRJ2.geometry("1980x1080")
+        PCRJ2.geometry("1480x1080")
 
 #==========================================================#CRJ#=======================================================================
     
@@ -532,6 +533,7 @@ def RUN1():
                             "Month"	INTEGER,
                             "Year"	INTEGER,
                             "Time"	INTEGER,
+                            "Date"      INTEGER,
                             "Item"	TEXT,
                             "Price"	INTEGER,
                             "Qty"	INTEGER,
@@ -544,7 +546,7 @@ def RUN1():
         PCRJ = Toplevel()
         PCRJ.title("Shop Database")
         PCRJ.configure(background="green")
-        PCRJ.geometry("1980x1080")
+        PCRJ.geometry("1530x1080+0+0")
         PCRJ.transient([Page1])
 
         
@@ -973,22 +975,48 @@ def RUN1():
     label2 = Label(F5, textvariable=var, relief=RAISED )
     var.set((time.strftime("%H:%M")))
 
+    Month_query = Entry(F5, bd=2)
+    Month_query.grid(row=0,column=0)
+
+    
+
     F6 = Frame(tab1, width=250, height=250 , bg="#E9E9E9", relief="raise")
     F6.grid_propagate(0)
     F6.grid(row=1,column=0)
     
     fig = Figure(figsize=(13, 5), dpi=100)
-    t = np.arange(0, 3, .01)
+##    t = np.arange(0, 3, .01)
+    Fig_plot = fig.add_subplot(111)
 
     def Refresh_Tab1():
         print((time.strftime("%H:%M")))
         var.set((time.strftime("%H:%M")))
+      
+    def animate(i):
+        date1 = datetime.strptime(time.strftime("%d"), "%d-%m-%Y")
+        modified_date = date1 + timedelta(days=-30)
+        Query_Date_Y = datetime.strftime(modified_date, "%d-%m-%Y")
+        
+        Fig_plot.clear()
+        xList = []
+        yList = []
+        
+        for DAY in range(30):
+            Total_Day = 0
+            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Day=? TO Day=?',(time.strftime("%d"),Query_Date_Y))
+            for row in c.fetchall():
+                print(row)
+                Total_Day += row[2]
+            xList.append(DAY)
+            yList.append(Total_Day)
+        Fig_plot.plot(xList,yList)
+        print("ani")
+        
 
-    Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=Refresh_Tab1, bd=2).grid(row=0,column=0)
+    Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=Refresh_Tab1, bd=2).grid(row=0,column=1)
+    
 
-##    c.execute('SELECT Day, Bank
-##    for row in data
-    fig.add_subplot(111).plot([1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8])
+    
 
     canvas = FigureCanvasTkAgg(fig, master=F6)  # A tk.DrawingArea.
     canvas.draw()
@@ -998,7 +1026,7 @@ def RUN1():
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 
 
-    
+
     label2.grid(row=0,column=2)
 
 
@@ -1010,7 +1038,8 @@ def RUN1():
     tabControl.pack(expand=1, fill="both")
 
 
-
+    ani = animation.FuncAnimation(fig, animate, interval=900)
+    Page1.mainloop()
 
 
 RUN1()

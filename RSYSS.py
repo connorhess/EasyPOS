@@ -168,6 +168,8 @@ def RSYS():
     PageR.configure(background="orange")
     ##        PageR.geometry("1100x800")
     PageR.attributes("-fullscreen", True)
+    PageR.attributes("-topmost", True)
+    
 
     def exit_PageR():
         PageR.destroy()
@@ -183,6 +185,8 @@ def RSYS():
         a1.configure(background="cyan")
         a1.geometry("500x300")
         a1.transient([PageR])
+        a1.attributes("-topmost", True)
+
 
         top = a1
         
@@ -196,6 +200,7 @@ def RSYS():
             a2.configure(background="cyan")
             a2.geometry("850x600")
             a2.transient([PageR])
+            a2.attributes("-topmost", True)
             L1 = Label(a2, text="QTY    [^]Up= 2    [v]Down= 1",font=Font(family='Helvetica',size=40,weight='bold'))
             L1.grid(row=1,column=2)
             w1 = Spinbox(a2, from_=1, to=20, font=Font(family='Helvetica',size=40,weight='bold'), width=4)
@@ -354,6 +359,7 @@ def RSYS():
             Page4.title("Shop Database")
             Page4.geometry("400x300")
             Page4.transient([PageR])
+            Page4.attributes("-topmost", True)
             Label(Page4, text="Total", bd=2).place(x=1,y=1)
             c.execute("SELECT SUM(FPrice) FROM Tables WHERE Table_No=?",(tableNO,))
             DA23 = c.fetchall()
@@ -425,13 +431,7 @@ def RSYS():
 
                 else:
                     Page4.destroy()
-                    def OK1():
-                        c.execute("DELETE FROM Tables WHERE Table_No=?",(tableNO,))
-                        conn.commit()
-                        Lb1.delete(0, 200)
-                        a1.destroy()
-                        Page5.destroy()    
-                        Button(Page5, text="Print", width=15, height=1, fg="white", bg="green", command=iprint, bd=2).place(x=1,y=140)
+                    def OK1():  
                         c.execute("SELECT SUM(FPrice) FROM Tables WHERE Table_No=?",(tableNO,))
                         DA23 = c.fetchall()
                         for row in DA23:
@@ -439,7 +439,6 @@ def RSYS():
                             print (row)
                             RR1 = random.randint(1,1000000000)
                             Bb1 = RR1
-                            Bb2 = TimeDate
                             Bb3 = "Table" + str(tableNO)
                             Bb4 = str(EE2)
                             Bb5 = str(SUM)
@@ -447,6 +446,11 @@ def RSYS():
                             Bb7 = 1
                             c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY) VALUES(?, ?, ?, ?, ? ,? ,? ,? ,? ,?)''',(Bb1, (time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Bb3, Bb4, Bb5, Bb6, Bb7))
                             conn.commit()
+                        c.execute("DELETE FROM Tables WHERE Table_No=?",(tableNO,))
+                        conn.commit()
+                        Lb1.delete(0, 200)
+                        a1.destroy()
+                        Page5.destroy()  
                     
                     SUM = str(SUM)
                     Page5 = Toplevel()
@@ -454,6 +458,7 @@ def RSYS():
                     Page5.configure(background="grey")
                     Page5.geometry("400x300")
                     Page5.transient([PageR])
+                    Page5.attributes("-topmost", True)
                     
                     
                     Label(Page5, text=(CHANGE), bd=2).place(x=100,y=1)
@@ -484,7 +489,7 @@ def RSYS():
                         Button(Page5, text="RePrint", width=15, height=1, fg="white", bg="green", command=RPrint, bd=2).place(x=1,y=165)
 
                         os.startfile(filename, "print")
-                    
+                    Button(Page5, text="Print", width=15, height=1, fg="white", bg="green", command=iprint, bd=2).place(x=1,y=140)
                     
                     
                     

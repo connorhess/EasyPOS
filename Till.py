@@ -50,6 +50,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
 	"Month"	INTEGER,
 	"Year"	INTEGER,
 	"Time"	INTEGER,
+	"Date"  INTEGER,
 	"Item"	TEXT,
 	"Price"	INTEGER,
 	"Qty"	INTEGER,
@@ -59,7 +60,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
 
 def add_account(Name="null",Password="1234",Perm=1):
     ID = random.randint(1,1000000000)
-    c.execute('''INSERT INTO (ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
+    c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
     conn.commit()
 
 monitor = IdleMonitor.get_monitor()
@@ -205,7 +206,7 @@ def Cart1(Logged_In="admin"):
             x.add_row([(row[0]), (row[2]), (row[1])])
             Name_ADD_1 = (row[2])
             Price_ADD_1 = (row[1])
-            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?)''',(Sale_ID,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Name_ADD_1, Price_ADD_1, "1", "0.000"))
+            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Date, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?,?)''',(Sale_ID,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Name_ADD_1, Price_ADD_1, "1", "0.000"))
             conn.commit()
             count = count + (row[1])
             text.insert(INSERT, x)
@@ -230,7 +231,7 @@ def Cart1(Logged_In="admin"):
             Price_per_KG = (row[2])
             weight = round((float(Price_1)/(Price_per_KG)),3)
             print(weight)
-            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Item, Price, QTY, Weight) VALUES(?, ? ,? ,?, ?, ?, ?, ?, ?)''',(Sale_ID, (time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Name_ADD_1, Price_1, "1", weight))
+            c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Date, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?,?)''',(Sale_ID,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Name_ADD_1, Price_1, "1", weight))
             conn.commit()
             count = count + float(Price_1)
             text.insert(INSERT, x)
