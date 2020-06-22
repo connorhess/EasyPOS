@@ -994,7 +994,7 @@ def RUN1():
       
     def animate(i):
         date1 = datetime.strptime(time.strftime("%d"), "%d-%m-%Y")
-        modified_date = date1 + timedelta(days=-30)
+        modified_date = date1 + timedelta(month=-1)
         Query_Date_Y = datetime.strftime(modified_date, "%d-%m-%Y")
         
         Fig_plot.clear()
