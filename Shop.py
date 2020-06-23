@@ -964,53 +964,94 @@ def RUN1():
 
     tab1 = ttk.Frame(tabControl)
     tab2 = ttk.Frame(tabControl)
+    tab3 = ttk.Frame(tabControl)
+    tab4 = ttk.Frame(tabControl)
 
-    tabControl.add(tab1, text='Tab 1')
-
+    tabControl.add(tab1, text='31 Day')
     F5 = Frame(tab1, width=250, height=50 , bg="#E9E9E9", relief="raise")
     F5.grid_propagate(0)
-    F5.grid(row=0,column=0)
-    
-    var = StringVar()
-    label2 = Label(F5, textvariable=var, relief=RAISED )
-    var.set((time.strftime("%H:%M")))
-
-    Month_query = Entry(F5, bd=2)
-    Month_query.grid(row=0,column=0)
-
-    
+    F5.grid(row=0,column=0,sticky='w')
 
     F6 = Frame(tab1, width=250, height=250 , bg="#E9E9E9", relief="raise")
     F6.grid_propagate(0)
     F6.grid(row=1,column=0)
+
+    
+    tabControl.add(tab2, text='7 Day')
+    F7 = Frame(tab2, width=250, height=50 , bg="#E9E9E9", relief="raise")
+    F7.grid_propagate(0)
+    F7.grid(row=0,column=0,sticky='w')
+
+    F8 = Frame(tab2, width=250, height=250 , bg="#E9E9E9", relief="raise")
+    F8.grid_propagate(0)
+    F8.grid(row=1,column=0)
+
+    
+    tabControl.add(tab3, text='1 Year')
+    tabControl.add(tab4, text='Stats')
+
+    
+    
+    var = StringVar()
+    label2 = Label(F1, textvariable=var, relief=RAISED )
+    var.set((time.strftime("%H:%M")))
+
+    
+
+    
+
+##    Month_query = Entry(F5, bd=2)
+##    Month_query.grid(row=0,column=0)
+
+    
+
+    
     
     fig = Figure(figsize=(13, 5), dpi=100)
 ##    t = np.arange(0, 3, .01)
     Fig_plot = fig.add_subplot(111)
 
+    fig_7Day = Figure(figsize=(13, 5), dpi=100)
+##    t = np.arange(0, 3, .01)
+    Fig_plot_7Day = fig_7Day.add_subplot(111)
+
     def Refresh_Tab1():
-        print((time.strftime("%H:%M")))
-        var.set((time.strftime("%H:%M")))
+        pass
       
-    def animate(i):
-        print(time.strftime("%m"))
+    def animate(i=1):
+        var.set((time.strftime("%H:%M")))
         Fig_plot.clear()
-        xList = []
-        yList = []
+        xList_30Day = []
+        yList_30Day = []
         
         for DAY in range(31):
             Total_Day = 0
             c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
             for row in c.fetchall():
-                print(row)
+##                print(row)
                 Total_Day += row[2]
-            xList.append(DAY)
-            yList.append(Total_Day)
-        Fig_plot.plot(xList,yList)
-        print("ani")
+            xList_30Day.append(DAY)
+            yList_30Day.append(Total_Day)
+        Fig_plot.plot(xList_30Day,yList_30Day)
+
+        xList_7Day = []
+        yList_7Day = []
+
+        for DAY in range(7):
+            Total_Day = 0
+            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
+            for row in c.fetchall():
+##                print(row)
+                Total_Day += row[2]
+            xList_7Day.append(DAY)
+            yList_7Day.append(Total_Day)
+        Fig_plot_7Day.plot(xList_7Day,yList_7Day)
+##        print("ani")
         
 
-    Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=Refresh_Tab1, bd=2).grid(row=0,column=1)
+    Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=animate, bd=2).grid(row=0,column=1)
+    Button(F7, text="Refresh", width=12, height=1, fg="white", bg="green", command=animate, bd=2).grid(row=0,column=1)
+
     
 
     
@@ -1021,21 +1062,29 @@ def RUN1():
     toolbar = NavigationToolbar2Tk(canvas, F6)
 ##    toolbar.update()
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+    
+
+    canvas1 = FigureCanvasTkAgg(fig_7Day, master=F8)  # A tk.DrawingArea.
+    canvas1.draw()
+    canvas1.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
+    toolbar = NavigationToolbar2Tk(canvas, F8)
+##    toolbar.update()
+    canvas1.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 
 
 
-    label2.grid(row=0,column=2)
+    label2.place(x=1375,y=1)
 
 
 
     
 
-    tabControl.add(tab2, text='Tab 2')
+    
 
     tabControl.pack(expand=1, fill="both")
 
 
-    ani = animation.FuncAnimation(fig, animate, interval=30000)
+    ani = animation.FuncAnimation(fig, animate, interval=60000)
     Page1.mainloop()
 
 
