@@ -20,48 +20,36 @@
 
 
 
-
+import sqlite3
 from datetime import timedelta, date
-import time
-from datetime import datetime
-
-
-
-Query_Date_T = time.strftime("%d, %m, %Y")
-date1 = datetime.strptime(Query_Date_T, "%d, %m, %Y")
-modified_date = date1 + timedelta(days=-1)
-Query_Date_Y = datetime.strftime(modified_date, "%d, %m, %Y")
-
 
 
 def daterange(start_date, end_date):
     for n in range(int ((end_date - start_date).days)):
         yield start_date + timedelta(n)
 
-start_date = (Query_Date_Y)
-end_date = (Query_Date_T)
+start_date = date(2020, 6, 1)
+end_date = date(2020, 6, 30)
 for single_date in daterange(start_date, end_date):
-    print(single_date.strftime("%Y-%m-%d"))
+    print(single_date.strftime("%d-%m-%Y"))
+    Date_query = (single_date.strftime("%d-%m-%Y"))
+    Total_Day = 0
+    c.execute('SELECT Date, Bank FROM CRJ WHERE Date=?',(Date_query,))
+    for row in c.fetchall():
+        print(row)
+        Total_Day += row[1]
+    xList.append(Date_query)
+    yList.append(Total_Day)
+Fig_plot.plot(xList,yList)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+L = 0.05
+B = 0.08
+R = 0.94
+T = 0.95
 
 
 
