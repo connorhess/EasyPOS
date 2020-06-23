@@ -23,6 +23,17 @@ def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
-
+    
 
 #SETUP.Create_Tables()
+
+
+#==============================#Shop.py#==============================#
+#Main Page
+Lable_Place_Time_x = 1500
+Lable_Place_Time_y = 30
+
+Frame_F8_R = 1
+Frame_F8_C = 0
+Frame_F8_Width = 250
+Frame_F8_Height = 250

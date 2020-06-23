@@ -186,37 +186,39 @@ def RUN1(Logged_In):
     def Add_User():
         Add_user = Toplevel()
         Add_user.title("Shop Database")
-        Add_user.configure(background="cadet blue")
+        Add_user.configure(background="#E9E9E9")
         Add_user.geometry("800x350+253+125")
         Add_user.transient([Page1])
 
 ##        Add_user.attributes("-topmost", True)
 
-        Label(Add_user, text="Name", bd=2).place(x=1,y=1)
+        Label(Add_user, text="Name", bd=2).grid(row=0,column=0,pady=2,sticky='e')
         User_Name = Entry(Add_user, bd=2)
-        User_Name.place(x=100,y=1)
+        User_Name.grid(row=0,column=1,pady=2)
 
-        Label(Add_user, text="Password", bd=2).place(x=1,y=25)
+        Label(Add_user, text="Password", bd=2).grid(row=1,column=0,pady=2,sticky='e')
         User_Password = Entry(Add_user, bd=2)
-        User_Password.place(x=100,y=25)
+        User_Password.grid(row=1,column=1,pady=2)
 
         def sel():
-            selection = "You selected the option " + str(var.get())
             PERM = int(var.get())
-            label.config(text = selection)
+
+        F9 = Frame(Add_user, width=50, bg="#E9E9E9", relief="raise")
+        F9.grid_propagate(0)
+        F9.grid(row=0,column=3)
 
         var = IntVar()
         R1 = Radiobutton(Add_user, text="Admin", variable=var, value=1,
                           command=sel)
-        R1.place(x=250,y=1)
+        R1.grid(row=0,column=4,pady=2)
 
         R2 = Radiobutton(Add_user, text="Manager", variable=var, value=2,
                           command=sel)
-        R2.place(x=100,y=25)
+        R2.grid(row=1,column=4,pady=2)
 
         R3 = Radiobutton(Add_user, text="Cashier", variable=var, value=3,
                           command=sel)
-        R3.place(x=100,y=50)
+        R3.grid(row=2,column=4,pady=2)
         
         def Commit_user():
             if len(User_Name) <= 0:
@@ -227,6 +229,9 @@ def RUN1(Logged_In):
                 MsgBox_006 = messagebox.showerror ('ERROR',Error.Error_006,icon = Error.Error_icon)
             else:
                 Till.add_account(User_Name.get(),User_Password.get(),PERM)
+
+
+        Button(Add_user, text="Add", width=20, height=1, fg="white", bg="green", command=Commit_user, bd=2).grid(row=2,column=1)
 
 #=========================================================#Remove_User#==================================================================
 
@@ -242,40 +247,6 @@ def RUN1(Logged_In):
 
 #=========================================================#Sales Info#==================================================================
 
-
-
-#=========================================================#TicketSYS#==================================================================
-
-
-    def TicketSYS():
-        TS = Toplevel()
-        TS.title("Shop Database")
-        TS.geometry("1980x1080")
-
-        def OCSV():
-            filedialog.askopenfilename(initialdir = "/",title = "select file",filetypes = (("CSV files",".csv"),("all files",".")))
-
-            
-
-        def DN():
-            pass
-
-##        F9 = Frame(TS, width=150, height=30, bd=2, bg="light grey", relief="raise")
-##        F9.place(x=1,y=1)
-
-        menubar = Menu(TS)
-        filemenu = Menu(menubar, tearoff=0)
-
-        filemenu.add_command(label="Open csv", command=OCSV)
-        filemenu.add_command(label="New", command=DN)
-        filemenu.add_command(label="Open", command=DN)
-        filemenu.add_command(label="Close", command=DN)
-
-        filemenu.add_separator()
-        menubar.add_cascade(label="File", menu=filemenu)
-
-
-        TS.configure(background="cadet blue", menu=menubar)
 
 
 
@@ -305,7 +276,7 @@ def RUN1(Logged_In):
     def Add_Menu1():
         PageAM = Toplevel()
         PageAM.title("Shop Database")
-        PageAM.configure(background="grey")
+        PageAM.configure(background="#E9E9E9")
         PageAM.geometry("800x350+253+125")
         PageAM.transient([Page1])
 
@@ -529,7 +500,7 @@ def RUN1(Logged_In):
         DATE2 = (time.strftime("%d/%m/%Y"))
         PCRJ = Toplevel()
         PCRJ.title("Shop Database")
-        PCRJ.configure(background="green")
+        PCRJ.configure(background="#E9E9E9")
         PCRJ.geometry("1530x1080+0+0")
         PCRJ.transient([Page1])
 
@@ -591,7 +562,7 @@ def RUN1(Logged_In):
         sqlite3.connect('Shop_Database.db')
         Page21 = Toplevel()
         Page21.title("Item Database")
-        Page21.configure(background="grey")
+        Page21.configure(background="#E9E9E9")
         Page21.geometry("800x350+253+125")
         Page21.transient([Page1])
         
@@ -627,7 +598,7 @@ def RUN1(Logged_In):
     def P_List():
         Page22 = Toplevel()
         Page22.title("Item Database")
-        Page22.configure(background="grey")
+        Page22.configure(background="#E9E9E9")
         Page22.geometry("800x350+253+125")
         Page22.transient([Page1])
         
@@ -650,7 +621,7 @@ def RUN1(Logged_In):
         sqlite3.connect('Shop_Database.db')
         Page2 = Toplevel()
         Page2.title("Item Database")
-        Page2.configure(background="grey")
+        Page2.configure(background="#E9E9E9")
         Page2.geometry("800x350+253+125")
         Page2.transient([Page1])
 
@@ -1046,6 +1017,10 @@ def RUN1(Logged_In):
 
 
     ani = animation.FuncAnimation(fig, animate, interval=60000)
+    Page1.columnconfigure(0, weight=1)
+    Page1.rowconfigure(0, weight=0) # not needed, this is the default behavior
+    Page1.rowconfigure(1, weight=1)
+    Page1.rowconfigure(2, weight=1)
     Page1.mainloop()
 
 
