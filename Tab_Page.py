@@ -1,15 +1,13 @@
-from tkinter import * # import everything from tkinter
-
-box = Tk() #Create a root window
-
-some_var = StringVar(box) #That holds a string; (the default value is an empty string)
-some_var.set("1") #here we set the value
-x = OptionMenu(box, some_var, "1", "2", "3") #OptionMenu class helps to create popmenu
-x.pack() #Pack PACKS widgets in rows or columns.
-
-mainloop() #run our aplication
-
-
+##from tkinter import * # import everything from tkinter
+##
+##box = Tk() #Create a root window
+##
+##some_var = StringVar(box) #That holds a string; (the default value is an empty string)
+##some_var.set("1") #here we set the value
+##x = OptionMenu(box, some_var, "1", "2", "3") #OptionMenu class helps to create popmenu
+##x.pack() #Pack PACKS widgets in rows or columns.
+##
+##
 
 
 
@@ -18,6 +16,32 @@ mainloop() #run our aplication
 
 
 
+
+
+
+
+
+from datetime import timedelta, date
+import time
+from datetime import datetime
+
+
+
+Query_Date_T = time.strftime("%d, %m, %Y")
+date1 = datetime.strptime(Query_Date_T, "%d, %m, %Y")
+modified_date = date1 + timedelta(days=-1)
+Query_Date_Y = datetime.strftime(modified_date, "%d, %m, %Y")
+
+
+
+def daterange(start_date, end_date):
+    for n in range(int ((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+
+start_date = (Query_Date_Y)
+end_date = (Query_Date_T)
+for single_date in daterange(start_date, end_date):
+    print(single_date.strftime("%Y-%m-%d"))
 
 
 

@@ -1034,17 +1034,18 @@ def RUN1():
             yList_30Day.append(Total_Day)
         Fig_plot.plot(xList_30Day,yList_30Day)
 
+    def animate2(i=1):
         xList_7Day = []
         yList_7Day = []
 
         for DAY in range(7):
-            Total_Day = 0
+            Total_Day2 = 0
             c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
             for row in c.fetchall():
 ##                print(row)
-                Total_Day += row[2]
+                Total_Day2 += row[2]
             xList_7Day.append(DAY)
-            yList_7Day.append(Total_Day)
+            yList_7Day.append(Total_Day2)
         Fig_plot_7Day.plot(xList_7Day,yList_7Day)
 ##        print("ani")
         
@@ -1060,15 +1061,15 @@ def RUN1():
     canvas.draw()
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
     toolbar = NavigationToolbar2Tk(canvas, F6)
-##    toolbar.update()
+    toolbar.update()
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
     
 
     canvas1 = FigureCanvasTkAgg(fig_7Day, master=F8)  # A tk.DrawingArea.
     canvas1.draw()
     canvas1.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
-    toolbar = NavigationToolbar2Tk(canvas, F8)
-##    toolbar.update()
+    toolbar1 = NavigationToolbar2Tk(canvas, F8)
+    toolbar1.update()
     canvas1.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 
 
@@ -1085,6 +1086,7 @@ def RUN1():
 
 
     ani = animation.FuncAnimation(fig, animate, interval=60000)
+    ani2 = animation.FuncAnimation(fig_7Day, animate2, interval=60000)
     Page1.mainloop()
 
 
