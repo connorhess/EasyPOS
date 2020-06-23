@@ -162,7 +162,7 @@ PEE = "2"
 
 ##.transient([PageR])
 
-def RSYS():
+def RSYS(Logged_In):
     PageR = Tk()
     PageR.title("Item Database")
     PageR.configure(background="orange")
@@ -349,7 +349,7 @@ def RSYS():
         for row in DA22:
             S1 = ((25 - (len(str(row[1])))) * " ")
             S2 = ((15 - (len(str(row[2])))) * " ")
-            Lb1.insert(1, ((str(row[1])) + S1 + (str(row[2])) + S2 + (str(row[3]))))
+            Lb1.insert(1, ((str(row[1])) + S1 + (str(row[2])) + S2 + (str(row[3]))+ '\n'))
 
 
         def F9():
@@ -421,7 +421,7 @@ def RSYS():
 
 
             
-            def F10():
+            def F10(Payment_Type):
                 global SUM
                 EE2 = (text2.get(1.0, 1000.0))
                 CHANGE = float(EE2) - float(SUM)
@@ -444,7 +444,7 @@ def RSYS():
                             Bb5 = str(SUM)
                             Bb6 = str(Lb1.get(1, 200))
                             Bb7 = 1
-                            c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY) VALUES(?, ?, ?, ?, ? ,? ,? ,? ,? ,?)''',(Bb1, (time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Bb3, Bb4, Bb5, Bb6, Bb7))
+                            c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_Type,Logged_In))
                             conn.commit()
                         c.execute("DELETE FROM Tables WHERE Table_No=?",(tableNO,))
                         conn.commit()
@@ -496,10 +496,15 @@ def RSYS():
                         
                     Button(Page5, text="OK", width=20, height=2, fg="white", bg="green", command=OK1, bd=2).place(x=1,y=70)
                 
-                
+            def cancel5():
+                Page4.destroy()
 
-            Button(Page4, text="PAY", width=20, height=1, fg="white", bg="green", command=F10, bd=2).place(x=1,y=60)
+            Button(Page4, text="PAY - Card", width=20, height=1, fg="white", bg="green", command=partial(F10,"Card"), bd=2).place(x=1,y=60)
+            Button(Page4, text="PAY - Cash", width=20, height=1, fg="white", bg="green", command=partial(F10,"Cash"), bd=2).place(x=1,y=60+25)
+            Button(Page4, text="PAY - Account", width=20, height=1, fg="white", bg="green", command=partial(F10,"Account"), bd=2).place(x=1,y=60+50)
+            Button(Page4, text="Cancel", width=20, height=1, fg="white", bg="green", command=cancel5, bd=2).place(x=1,y=60+100)
 
+        
         def Other_price():
             a5 = Toplevel()
             a5.title(Title)

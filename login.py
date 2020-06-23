@@ -138,11 +138,11 @@ def Login_Page():
                 print("Password OK")
                 Login_page.destroy()
                 if (row[3]) == 1.0:
-                    R.LEV1()
+                    R.LEV1(User)
                 elif (row[3]) == 2.0:
-                    R.LEV2()
+                    R.LEV2(User)
                 elif (row[3]) == 3.0:
-                    R.LEV3()
+                    R.LEV3(User)
             else:
                 print("NO")
                 MsgBox_002 = messagebox.showerror ('ERROR',Error.Error_002,icon = Error.Error_icon)

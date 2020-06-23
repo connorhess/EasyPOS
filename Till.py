@@ -13,6 +13,7 @@ from idle_time import IdleMonitor
 import Error
 from tkinter import messagebox
 from PIL import ImageTk,Image
+import SETUP
 
 
 x = PrettyTable()
@@ -42,20 +43,7 @@ print (random.randint(1,1000000000))
 conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
 
-c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
-c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
-c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
-	"ID"	INTEGER,
-	"Day"	INTEGER,
-	"Month"	INTEGER,
-	"Year"	INTEGER,
-	"Time"	INTEGER,
-	"Date"  INTEGER,
-	"Item"	TEXT,
-	"Price"	INTEGER,
-	"Qty"	INTEGER,
-	"Weight" REAL)''')
-
+SETUP.Create_Tables()
 
 
 def add_account(Name="null",Password="1234",Perm=1):
@@ -341,7 +329,7 @@ def Cart1(Logged_In="admin"):
                     Bb6 = (text.get(1.0, 1000.0))
                     Bb7 = 1
                     Payment_type = Payment_Type
-                    c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
+                    c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
                     conn.commit()
                     #===========================#
                 Page5 = Tk()

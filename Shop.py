@@ -18,6 +18,7 @@ from idle_time import IdleMonitor
 from tkinter import messagebox
 import Error
 from datetime import datetime, timedelta
+from datetime import date
 import keyboard
 import tkinter.font as tkFont
 import Info
@@ -94,7 +95,7 @@ PASS2 = DEF1
 NAME3 = "Cashier 2"
 PASS3 = DEF1
 Time2 = (time.strftime("%H:%M"))
-DATE = (time.strftime("%m-%Y"))
+DATE = (time.strftime("%d-%m-%Y"))
 
 print (time.strftime("%H:%M"))
 print (time.strftime("%d/%m/%Y"))
@@ -102,13 +103,7 @@ print (random.randint(1,1000000000))
 
 
 
-
-c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
-c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
-c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
-c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
-
-
+SETUP.Create_Tables()
 ##try:
 ##    c.execute("SELECT * FROM Settings")
 ##    for row in c.fetchall():
@@ -155,24 +150,24 @@ def FTW():
     conn.commit()
     SET.FIRSTTIME()
 
-def LEV1():
+def LEV1(Logged_In):
     global LEVL
     LEVL = 1
-    RUN1()
+    RUN1(Logged_In)
 
-def LEV2():
+def LEV2(Logged_In):
     global LEVL
     LEVL = 2
-    RUN1()
+    RUN1(Logged_In)
 
-def LEV3():
+def LEV3(Logged_In):
     global LEVL
     LEVL = 3
-    RUN1()
+    RUN1(Logged_In)
 
 
 
-def RUN1():
+def RUN1(Logged_In):
     Page1 = Tk()
     Page1.title("Shop Database")
     Page1.configure(background="#BEBEBE")
@@ -524,20 +519,9 @@ def RUN1():
             if MsgBox == 'yes':
                 c.execute('''DROP TABLE CRJ''')
                 conn.commit()
-                c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER, Month INTEGER, Year INTEGER, Time INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT)''')
                 c.execute('''DROP TABLE Sales''')
                 conn.commit()
-                c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
-                            "ID"	INTEGER,
-                            "Day"	INTEGER,
-                            "Month"	INTEGER,
-                            "Year"	INTEGER,
-                            "Time"	INTEGER,
-                            "Date"      INTEGER,
-                            "Item"	TEXT,
-                            "Price"	INTEGER,
-                            "Qty"	INTEGER,
-                            "Weight" REAL)''')
+                SETUP.Create_Tables()
                 PCRJ.destroy()
                 CRJ1()
                 
@@ -555,9 +539,9 @@ def RUN1():
         text = Text(PCRJ, width=180)
 
         BZ = PrettyTable()
-        c.execute("SELECT * FROM CRJ")
+        c.execute("SELECT ID, Date,Time,Description,Amount,Bank,Item,Payment_Type,Cashier FROM CRJ")
         for row in c.fetchall():
-            BZ.field_names = ["ID", "Day", "Month", "Year", "Time", "Description", "Amount paid", "Bank", "Item", "QTY","Payment Type","Cashier"]
+            BZ.field_names = ["ID", "Date", "Time", "Description", "Amount paid", "Bank", "Item","Payment Type","Cashier"]
             BZB = (row)
             BZ.add_row((BZB))
         print(BZ)
@@ -582,13 +566,13 @@ def RUN1():
         
         c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_Y,))
         for row in c.fetchall():
-            Total_Meat_Yesterday = float(Total_Meat_Yesterday) + float(row[6])
-            Total_Tenderd_Cash_Yesterday = float(Total_Tenderd_Cash_Yesterday) + float(row[4])
+            Total_Meat_Yesterday = float(Total_Meat_Yesterday) + float(row[9])
+            Total_Tenderd_Cash_Yesterday = float(Total_Tenderd_Cash_Yesterday) + float(row[7])
         
         c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_T,))
         for row in c.fetchall():
-            Total_Meat_Today = float(Total_Meat_Today) + float(row[6])
-            Total_Tenderd_Cash_Today = float(Total_Tenderd_Cash_Today) + float(row[4])
+            Total_Meat_Today = float(Total_Meat_Today) + float(row[9])
+            Total_Tenderd_Cash_Today = float(Total_Tenderd_Cash_Today) + float(row[7])
 
         BZ.field_names = ["Total Meat In KG [Yesterday]", "Total Cash Recived [Yesterday]", "Total Meat In KG [Today]", "Total Cash Recived [Today]",]
         BZ.add_row([Total_Meat_Yesterday, Total_Tenderd_Cash_Yesterday, Total_Meat_Today, Total_Tenderd_Cash_Today])
@@ -600,7 +584,7 @@ def RUN1():
 #==========================================================#Restorant System#===================================================================
 
     def RSYS():
-        GEN.RSYS()
+        GEN.RSYS(Logged_In)
 
 #===========================================================#Delete product#===============================================================
     def Del_product():
@@ -964,39 +948,18 @@ def RUN1():
 
     tab1 = ttk.Frame(tabControl)
     tab2 = ttk.Frame(tabControl)
-    tab3 = ttk.Frame(tabControl)
-    tab4 = ttk.Frame(tabControl)
 
     tabControl.add(tab1, text='31 Day')
+    tabControl.add(tab2, text='Stats')
+
+
     F5 = Frame(tab1, width=250, height=50 , bg="#E9E9E9", relief="raise")
     F5.grid_propagate(0)
     F5.grid(row=0,column=0,sticky='w')
-
-    F6 = Frame(tab1, width=250, height=250 , bg="#E9E9E9", relief="raise")
-    F6.grid_propagate(0)
-    F6.grid(row=1,column=0)
-
-    
-    tabControl.add(tab2, text='7 Day')
-    F7 = Frame(tab2, width=250, height=50 , bg="#E9E9E9", relief="raise")
-    F7.grid_propagate(0)
-    F7.grid(row=0,column=0,sticky='w')
-
-    F8 = Frame(tab2, width=250, height=250 , bg="#E9E9E9", relief="raise")
-    F8.grid_propagate(0)
-    F8.grid(row=1,column=0)
-
-    
-    tabControl.add(tab3, text='1 Year')
-    tabControl.add(tab4, text='Stats')
-
-    
     
     var = StringVar()
     label2 = Label(F1, textvariable=var, relief=RAISED )
     var.set((time.strftime("%H:%M")))
-
-    
 
     
 
@@ -1005,15 +968,17 @@ def RUN1():
 
     
 
-    
-    
-    fig = Figure(figsize=(13, 5), dpi=100)
-##    t = np.arange(0, 3, .01)
-    Fig_plot = fig.add_subplot(111)
+    F6 = Frame(tab1, width=250, height=250 , bg="#E9E9E9", relief="raise")
+    F6.grid_propagate(0)
+    F6.grid(row=1,column=0)
 
-    fig_7Day = Figure(figsize=(13, 5), dpi=100)
-##    t = np.arange(0, 3, .01)
-    Fig_plot_7Day = fig_7Day.add_subplot(111)
+    F8 = Frame(tab2, width=250, height=250 , bg="#E9E9E9", relief="raise")
+    F8.grid_propagate(0)
+    F8.grid(row=1,column=0)
+    
+    fig = Figure(figsize=(15, 7), dpi=85)
+    fig.subplots_adjust(left=0.05, bottom=0.08, right=0.98, top=0.95, wspace=None, hspace=None)
+    Fig_plot = fig.add_subplot(111)
 
     def Refresh_Tab1():
         pass
@@ -1021,38 +986,41 @@ def RUN1():
     def animate(i=1):
         var.set((time.strftime("%H:%M")))
         Fig_plot.clear()
-        xList_30Day = []
-        yList_30Day = []
-        
-        for DAY in range(31):
+        xList = []
+        yList = []
+
+        def daterange(start_date, end_date):
+            for n in range(int ((end_date - start_date).days)):
+                yield start_date + timedelta(n)
+
+        start_date = date(2020, 6, 1)
+        end_date = date(2020, 6, 30)
+        for single_date in daterange(start_date, end_date):
+            print(single_date.strftime("%d-%m-%Y"))
+            Date_query = (single_date.strftime("%d-%m-%Y"))
+            Date_query_show = (single_date.strftime("%d-%m"))
             Total_Day = 0
-            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
+            c.execute('SELECT Date, Bank FROM CRJ WHERE Date=?',(Date_query,))
             for row in c.fetchall():
+                print(row)
+                Total_Day += row[1]
+            xList.append(Date_query_show)
+            yList.append(Total_Day)
+        Fig_plot.plot(xList,yList)
+        
+##        for DAY in range(31):
+##            Total_Day = 0
+##            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
+##            for row in c.fetchall():
 ##                print(row)
-                Total_Day += row[2]
-            xList_30Day.append(DAY)
-            yList_30Day.append(Total_Day)
-        Fig_plot.plot(xList_30Day,yList_30Day)
-
-    def animate2(i=1):
-        xList_7Day = []
-        yList_7Day = []
-
-        for DAY in range(7):
-            Total_Day2 = 0
-            c.execute('SELECT Day, Month, Bank FROM CRJ WHERE Month=? AND Day=?',(time.strftime("%m"),DAY))
-            for row in c.fetchall():
-##                print(row)
-                Total_Day2 += row[2]
-            xList_7Day.append(DAY)
-            yList_7Day.append(Total_Day2)
-        Fig_plot_7Day.plot(xList_7Day,yList_7Day)
+##                Total_Day += row[2]
+##            xList.append(DAY)
+##            yList.append(Total_Day)
+##        Fig_plot.plot(xList,yList)
 ##        print("ani")
         
 
     Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=animate, bd=2).grid(row=0,column=1)
-    Button(F7, text="Refresh", width=12, height=1, fg="white", bg="green", command=animate, bd=2).grid(row=0,column=1)
-
     
 
     
@@ -1061,20 +1029,12 @@ def RUN1():
     canvas.draw()
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
     toolbar = NavigationToolbar2Tk(canvas, F6)
-    toolbar.update()
+##    toolbar.update()
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
-    
-
-    canvas1 = FigureCanvasTkAgg(fig_7Day, master=F8)  # A tk.DrawingArea.
-    canvas1.draw()
-    canvas1.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
-    toolbar1 = NavigationToolbar2Tk(canvas, F8)
-    toolbar1.update()
-    canvas1.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 
 
 
-    label2.place(x=1375,y=1)
+    label2.place(x=1500,y=30)
 
 
 
@@ -1086,11 +1046,10 @@ def RUN1():
 
 
     ani = animation.FuncAnimation(fig, animate, interval=60000)
-    ani2 = animation.FuncAnimation(fig_7Day, animate2, interval=60000)
     Page1.mainloop()
 
 
-RUN1()
+RUN1("Connor")
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================
