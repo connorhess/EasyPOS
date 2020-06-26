@@ -32,6 +32,10 @@ import webbrowser
 import xlsxwriter
 
 
+import urllib
+import urllib.parse
+import io
+
 
 
 
@@ -1091,7 +1095,7 @@ def RUN1(Logged_In):
             xList.append(Date_query_show)
             yList.append(Total_Day)
         Fig_plot_1.plot(xList,yList)
-        response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt')
+        response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Message.txt')
         Message = response.text
         Message_var.set(Message)
 
@@ -1146,7 +1150,11 @@ def RUN1(Logged_In):
 
 
     
-
+    raw_data = urllib.request.urlopen('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Till.png').read()
+    im = Image.open(io.BytesIO(raw_data))
+    image = ImageTk.PhotoImage(im)
+    label1 = Label(Page1, image=image)
+    label1.grid(row=0, sticky=W)
     
 
     tabControl.pack(expand=1, fill="both")
