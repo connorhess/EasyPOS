@@ -190,6 +190,10 @@ def RUN1(Logged_In):
     for row in c.fetchall():
         fontStyle2 = tkFont.Font(size=int(row[2]))
 
+    c.execute("SELECT * FROM Settings WHERE ID=3")
+    for row in c.fetchall():
+        fontStyle3 = tkFont.Font(size=int(row[2]))
+
 
 
 #=========================================================#Add_User#==================================================================
@@ -881,12 +885,11 @@ def RUN1(Logged_In):
         
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1375,y=1)
 
-        F1_1 = LabelFrame(F1, text="Systems",font=fontStyle, height=100, width=106, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems",font=fontStyle, bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
-        F1_1.grid_propagate(0)
 
-        LEVEL1 = Button(F1_1, text="Barcode Cart", width=13, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
-        LEVEL2 = Button(F1_1, text="Restorant System", width=13, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=13, height=1, fg="white", bg="green", command=Cart1, font=fontStyle3, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=13, height=1, fg="white", bg="green", command=RSYS, font=fontStyle3, bd=2).grid(row=1,column=0)
 
         
     elif LEVL == 2:
@@ -955,12 +958,11 @@ def RUN1(Logged_In):
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
 
 
-        F1_1 = LabelFrame(F1, text="Systems", height=100, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems", bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
-        F1_1.grid_propagate(0)
 
-        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
-        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, font=fontStyle3, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, font=fontStyle3, bd=2).grid(row=1,column=0)
 
         
     elif LEVL == 3:
@@ -998,12 +1000,12 @@ def RUN1(Logged_In):
         
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
         
-        F1_1 = LabelFrame(F1, text="Systems", height=100, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems", bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
-        F1_1.grid_propagate(0)
 
-        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
-        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
+
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, font=fontStyle3, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, font=fontStyle3, bd=2).grid(row=1,column=0)
 
 
 
@@ -1012,11 +1014,10 @@ def RUN1(Logged_In):
     m1 = PanedWindow(Page1, bg="grey", height=(Page1.winfo_height() - 150), width=(Page1.winfo_width()))
     m1.grid(row=2,column=0)
 
-    F2 = Frame(m1, width=220, bg="#E9E9E9", relief="raise")
+    F2 = Frame(m1, width=180, bg="#E9E9E9", relief="raise")
     F2.grid_propagate(0)
     m1.add(F2)
     
-    LEVEL3 = Button(F2, text="Button", width=12, height=1, fg="white", bg="green", command=donothing, bd=2).grid(row=0,column=0)
 
     m2 = PanedWindow(m1, sashwidth=8, orient=VERTICAL, bg="grey")
     m1.add(m2)
@@ -1073,18 +1074,30 @@ def RUN1(Logged_In):
     Row_Inc = 0
     Col_Inc = 1
     Col_Inc_2 = 0
+    Col_Inc_3 = 3
+    Col_Inc_4 = 2
 
     c.execute("SELECT * FROM Scale")
     for row in c.fetchall():
         Total_Meat_Stats = 0
+        PPK = (float(row[2]))
         if Row_Inc >= 20:
-            Col_Inc += 2
+            Col_Inc += 4
             Row_Inc = 0
-            Col_Inc_2 += 2
+            Col_Inc_2 += 4
+            Col_Inc_3 += 4
+            Col_Inc_4 += 4
             
         Stats = StringVar()
         label6 = Label(F10, textvariable=Stats, anchor='w', font=fontStyle2, pady=4)
         label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
+
+        label7 = Label(F10, text=' |  Income: R', anchor='e', font=fontStyle2, pady=4)
+        label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
+        
+        Stats_Inc = StringVar()
+        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', font=fontStyle2, pady=4, padx=4)
+        label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
         
         label7 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', font=fontStyle2, pady=4)
         label7.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
@@ -1095,6 +1108,7 @@ def RUN1(Logged_In):
             Total_Meat_Stats += float(row[9])
 
         Stats.set(Total_Meat_Stats)
+        Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
     
     
     fig = Figure(figsize=(15, 7), dpi=85)
@@ -1139,6 +1153,16 @@ def RUN1(Logged_In):
             Message_var.set(Message)
         except:
             Message_var.set("Ofline")
+
+        c.execute("SELECT * FROM Scale")
+        for row in c.fetchall():
+            Total_Meat_Stats = 0
+            PPK = (float(row[2]))  
+            c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
+            for row in c.fetchall():
+                Total_Meat_Stats += float(row[9])
+            Stats.set(Total_Meat_Stats)
+            Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
 
     def animate2(i=1):
         Fig_plot_2.clear()
@@ -1196,9 +1220,13 @@ def RUN1(Logged_In):
 ##    image = ImageTk.PhotoImage(im)
 ##    label1 = Label(F2, image=image)
 ##    label1.grid(row=100,column=0)
-    
+    def Re_Fresh():
+        animate()
+        animate2()
 
     tabControl.pack(expand=1, fill="both")
+
+    LEVEL3 = Button(F2, text="Refresh", width=12, height=1, fg="white", bg="green", command=Re_Fresh, font=fontStyle3, bd=2).grid(row=0,column=0)
 
 
     ani = animation.FuncAnimation(fig, animate, interval=60000)
@@ -1211,7 +1239,7 @@ def RUN1(Logged_In):
     Page1.mainloop()
 
 
-RUN1("Connor")
+##RUN1("Connor")
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================
