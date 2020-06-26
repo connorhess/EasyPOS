@@ -186,6 +186,10 @@ def RUN1(Logged_In):
     for row in c.fetchall():
         fontStyle = tkFont.Font(size=int(row[2]))
 
+    c.execute("SELECT * FROM Settings WHERE ID=2")
+    for row in c.fetchall():
+        fontStyle2 = tkFont.Font(size=int(row[2]))
+
 
 
 #=========================================================#Add_User#==================================================================
@@ -360,23 +364,20 @@ def RUN1(Logged_In):
 
 #=========================================================#Help#==================================================================
 
-    def Help():
-##        top = Toplevel()
-##        top.title("Shop Database")
-##        top.configure(background="cadet blue")
-##        top.geometry("1980x1080")
-
-        
-        new = 2 # open in a new tab, if possible
-
-
-
-        ## open an HTML file on my own (Windows) computer
-    
+    def Help():       
+        new = 2
         webbrowser.open("https://www.node-s.co.za/products/easypos/help",new=new)
 ##        webbrowser.open("file://C:/Users/conno/OneDrive/Desktop/Shop/Python totaurials.docx",new=new)
 
+    def Open_Yoco():
+        new = 2
+        webbrowser.open("http://referral.yoco.com/DtvrN",new=new)
+##        webbrowser.open("file://C:/Users/conno/OneDrive/Desktop/Shop/Python totaurials.docx",new=new)
 
+    def Donate_Yoco():
+        new = 2
+        webbrowser.open("https://pay.yoco.com/node-s?reference=Donate",new=new)
+##        webbrowser.open("file://C:/Users/conno/OneDrive/Desktop/Shop/Python totaurials.docx",new=new)
     
 
 #=========================================================#restorant items#===========================================================
@@ -865,6 +866,8 @@ def RUN1(Logged_In):
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.add_command(label="Help Index",font=fontStyle, command=Help)
         helpmenu.add_command(label="About...",font=fontStyle, command=donothing)
+        helpmenu.add_command(label="Yoco",font=fontStyle, command=Open_Yoco)
+        helpmenu.add_command(label="Donate",font=fontStyle, command=Donate_Yoco)
         menubar.add_cascade(label="Help",font=fontStyle, menu=helpmenu)
 
         Page1.config(menu=menubar)
@@ -1027,9 +1030,13 @@ def RUN1(Logged_In):
 
     tab1 = ttk.Frame(tabControl)
     tab2 = ttk.Frame(tabControl)
+    tab3 = ttk.Frame(tabControl)
+
 
     tabControl.add(tab1, text='30 Day Income')
     tabControl.add(tab2, text='30 Day Meat Sales')
+    tabControl.add(tab3, text='Statistics')
+
 
 
 ##    F5 = Frame(tab1, width=250, height=50 , bg="#E9E9E9", relief="raise")
@@ -1052,13 +1059,42 @@ def RUN1(Logged_In):
 
     
 
-    F6 = Frame(tab1, width=250, height=250 , bg="#E9E9E9", relief="raise")
+    F6 = Frame(tab1, bg="#E9E9E9", relief="raise")
     F6.grid_propagate(0)
-    F6.grid(row=1,column=0)
+    F6.grid(row=0,column=0)
 
     F8 = Frame(tab2, width=250, height=250 , bg="#E9E9E9", relief="raise")
     F8.grid_propagate(0)
     F8.grid(row=1,column=0)
+
+    F10 = Frame(tab3, bg="#E9E9E9", relief="raise")
+##    F10.grid_propagate(0)
+    F10.grid(row=1,column=0)
+    Row_Inc = 0
+    Col_Inc = 1
+    Col_Inc_2 = 0
+
+    c.execute("SELECT * FROM Scale")
+    for row in c.fetchall():
+        Total_Meat_Stats = 0
+        if Row_Inc >= 20:
+            Col_Inc += 2
+            Row_Inc = 0
+            Col_Inc_2 += 2
+            
+        Stats = StringVar()
+        label6 = Label(F10, textvariable=Stats, anchor='w', font=fontStyle2, pady=4)
+        label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
+        
+        label7 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', font=fontStyle2, pady=4)
+        label7.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
+        Row_Inc += 1
+        
+        c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
+        for row in c.fetchall():
+            Total_Meat_Stats += float(row[9])
+
+        Stats.set(Total_Meat_Stats)
     
     
     fig = Figure(figsize=(15, 7), dpi=85)
