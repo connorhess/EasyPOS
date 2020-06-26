@@ -1042,7 +1042,7 @@ def RUN1(Logged_In):
     var.set((time.strftime("%H:%M")))
 
     Message_var = StringVar()
-    label3 = Label(Black_F, textvariable=Message_var, relief=RAISED )
+    label3 = Label(Black_F, textvariable=Message_var,width=230, anchor='w' , relief=RAISED )
     Message_var.set("...")
 
     
