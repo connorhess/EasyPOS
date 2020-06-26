@@ -45,6 +45,18 @@ c = conn.cursor()
 
 SETUP.Create_Tables()
 
+def delete_scale(Name):
+    c.execute('''DELETE FROM Scale WHERE Name=?''',(Name,))
+    conn.commit()
+
+def add_scale(Code,Name,Price_per_kg):
+    c.execute('''INSERT INTO Scale(Code, Name, Price_per_kg) VALUES(? ,? ,?)''',(Code, Name, Price_per_kg))
+    conn.commit()
+
+
+def delete_account(Name):
+    c.execute('''DELETE FROM Cashiers WHERE Name=?''',(Name,))
+    conn.commit()
 
 def add_account(Name="null",Password="1234",Perm=1):
     ID = random.randint(1,1000000000)
@@ -52,7 +64,7 @@ def add_account(Name="null",Password="1234",Perm=1):
     conn.commit()
 
 monitor = IdleMonitor.get_monitor()
-x.field_names = ["Code", "Name", "Price"]
+x.field_names = ["Code", "Name", "Price","Weight"]
 x2.field_names = ["Code", "Name", "Price"]
 
 def Cart1(Logged_In="admin"):
@@ -191,7 +203,7 @@ def Cart1(Logged_In="admin"):
         c.execute("SELECT * FROM Product_List WHERE Code=?",(Add1,))
         DA22 = c.fetchall()
         for row in DA22:
-            x.add_row([(row[0]), (row[2]), (row[1])])
+            x.add_row([(row[0]), (row[2]), (row[1]),"0.0"])
             Name_ADD_1 = (row[2])
             Price_ADD_1 = (row[1])
             c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Date, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?,?)''',(Sale_ID,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Name_ADD_1, Price_ADD_1, "1", "0.000"))
@@ -204,7 +216,7 @@ def Cart1(Logged_In="admin"):
     def Scale():
         sqlite3.connect('Shop_Database.db')
         s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13 = str(e6.get())
-        Code_1 = s1+s2+s3+s4+s5+s6+s7
+        Code_1 = s1+s2+s3+s4+s5+s6
         Price_1 = s8+s9+s10+ "." +s11+s12
         Code_2 = str(e6.get())
         print(Code_1)
@@ -214,10 +226,10 @@ def Cart1(Logged_In="admin"):
         c.execute("SELECT * FROM Scale WHERE Code=?",(Code_1,))
         DA22 = c.fetchall()
         for row in DA22:
-            x.add_row([Code_2, (row[1]), Price_1])
             Name_ADD_1 = (row[1])
             Price_per_KG = (row[2])
             weight = round((float(Price_1)/(Price_per_KG)),3)
+            x.add_row([Code_2, (row[1]), Price_1,weight])
             print(weight)
             c.execute('''INSERT INTO Sales(ID, Day, Month, Year, Time, Date, Item, Price, QTY, Weight) VALUES(?, ?, ?, ? ,? ,?, ?, ?, ?,?)''',(Sale_ID,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Name_ADD_1, Price_1, "1", weight))
             conn.commit()
@@ -313,10 +325,6 @@ def Cart1(Logged_In="admin"):
             else:
                 Page4.destroy()
                 def OK1():
-                    Login_Page()
-##                    Page4.destroy()
-                    Page3.destroy()
-                    Page5.destroy()
                     #===========================#
                     RR1 = Sale_ID
                     Bb1 = RR1
@@ -332,6 +340,10 @@ def Cart1(Logged_In="admin"):
                     c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))
                     conn.commit()
                     #===========================#
+                    Login_Page()
+##                    Page4.destroy()
+                    Page3.destroy()
+                    Page5.destroy()
                 Page5 = Tk()
                 Page5.title("Shop Database")
                 Page5.configure(background="grey")

@@ -30,6 +30,10 @@ Error_010 = 'No Item Name Provided.\nERROR-010'
 
 Error_011 = 'No Cost Price Provided.\nERROR-011'
 
-Error_012 = '.\nERROR-012'
+Error_012 = "'Barcode' Cannot Be Text.\nERROR-012"
 
-Error_013 = '.\nERROR-013'
+Error_013 = 'No Price Per KG Provided.\nERROR-013'
+
+Error_014 = "'Price Per KG' Cannot Be Text.\nERROR-014"
+
+Error_015 = "'Price Per KG' Cannot Be Text.\nERROR-015"

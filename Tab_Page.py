@@ -6,11 +6,6 @@
 ##some_var.set("1") #here we set the value
 ##x = OptionMenu(box, some_var, "1", "2", "3") #OptionMenu class helps to create popmenu
 ##x.pack() #Pack PACKS widgets in rows or columns.
-##
-##
-
-
-
 
 
 
@@ -21,71 +16,26 @@
 
 
 import sqlite3
-from datetime import timedelta, date
+from tkinter import *
+from tkinter import filedialog
+from tkinter import messagebox
+import time
+from datetime import timedelta
+import datetime
+from idle_time import IdleMonitor
+import random
+from prettytable import PrettyTable
+from functools import partial
+import sys
+import os
+import Error
+import tkinter as tk
+from tkinter import ttk
+from PIL import ImageTk,Image
+import Info
+import matplotlib.pyplot as plt
+import numpy as np
 
-
-def daterange(start_date, end_date):
-    for n in range(int ((end_date - start_date).days)):
-        yield start_date + timedelta(n)
-
-start_date = date(2020, 6, 1)
-end_date = date(2020, 6, 30)
-for single_date in daterange(start_date, end_date):
-    print(single_date.strftime("%d-%m-%Y"))
-    Date_query = (single_date.strftime("%d-%m-%Y"))
-    Total_Day = 0
-    c.execute('SELECT Date, Bank FROM CRJ WHERE Date=?',(Date_query,))
-    for row in c.fetchall():
-        print(row)
-        Total_Day += row[1]
-    xList.append(Date_query)
-    yList.append(Total_Day)
-Fig_plot.plot(xList,yList)
-
-
-
-
-
-L = 0.05
-B = 0.08
-R = 0.94
-T = 0.95
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##import sqlite3
-##from tkinter import *
-##from tkinter import filedialog
-##from tkinter import messagebox
-##import time
-##from datetime import timedelta
-##import datetime
-##from idle_time import IdleMonitor
-##import random
-##from prettytable import PrettyTable
-##from functools import partial
-##import sys
-##import os
-##import Error
-##import tkinter as tk
-##from tkinter import ttk
-##from PIL import ImageTk,Image
-##import Info
-##import matplotlib.pyplot as plt
-##import numpy as np
 ##
 ##
 ##
@@ -101,15 +51,55 @@ T = 0.95
 
 
 
+import urllib
+import requests
+import urllib.parse
+import io
+
+
+Page1 = Tk()
+Page1.title("Shop Database")
+Page1.configure(background="#BEBEBE")
+Page1.geometry("700x500+300+300")
+Page1.iconbitmap('Till.ico')
+Page1.attributes("-topmost", True)
 
 
 
-##Page1 = Tk()
-##Page1.title("Shop Database")
-##Page1.configure(background="#BEBEBE")
-##Page1.geometry("700x500+300+300")
-##Page1.iconbitmap('Till.ico')
-##Page1.attributes("-topmost", True)
+
+
+raw_data = urllib.request.urlopen('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Till.png').read()
+im = Image.open(io.BytesIO(raw_data))
+image = ImageTk.PhotoImage(im)
+label1 = Label(Page1, image=image)
+label1.grid(row=0, sticky=W)
+
+
+Page1.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##
 ##
 ##fig = Figure(figsize=(5, 4), dpi=100)
