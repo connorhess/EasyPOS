@@ -12,7 +12,9 @@ import matplotlib.animation as animation
 from matplotlib import style
 import numpy as np
 import os
-from PIL import ImageTk,Image
+from PIL import Image
+from PIL import ImageTk
+import PIL
 from prettytable import PrettyTable
 import random
 import RSYSS
@@ -371,7 +373,7 @@ def RUN1(Logged_In):
 
         ## open an HTML file on my own (Windows) computer
     
-        webbrowser.open("https://www.node-s.co.za/E",new=new)
+        webbrowser.open("https://www.node-s.co.za/products/easypos/help",new=new)
 ##        webbrowser.open("file://C:/Users/conno/OneDrive/Desktop/Shop/Python totaurials.docx",new=new)
 
 
@@ -1095,9 +1097,12 @@ def RUN1(Logged_In):
             xList.append(Date_query_show)
             yList.append(Total_Day)
         Fig_plot_1.plot(xList,yList)
-        response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Message.txt')
-        Message = response.text
-        Message_var.set(Message)
+        try:
+            response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Message.txt')
+            Message = response.text
+            Message_var.set(Message)
+        except:
+            Message_var.set("Ofline")
 
     def animate2(i=1):
         Fig_plot_2.clear()
@@ -1151,10 +1156,10 @@ def RUN1(Logged_In):
 
     
     raw_data = urllib.request.urlopen('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Till.png').read()
-    im = Image.open(io.BytesIO(raw_data))
+    im = PIL.Image.open(io.BytesIO(raw_data)).resize((200, 200))
     image = ImageTk.PhotoImage(im)
-    label1 = Label(Page1, image=image)
-    label1.grid(row=0, sticky=W)
+    label1 = Label(F2, image=image)
+    label1.grid(row=100,column=0)
     
 
     tabControl.pack(expand=1, fill="both")
