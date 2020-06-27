@@ -1,7 +1,7 @@
 @echo off
 echo Starting.........
 
-pyinstaller -w -F -i "Till.ico" login.py
+pyinstaller -w -F login.py
 
 echo Done
 
