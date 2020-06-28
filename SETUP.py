@@ -1,39 +1,34 @@
-import sqlite3
+from cx_Freeze import setup, Executable
+import sys
+import os.path
+
+PYTHON_INSTALL_DIR = os.path.dirname(os.path.dirname(os.__file__))
+os.environ['TCL_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'tcl', 'tcl8.6')
+os.environ['TK_LIBRARY'] = os.path.join(PYTHON_INSTALL_DIR, 'tcl', 'tk8.6')
 
 
-conn = sqlite3.connect('Shop_Database.db')
-c = conn.cursor()
+# Dependencies are automatically detected, but it might need fine tuning.
+build_exe_options = {"packages": ["os"]}
+
+# GUI applications require a different base on Windows (the default is for a
+# console application).
+base = None
+if sys.platform == "win32":
+    base = "Win32GUI"
+
+options = {
+    'build_exe': {
+        'include_files':[
+            os.path.join(PYTHON_INSTALL_DIR, 'DLLs', 'tk86t.dll'),
+            os.path.join(PYTHON_INSTALL_DIR, 'DLLs', 'tcl86t.dll'),
+         ],
+    },
+}
 
 
-def Create_Tables():
-    c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
-                            "ID"	INTEGER,
-                            "Day"	INTEGER,
-                            "Month"	INTEGER,
-                            "Year"	INTEGER,
-                            "Time"	INTEGER,
-                            "Date"      INTEGER,
-                            "Item"	TEXT,
-                            "Price"	INTEGER,
-                            "Qty"	INTEGER,
-                            "Weight" REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
-    
+setup(  name = "EasyPOS",
+        version = "0.9",
+        description = "Point of Sales!",
+        options = {"build_exe": build_exe_options},
+        executables = [Executable("Login.py", base=base)])
 
-#SETUP.Create_Tables()
-
-
-#==============================#Shop.py#==============================#
-#Main Page
-Lable_Place_Time_x = 1500
-Lable_Place_Time_y = 30
-
-Frame_F8_R = 1
-Frame_F8_C = 0
-Frame_F8_Width = 250
-Frame_F8_Height = 250

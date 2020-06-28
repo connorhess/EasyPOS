@@ -21,7 +21,6 @@ import RSYSS
 import requests
 import sys
 import sqlite3
-import SETUP
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
@@ -39,6 +38,25 @@ import urllib.parse
 import io
 
 
+def Create_Tables():
+    c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
+                            "ID"	INTEGER,
+                            "Day"	INTEGER,
+                            "Month"	INTEGER,
+                            "Year"	INTEGER,
+                            "Time"	INTEGER,
+                            "Date"      INTEGER,
+                            "Item"	TEXT,
+                            "Price"	INTEGER,
+                            "Qty"	INTEGER,
+                            "Weight" REAL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
+    
 
 
 Version = Info.i_version
@@ -84,7 +102,7 @@ except:
 ##b1 = 14 - (len(a))
 ##print (a1 + (" " * b1) + "|")
 
-SET = SETUP
+    
 
 GEN = RSYSS
 GEN.Config1()
@@ -110,7 +128,7 @@ print (random.randint(1,1000000000))
 
 
 
-SETUP.Create_Tables()
+Create_Tables()
 ##try:
 ##    c.execute("SELECT * FROM Settings")
 ##    for row in c.fetchall():
@@ -605,7 +623,7 @@ def RUN1(Logged_In):
                 conn.commit()
                 c.execute('''DROP TABLE Sales''')
                 conn.commit()
-                SETUP.Create_Tables()
+                Create_Tables()
                 PCRJ.destroy()
                 CRJ1()
                 
