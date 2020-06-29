@@ -13,7 +13,7 @@ from idle_time import IdleMonitor
 import Error
 from tkinter import messagebox
 from PIL import ImageTk,Image
-import SETUP
+
 
 
 x = PrettyTable()
@@ -43,7 +43,6 @@ print (random.randint(1,1000000000))
 conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
 
-SETUP.Create_Tables()
 
 def delete_scale(Name):
     c.execute('''DELETE FROM Scale WHERE Name=?''',(Name,))
@@ -58,7 +57,7 @@ def delete_account(Name):
     c.execute('''DELETE FROM Cashiers WHERE Name=?''',(Name,))
     conn.commit()
 
-def add_account(Name="null",Password="1234",Perm=1):
+def add_account(Name="admin",Password="1234",Perm=1):
     ID = random.randint(1,1000000000)
     c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
     conn.commit()

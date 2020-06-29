@@ -128,7 +128,7 @@ print (random.randint(1,1000000000))
 
 
 
-Create_Tables()
+##Create_Tables()
 ##try:
 ##    c.execute("SELECT * FROM Settings")
 ##    for row in c.fetchall():
@@ -143,27 +143,6 @@ Create_Tables()
 ##c.execute('''INSERT INTO CRJ(PLU, Name, Price) VALUES(?, ? ,?)''',(Bbb1, Bbb2, Bbb3))
 ##conn.commit()
 
-
-c.execute("SELECT * FROM Starters")
-for row in c.fetchall():
-    print(row)
-
-
-
-
-print ("=" * 70)
-
-AZ = PrettyTable()
-
-c.execute("SELECT * FROM Product_List")
-#DA22 = c.fetchall()
-for row in c.fetchall():
-    print(row)
-    AZ.field_names = ["ID", "Price", "Name", "Cost Price"]
-    E = (row)
-    AZ.add_row((E))
-
-print(AZ)
 
 global LEVL
 
