@@ -1,0 +1,5 @@
+##    raw_data = urllib.request.urlopen('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Till.png').read()
+##    im = PIL.Image.open(io.BytesIO(raw_data)).resize((200, 200))
+##    image = ImageTk.PhotoImage(im)
+##    label1 = Label(F2, image=image)
+##    label1.grid(row=100,column=0)

@@ -1,5 +1,5 @@
 import sqlite3
-#import tkinter
+import tkinter
 from tkinter import *
 import Shop
 import Error
@@ -10,8 +10,9 @@ import win32api
 import sys
 import os
 import Info
-from PIL import ImageTk,Image
 import Till
+import random
+
 
 from licensing.models import *
 from licensing.methods import Key, Helpers
@@ -53,6 +54,19 @@ def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
+    def add_account(Name="admin",Password="1234",Perm=1):
+        ID = random.randint(1,1000000000)
+        c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
+        conn.commit()
+    try:
+        c.execute("SELECT * FROM Cashiers WHERE Name=admin")
+        for row in c.fetchall():
+            print(row)
+    except:
+        add_account()
+        f = open("Key.txt", "w")
+        f.close()
 
 
 
@@ -161,17 +175,18 @@ def Login_Page():
                 MsgBox_002 = messagebox.showerror ('ERROR',Error.Error_002,icon = Error.Error_icon)
 
     Button(Login_page, text="Done", width=10, height=1, bg="blue", fg="white", command=ENTER, bd=2).place(x=180+X_Distance,y=560)
+    Login_page.mainloop()
 
 
 def Update():
     win32api.ShellExecute(0, 'open', '{Downloads_location}\\setup.msi', None, None, 10)
 
 def Update_manager(TEXT="Checking for update"):
-    Page1 = Tk()
-    Page1.title(TEXT)
-    Page1.configure(background="#BEBEBE")
-    Page1.attributes("-topmost", True)
-    Label(Page1, text=(TEXT+"\n\nMade By Connor Hess  V" + str(version)), fg="white", bg="gray").pack()
+    Update_Manager = Tk()
+    Update_Manager.title(TEXT)
+    Update_Manager.configure(background="#BEBEBE")
+    Update_Manager.attributes("-topmost", True)
+    label = Label(Update_Manager, text=(TEXT+"\n\nMade By Connor Hess  V" + str(version)), fg="white", bg="gray").pack()
     
     response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt')
     data = response.text
@@ -181,14 +196,15 @@ def Update_manager(TEXT="Checking for update"):
         if MsgBox == 'yes':
             webbrowser.open_new_tab('https://github.com/connorhess/EasyPOS/raw/master/'
                                                 'Update/Output/setup.exe?raw=true')
-            Page1.destroy()
+            Update_Manager.destroy()
             Update()
         else:
-            Page1.destroy()
+            Update_Manager.destroy()
             Login_Page()
     else:
-        Page1.destroy()
+        Update_Manager.destroy()
         Login_Page()
+    Update_Manager.mainloop()
 
 def Validate():
     RSAPubKey = '''<RSAKeyValue>
@@ -197,8 +213,6 @@ def Validate():
     auth = "WyIyMzQ5MSIsIk9MY2xicDc5dVE5OUVmc0pFcWUwU2ZNTnB1c1F1dzVkeWtVSG5sTzgiXQ=="
 
     def New_key():
-        f = open("Key.txt", "w")
-        f.close()
         PageKey = Tk()
         PageKey.title("Shop Database")
         PageKey.configure(background="#BEBEBE")
@@ -222,19 +236,19 @@ def Validate():
             if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
                 # an error occurred or the key is invalid or it cannot be activated
                 # (eg. the limit of activated devices was achieved)
-                print("The license does not work: {0}".format(result[1]))
+                print("The license does not work2: {0}".format(result[1]))
                 PageKey.destroy()
                 New_key()
             else:
                 # everything went fine if we are here!
-                print("The license is valid!")
+                print("The license is valid2!")
                 Update_manager()
                 fke = open("Key.txt", "w")
                 fke.write(Prod_Key)
                 fke.close()
                 PageKey.destroy()
-                
         Button(PageKey, text="Enter", command=Key_enter).grid(row=1,column=1)
+        PageKey.mainloop()
 
 
     try:
@@ -248,12 +262,13 @@ def Validate():
         if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
             # an error occurred or the key is invalid or it cannot be activated
             # (eg. the limit of activated devices was achieved)
-            print("The license does not work: {0}".format(result[1]))
+            print("The license does not work1: {0}".format(result[1]))
             New_key()
         else:
             # everything went fine if we are here!
-            print("The license is valid!")
+            print("The license is valid!1")
             Update_manager()
+        f.close()
     except:
         New_key()
 
@@ -268,5 +283,4 @@ try:
 except:
     print("First Time")
     Create_Tables()
-    Till.add_account()
     Validate()

@@ -12,8 +12,6 @@ import matplotlib.animation as animation
 from matplotlib import style
 import numpy as np
 import os
-from PIL import Image
-from PIL import ImageTk
 import PIL
 from prettytable import PrettyTable
 import random
@@ -56,6 +54,7 @@ def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
     
 
 
@@ -148,6 +147,31 @@ global LEVL
 
 LEVL = 1
 
+global fontStyle
+global fontStyle2
+global fontStyle3
+
+##try:
+##    c.execute("SELECT * FROM Settings WHERE ID=1")
+##    for row in c.fetchall():
+##        fontStyle = tkFont.Font(size=int(row[2]))
+##except:
+##    fontStyle = tkFont.Font(size=int(12))
+##    
+##try:
+##    c.execute("SELECT * FROM Settings WHERE ID=2")
+##    for row in c.fetchall():
+##        fontStyle2 = tkFont.Font(size=int(row[2]))
+##except:
+##    fontStyle2 = tkFont.Font(size=int(12))
+##    
+##try:
+##    c.execute("SELECT * FROM Settings WHERE ID=3")
+##    for row in c.fetchall():
+##        fontStyle3 = tkFont.Font(size=int(row[2]))
+##except:
+##    fontStyle3 = tkFont.Font(size=int(12))
+
 
 def FTW():
     c.execute('''DROP TABLE Settings''')
@@ -176,20 +200,28 @@ def RUN1(Logged_In):
     Page1.title("Shop Database")
     Page1.configure(background="#BEBEBE")
     Page1.attributes("-fullscreen", True)
-    Page1.iconbitmap('Till.ico')
-##    Page1.attributes("-topmost", True)
-    
-    c.execute("SELECT * FROM Settings WHERE ID=1")
-    for row in c.fetchall():
-        fontStyle = tkFont.Font(size=int(row[2]))
+    Page1.attributes("-topmost", True)
 
-    c.execute("SELECT * FROM Settings WHERE ID=2")
-    for row in c.fetchall():
-        fontStyle2 = tkFont.Font(size=int(row[2]))
-
-    c.execute("SELECT * FROM Settings WHERE ID=3")
-    for row in c.fetchall():
-        fontStyle3 = tkFont.Font(size=int(row[2]))
+##    try:
+##        c.execute("SELECT * FROM Settings WHERE ID=1")
+##        for row in c.fetchall():
+##            fontStyle = tkFont.Font(root=Page1, size=int(row[2]))
+##    except:
+##        fontStyle = tkFont.Font(root=Page1, size=int(12))
+##        
+##    try:
+##        c.execute("SELECT * FROM Settings WHERE ID=2")
+##        for row in c.fetchall():
+##            fontStyle2 = tkFont.Font(root=Page1, size=int(row[2]))
+##    except:
+##        fontStyle2 = tkFont.Font(root=Page1, size=int(12))
+##        
+##    try:
+##        c.execute("SELECT * FROM Settings WHERE ID=3")
+##        for row in c.fetchall():
+##            fontStyle3 = tkFont.Font(root=Page1, size=int(row[2]))
+##    except:
+##        fontStyle3 = tkFont.Font(root=Page1, size=int(12))
 
 
 
@@ -290,6 +322,7 @@ def RUN1(Logged_In):
 ##        Add_user.attributes("-topmost", True)
 
         Label(Add_scale, text="Code", bd=2).grid(row=0,column=0,pady=2,sticky='e')
+        Label(Add_scale, text="Example: the full barcode of the item you want to add '2 100017 796304' with no spaces", bd=2).grid(row=0,column=2,pady=2,sticky='e')
         Scale_Code = Entry(Add_scale, bd=2)
         Scale_Code.grid(row=0,column=1,pady=2)
 
@@ -804,72 +837,72 @@ def RUN1(Logged_In):
 #======================================================================================================================================================================
 #========================================================================#Home Layout#=================================================================================
 #======================================================================================================================================================================
-
-    if LEVL == 1:
-        def donothing():
+    def donothing():
             pass
-        def Page1_close():
-            Page1.destroy()
+    def Page1_close():
+        Page1.destroy()
 
-           
+    Page1.update_idletasks()
+    if LEVL == 1:
+ 
         menubar = Menu(Page1)
         filemenu = Menu(menubar, tearoff=0)
-        filemenu.add_command(label="Exit",font=fontStyle, command=Page1_close)
-        menubar.add_cascade(label="File",font=fontStyle, menu=filemenu)
+        filemenu.add_command(label="Exit", command=Page1_close)
+        menubar.add_cascade(label="File", menu=filemenu)
 
         Usermenu = Menu(menubar, tearoff=0)
-        Usermenu.add_command(label="User List",font=fontStyle, command=donothing)
+        Usermenu.add_command(label="User List", command=donothing)
         Usermenu.add_separator()
-        Usermenu.add_command(label="Add User",font=fontStyle, command=Add_User)
-        Usermenu.add_command(label="Delete User",font=fontStyle, command=Delete_User)
+        Usermenu.add_command(label="Add User", command=Add_User)
+        Usermenu.add_command(label="Delete User", command=Delete_User)
         Usermenu.add_separator()
-        Usermenu.add_command(label="Log(Login)",font=fontStyle, command=donothing)
-        menubar.add_cascade(label="User's",font=fontStyle, menu=Usermenu)
+        Usermenu.add_command(label="Log(Login)", command=donothing)
+        menubar.add_cascade(label="User's", menu=Usermenu)
 
         Posmenu = Menu(menubar, tearoff=0)
-        Posmenu.add_command(label="Product List",font=fontStyle, command=P_List)
+        Posmenu.add_command(label="Product List", command=P_List)
         Posmenu.add_separator()
-        Posmenu.add_command(label="New Product",font=fontStyle, command=New_product)
-        Posmenu.add_command(label="Delete Product",font=fontStyle, command=Del_product)
+        Posmenu.add_command(label="New Product", command=New_product)
+        Posmenu.add_command(label="Delete Product", command=Del_product)
         Posmenu.add_separator()
-        Posmenu.add_command(label="Add Scale Item",font=fontStyle, command=Add_Scale)
-        Posmenu.add_command(label="Delete Scale Item",font=fontStyle, command=Delete_Scale)
-        menubar.add_cascade(label="POS System",font=fontStyle, menu=Posmenu)
+        Posmenu.add_command(label="Add Scale Item", command=Add_Scale)
+        Posmenu.add_command(label="Delete Scale Item", command=Delete_Scale)
+        menubar.add_cascade(label="POS System", menu=Posmenu)
 
         Hotel_Mode = IntVar()
         Restaurantmenu = Menu(menubar, tearoff=0)
-        Restaurantmenu.add_command(label="Item List",font=fontStyle, command=donothing)
+        Restaurantmenu.add_command(label="Item List", command=donothing)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_command(label="New Item",font=fontStyle, command=Add_Menu1)
-        Restaurantmenu.add_command(label="Delete Item",font=fontStyle, command=Add_Menu1)
+        Restaurantmenu.add_command(label="New Item", command=Add_Menu1)
+        Restaurantmenu.add_command(label="Delete Item", command=Add_Menu1)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_command(label="Add Menu category",font=fontStyle, command=donothing)
-        Restaurantmenu.add_command(label="Remove Menu category",font=fontStyle, command=donothing)
+        Restaurantmenu.add_command(label="Add Menu category", command=donothing)
+        Restaurantmenu.add_command(label="Remove Menu category", command=donothing)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_checkbutton(label="Hotel Mode",font=fontStyle, onvalue=1, offvalue=0, variable=Hotel_Mode)
-        menubar.add_cascade(label="Restaurant Manager",font=fontStyle, menu=Restaurantmenu)
+        Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
+        menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
             
         Salesmenu = Menu(menubar, tearoff=0)
         submenu = Menu(Salesmenu)
-        submenu.add_command(label="Excel",font=fontStyle, command=ESC)
-        submenu.add_command(label="CSV",font=fontStyle, command=donothing)
-        submenu.add_command(label="Print",font=fontStyle, command=donothing)
+        submenu.add_command(label="Excel", command=ESC)
+        submenu.add_command(label="CSV", command=donothing)
+        submenu.add_command(label="Print", command=donothing)
 
-        Salesmenu.add_command(label="Sales",font=fontStyle, command=CRJ1)
+        Salesmenu.add_command(label="Sales", command=CRJ1)
         Salesmenu.add_separator()
-        Salesmenu.add_cascade(label="Export",font=fontStyle, menu=submenu)
+        Salesmenu.add_cascade(label="Export", menu=submenu)
         Salesmenu.add_separator()
-        Salesmenu.add_command(label="Search Sales By Date",font=fontStyle, command=donothing)
-        Salesmenu.add_command(label="Clear Sales",font=fontStyle, command=donothing)
-        menubar.add_cascade(label="Sales Data",font=fontStyle, menu=Salesmenu)
+        Salesmenu.add_command(label="Search Sales By Date", command=donothing)
+        Salesmenu.add_command(label="Clear Sales", command=donothing)
+        menubar.add_cascade(label="Sales Data", menu=Salesmenu)
 
         
         helpmenu = Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Help Index",font=fontStyle, command=Help)
-        helpmenu.add_command(label="About...",font=fontStyle, command=donothing)
-        helpmenu.add_command(label="Yoco",font=fontStyle, command=Open_Yoco)
-        helpmenu.add_command(label="Donate",font=fontStyle, command=Donate_Yoco)
-        menubar.add_cascade(label="Help",font=fontStyle, menu=helpmenu)
+        helpmenu.add_command(label="Help Index", command=Help)
+        helpmenu.add_command(label="About...", command=donothing)
+        helpmenu.add_command(label="Yoco", command=Open_Yoco)
+        helpmenu.add_command(label="Donate", command=Donate_Yoco)
+        menubar.add_cascade(label="Help", menu=helpmenu)
 
         Page1.config(menu=menubar)
         
@@ -882,11 +915,11 @@ def RUN1(Logged_In):
         
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1375,y=1)
 
-        F1_1 = LabelFrame(F1, text="Systems",font=fontStyle, bg="#E9E9E9", relief="raise")
+        F1_1 = LabelFrame(F1, text="Systems", bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
 
-        LEVEL1 = Button(F1_1, text="Barcode Cart", width=13, height=1, fg="white", bg="green", command=Cart1, font=fontStyle3, bd=2).grid(row=0,column=0)
-        LEVEL2 = Button(F1_1, text="Restorant System", width=13, height=1, fg="white", bg="green", command=RSYS, font=fontStyle3, bd=2).grid(row=1,column=0)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=13, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=13, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
         
     elif LEVL == 2:
@@ -958,8 +991,8 @@ def RUN1(Logged_In):
         F1_1 = LabelFrame(F1, text="Systems", bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
 
-        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, font=fontStyle3, bd=2).grid(row=0,column=0)
-        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, font=fontStyle3, bd=2).grid(row=1,column=0)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
         
     elif LEVL == 3:
@@ -1001,8 +1034,8 @@ def RUN1(Logged_In):
         F1_1.grid(row=0,column=0)
 
 
-        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, font=fontStyle3, bd=2).grid(row=0,column=0)
-        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, font=fontStyle3, bd=2).grid(row=1,column=0)
+        LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
+        LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
 
 
@@ -1086,17 +1119,17 @@ def RUN1(Logged_In):
             Col_Inc_4 += 4
             
         Stats = StringVar()
-        label6 = Label(F10, textvariable=Stats, anchor='w', font=fontStyle2, pady=4)
+        label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
         label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
 
-        label7 = Label(F10, text=' |  Income: R', anchor='e', font=fontStyle2, pady=4)
+        label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
         label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
         
         Stats_Inc = StringVar()
-        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', font=fontStyle2, pady=4, padx=4)
+        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
         label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
         
-        label7 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', font=fontStyle2, pady=4)
+        label7 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
         label7.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
         Row_Inc += 1
         
@@ -1151,15 +1184,15 @@ def RUN1(Logged_In):
         except:
             Message_var.set("Ofline")
 
-        c.execute("SELECT * FROM Scale")
-        for row in c.fetchall():
-            Total_Meat_Stats = 0
-            PPK = (float(row[2]))  
-            c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
-            for row in c.fetchall():
-                Total_Meat_Stats += float(row[9])
-            Stats.set(Total_Meat_Stats)
-            Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
+##        c.execute("SELECT * FROM Scale")
+##        for row in c.fetchall():
+##            Total_Meat_Stats = 0
+##            PPK = (float(row[2]))  
+##            c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
+##            for row in c.fetchall():
+##                Total_Meat_Stats += float(row[9])
+##            Stats.set(Total_Meat_Stats)
+##            Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
 
     def animate2(i=1):
         Fig_plot_2.clear()
@@ -1211,28 +1244,22 @@ def RUN1(Logged_In):
 
 
 
-    
-##    raw_data = urllib.request.urlopen('https://raw.githubusercontent.com/connorhess/EasyPOS/master/Till.png').read()
-##    im = PIL.Image.open(io.BytesIO(raw_data)).resize((200, 200))
-##    image = ImageTk.PhotoImage(im)
-##    label1 = Label(F2, image=image)
-##    label1.grid(row=100,column=0)
     def Re_Fresh():
         animate()
         animate2()
 
     tabControl.pack(expand=1, fill="both")
 
-    LEVEL3 = Button(F2, text="Refresh", width=12, height=1, fg="white", bg="green", command=Re_Fresh, font=fontStyle3, bd=2).grid(row=0,column=0)
+    LEVEL3 = Button(F2, text="Refresh", width=12, height=1, fg="white", bg="green", command=Re_Fresh, bd=2).grid(row=0,column=0)
 
 
     ani = animation.FuncAnimation(fig, animate, interval=60000)
     ani2 = animation.FuncAnimation(fig_2, animate2, interval=60000)
     
-    Page1.columnconfigure(0, weight=1)
-    Page1.rowconfigure(0, weight=0) # not needed, this is the default behavior
-    Page1.rowconfigure(1, weight=1)
-    Page1.rowconfigure(2, weight=1)
+##    Page1.columnconfigure(0, weight=1)
+##    Page1.rowconfigure(0, weight=0) # not needed, this is the default behavior
+##    Page1.rowconfigure(1, weight=1)
+##    Page1.rowconfigure(2, weight=1)
     Page1.mainloop()
 
 

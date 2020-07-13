@@ -13,8 +13,6 @@ from prettytable import PrettyTable
 from tkinter.font import Font
 from os.path import join as pjoin
 import Error
-from PIL import ImageTk,Image
-
 
 button_1 = "Beers & Ciders"
 button_2 = "wine/per Glass"

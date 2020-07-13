@@ -1,7 +1,7 @@
 @echo off
 echo Starting.........
 
-pyinstaller -c -F --name "EasyPOS" "C:/Users/conno/OneDrive/Documents/GitHub/EasyPOS/login.py"
+pyinstaller -w -F --name "EasyPOS" "C:/Users/conno/OneDrive/Documents/GitHub/EasyPOS/login.py"
 
 echo ====================================
 echo ================Done================

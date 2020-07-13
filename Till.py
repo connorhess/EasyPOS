@@ -9,10 +9,8 @@ import sys
 import os
 from datetime import timedelta
 import datetime
-from idle_time import IdleMonitor
 import Error
 from tkinter import messagebox
-from PIL import ImageTk,Image
 
 
 
@@ -62,7 +60,6 @@ def add_account(Name="admin",Password="1234",Perm=1):
     c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
     conn.commit()
 
-monitor = IdleMonitor.get_monitor()
 x.field_names = ["Code", "Name", "Price","Weight"]
 x2.field_names = ["Code", "Name", "Price"]
 
