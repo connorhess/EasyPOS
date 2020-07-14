@@ -765,37 +765,54 @@
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\pkg_resources\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging',
+  ('pkg_resources._vendor.packaging._compat',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.specifiers',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging._structures',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.__about__',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
    'PYMODULE'),
   ('pkg_resources._vendor.packaging.version',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\version.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.utils',
+  ('pkg_resources._vendor.packaging.requirements',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging._compat',
+  ('pkg_resources._vendor.packaging.__about__',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._structures',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
    'PYMODULE'),
   ('pkg_resources._vendor.six',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\six.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.pyparsing',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\pyparsing.py',
+   'PYMODULE'),
+  ('uuid', 'c:\\program files (x86)\\python\\lib\\uuid.py', 'PYMODULE'),
+  ('netbios',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\win32\\lib\\netbios.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.specifiers',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.utils',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
    'PYMODULE'),
   ('pkg_resources._vendor.appdirs',
    'c:\\program files '
@@ -809,23 +826,6 @@
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\win32comext\\shell\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.pyparsing',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\pyparsing.py',
-   'PYMODULE'),
-  ('uuid', 'c:\\program files (x86)\\python\\lib\\uuid.py', 'PYMODULE'),
-  ('netbios',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\win32\\lib\\netbios.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.requirements',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
-   'PYMODULE'),
   ('pkg_resources._vendor.packaging.markers',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
@@ -838,10 +838,10 @@
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\pkg_resources\\extern\\__init__.py',
    'PYMODULE'),
-  ('_py_abc', 'c:\\program files (x86)\\python\\lib\\_py_abc.py', 'PYMODULE'),
   ('stringprep',
    'c:\\program files (x86)\\python\\lib\\stringprep.py',
    'PYMODULE'),
+  ('_py_abc', 'c:\\program files (x86)\\python\\lib\\_py_abc.py', 'PYMODULE'),
   ('licensing.methods',
    'c:\\program files (x86)\\python\\lib\\site-packages\\licensing\\methods.py',
    'PYMODULE'),
@@ -1950,25 +1950,37 @@
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\_compat.py',
    'PYMODULE'),
-  ('setuptools._vendor.packaging.specifiers',
+  ('setuptools._vendor.packaging',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\specifiers.py',
+   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__init__.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.utils',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\utils.py',
    'PYMODULE'),
   ('setuptools._vendor.packaging.version',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\version.py',
    'PYMODULE'),
+  ('setuptools._vendor.packaging.requirements',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
   ('setuptools._vendor.packaging.__about__',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__about__.py',
    'PYMODULE'),
-  ('setuptools._vendor.six',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\six.py',
-   'PYMODULE'),
   ('setuptools._vendor.pyparsing',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\pyparsing.py',
+   'PYMODULE'),
+  ('setuptools._vendor.packaging.specifiers',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\specifiers.py',
+   'PYMODULE'),
+  ('setuptools._vendor.six',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\six.py',
    'PYMODULE'),
   ('setuptools._vendor.packaging.markers',
    'c:\\program files '
@@ -1977,18 +1989,6 @@
   ('setuptools._vendor.packaging._structures',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\_structures.py',
-   'PYMODULE'),
-  ('setuptools._vendor.packaging.utils',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\utils.py',
-   'PYMODULE'),
-  ('setuptools._vendor.packaging.requirements',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\requirements.py',
-   'PYMODULE'),
-  ('setuptools._vendor.packaging',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\setuptools\\_vendor\\packaging\\__init__.py',
    'PYMODULE'),
   ('setuptools._vendor',
    'c:\\program files '
@@ -2682,37 +2682,88 @@
   ('PIL.Image',
    'c:\\program files (x86)\\python\\lib\\site-packages\\PIL\\Image.py',
    'PYMODULE'),
-  ('PIL.XpmImagePlugin',
+  ('PIL.DcxImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\XpmImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FtexImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.BlpImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.McIdasImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\McIdasImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
    'PYMODULE'),
   ('PIL.MspImagePlugin',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\PIL\\MspImagePlugin.py',
    'PYMODULE'),
-  ('PIL.WebPImagePlugin',
+  ('PIL.ImImagePlugin',
+   'c:\\program files (x86)\\python\\lib\\site-packages\\PIL\\ImImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.EpsImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.McIdasImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\McIdasImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IcnsImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.Hdf5StubImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.WmfImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IcoImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MicImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\MicImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.CurImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\CurImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PsdImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PcdImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.SgiImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.DdsImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XpmImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\XpmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.GribStubImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MpegImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XbmImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\XbmImagePlugin.py',
    'PYMODULE'),
   ('PIL.PcxImagePlugin',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\PIL\\PcxImagePlugin.py',
    'PYMODULE'),
-  ('PIL.IptcImagePlugin',
+  ('PIL.FitsStubImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\IptcImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\FitsStubImagePlugin.py',
    'PYMODULE'),
   ('PIL.PdfImagePlugin',
    'c:\\program files '
@@ -2721,116 +2772,29 @@
   ('PIL.PdfParser',
    'c:\\program files (x86)\\python\\lib\\site-packages\\PIL\\PdfParser.py',
    'PYMODULE'),
-  ('PIL.PcdImagePlugin',
+  ('PIL.BlpImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.XVThumbImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PixarImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\PixarImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.XbmImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\XbmImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FitsStubImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\FitsStubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.IcoImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.BufrStubImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.DdsImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FliImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\FliImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FpxImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PsdImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.IcnsImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.TgaImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.GbrImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.EpsImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.Jpeg2KImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\Jpeg2KImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.SunImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\SunImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.DcxImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.ImImagePlugin',
-   'c:\\program files (x86)\\python\\lib\\site-packages\\PIL\\ImImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.MicImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\MicImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
    'PYMODULE'),
   ('PIL.PalmImagePlugin',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\PIL\\PalmImagePlugin.py',
    'PYMODULE'),
-  ('PIL.MpegImagePlugin',
+  ('PIL.SunImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\SunImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PixarImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\PixarImagePlugin.py',
    'PYMODULE'),
   ('PIL.MpoImagePlugin',
    'c:\\program files '
    '(x86)\\python\\lib\\site-packages\\PIL\\MpoImagePlugin.py',
    'PYMODULE'),
-  ('PIL.ImtImagePlugin',
+  ('PIL.WebPImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.GribStubImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.Hdf5StubImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.CurImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\CurImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.WmfImagePlugin',
-   'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
    'PYMODULE'),
   ('PIL.SpiderImagePlugin',
    'c:\\program files '
@@ -2839,9 +2803,45 @@
   ('PIL.ImageTk',
    'c:\\program files (x86)\\python\\lib\\site-packages\\PIL\\ImageTk.py',
    'PYMODULE'),
-  ('PIL.SgiImagePlugin',
+  ('PIL.ImtImagePlugin',
    'c:\\program files '
-   '(x86)\\python\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
+   '(x86)\\python\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.TgaImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IptcImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\IptcImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FliImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\FliImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FtexImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.XVThumbImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.Jpeg2KImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\Jpeg2KImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FpxImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.GbrImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.BufrStubImagePlugin',
+   'c:\\program files '
+   '(x86)\\python\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
    'PYMODULE'),
   ('PIL.TiffImagePlugin',
    'c:\\program files '

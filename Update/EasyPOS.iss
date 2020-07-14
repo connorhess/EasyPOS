@@ -5,20 +5,20 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{B5345CBD-0118-4A46-A25B-4995A9A7DF60}
+AppId={{79FB20ED-17FE-4563-B4E1-6B34DA3AE75E}
 AppName=EasyPOS
-AppVersion=0.75
-;AppVerName=EasyPOS 0.75
-AppPublisher=Node-s
-AppPublisherURL=https://www.node-s.co.za/products/easypos
-AppSupportURL=https://www.node-s.co.za/products/easypos
-AppUpdatesURL=https://www.node-s.co.za/products/easypos
+AppVersion=0.9
+;AppVerName=EasyPOS 0.9
+AppPublisher=Node-S
+AppPublisherURL=https://www.node-s.co.za
+AppSupportURL=https://www.node-s.co.za
+AppUpdatesURL=https://www.node-s.co.za
 DefaultDirName={pf}\EasyPOS
 DefaultGroupName=EasyPOS
-AllowNoIcons=yes
 LicenseFile=C:\Users\conno\OneDrive\Desktop\Programing\EasyPOS license.txt
+OutputDir=C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\Update\Output
 OutputBaseFilename=setup
-SetupIconFile=C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\Till.ico
+SetupIconFile=C:\Users\conno\OneDrive\Desktop\Programing\Python apps\Shop Ubuntu\Shop\Till.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -27,13 +27,87 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\login.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\EasyPOS.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_asyncio.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_bz2.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_cffi_backend.cp38-win32.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_ctypes.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_decimal.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_elementtree.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_hashlib.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_lzma.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_multiprocessing.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_overlapped.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_queue.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_socket.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_sqlite3.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_ssl.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_testcapi.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_tkinter.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\_win32sysloader.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\base_library.zip"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\CRJ.xlsx"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\EasyPOS.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\EasyPOS.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\Key.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\kiwisolver.cp38-win32.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\lib_arpack-.TNFDKO7PUO6J56QP54HRFFFOGJ5KK42R.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\lib_blas_su.Q76LSVT2HKL7MOFMMTWSYUWOBZTQEDRG.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\lib_dop-f2p.SHHGFHU27T7A67BB73JG6AYV6SBOPB5S.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\lib_test_fo.6QS7HUU6UWQ3ZZ2H5HU3YC3T72Y24U6T.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libansari.Q4BAGRNANLWD2YZJOKYPOAUIOLXW2LXK.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libbanded5x.4IUYWW5MWOZRBQHWHEF6V7OLJJR2H5UH.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libbispeu.KX7AQLB2Z5NFTCADW76YV5UMLBQNDALD.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libblkdta00.W2WIGGWJFOAGZ2GLJAMJTRAB64JHFPGE.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libchkder.23IDUBONJEDQJXE3WT2KTJUEFGPJBH5V.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libcobyla2.3BFPWD23GN4DOQSZLNJP2Y3VKAM3SSGW.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libcrypto-1_1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libd_odr.EBF7VDO7RGRZWUXWFWO7QISWCT67FE5Q.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libdcsrch.CTD6WPTKUW4MYYPI2KYOJ4427ZGGSXEQ.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libdet.IUW3KWJYFWDDVIISPOKG6ML5UIXRXGMQ.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libdfft.SQCIOFJOWBHAMIT4OKZANGLFQIZOQWHJ.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libdfitpack.U3JFXQWTJN3N6NXXLJT2B5E4LMKAMIJG.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libdgamln.DO2GTLV55OKJYIVXXO2CBWFNQWWWZBIW.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libdqag.26F7MW26JXE7DJOTLL2L3IYPH46LDI22.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libffi-7.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libgetbreak.QO2RJVHN634JVKO425FFINE2NOT4B6HK.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\liblbfgsb.3SJEPXKZXSZSHKWQNBNCPB6QCF7ADMTD.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\liblsoda-f2.OBLR2PMYT75BPB4B72ND2PPNF5T7LHTG.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libmvndst.JT4IK7XSYOWWR3RBUQLPX5XDUSJTNJO2.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libnnls.MK5ZGBDFVYKGTLTZ7B7TM5YP6CSG4GX5.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libopenblas.OQBRWY77NU6P6PFTK2RERHPIPTWW7ZVE.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libopenblas.SVHFG5YE3RK3Z27NVFUDAPL2O3W6IMXW.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libslsqp_op.MXR5BOTVQOM7FKAXXDEPBABKIXS3O77A.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libspecfun.4EOQTMYNA23N5GPNA7SCW33J5YXJI2Q6.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libssl-1_1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libvode-f2p.3ZKFBGFH5UR62GN3UE57VYA3R6DSUD3J.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libwrap_dum.3LBJ6GA7V6FGQSICA23JCNUWKVRAPJH4.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\libwrap_dum.VWYJQ4KLG275FI5SASQGOWBKPMKMR22O.gfortran-win32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\mfc140u.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\msvcp140.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\pyexpat.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\python38.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\pythoncom38.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\pywintypes38.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\select.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\Shop_Database.db"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\tcl86t.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\tk86t.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\unicodedata.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\VCRUNTIME140.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\win32api.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\win32evtlog.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\win32pdh.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\win32trace.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\win32ui.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\conno\OneDrive\Documents\GitHub\EasyPOS\dist\EasyPOS\win32wnet.pyd"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\EasyPOS"; Filename: "{app}\login.exe"
-Name: "{commondesktop}\EasyPOS"; Filename: "{app}\login.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\EasyPOS"; Filename: "{app}\login.exe"; Tasks: quicklaunchicon
+Name: "{group}\EasyPOS"; Filename: "{app}\EasyPOS.exe"
+Name: "{commondesktop}\EasyPOS"; Filename: "{app}\EasyPOS.exe"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\EasyPOS"; Filename: "{app}\EasyPOS.exe"; Tasks: quicklaunchicon
 
 [Run]
-Filename: "{app}\login.exe"; Description: "{cm:LaunchProgram,EasyPOS}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\EasyPOS.exe"; Description: "{cm:LaunchProgram,EasyPOS}"; Flags: nowait postinstall skipifsilent
