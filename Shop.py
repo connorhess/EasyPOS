@@ -38,6 +38,31 @@ import io
 
 
 
+conn = sqlite3.connect('Shop_Database.db')
+c = conn.cursor()
+
+c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Sales (
+                        "ID"    INTEGER,
+                        "Day"   INTEGER,
+                        "Month" INTEGER,
+                        "Year"  INTEGER,
+                        "Time"  INTEGER,
+                        "Date"  INTEGER,
+                        "Item"  TEXT,
+                        "Price" INTEGER,
+                        "Qty"   INTEGER,
+                        "Weight" REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Tables(Item_PLU REAL, Item_Name TEXT, Item_Price INT, QTY INT, FPrice INT, Table_No INT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
+
+
 def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
@@ -57,7 +82,21 @@ def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
-    
+    c.execute('''CREATE TABLE IF NOT EXISTS Tables(Item_PLU REAL, Item_Name TEXT, Item_Price INT, QTY INT, FPrice INT, Table_No INT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
+    def add_account(Name="admin",Password="1234",Perm=1):
+        ID = random.randint(1,1000000000)
+        c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
+        conn.commit()
+    try:
+        c.execute("SELECT * FROM Cashiers WHERE Name=admin")
+        for row in c.fetchall():
+            print(row)
+    except:
+        add_account()
+        f = open("Key.txt", "w")
+        f.close()
+
 
 
 Version = Info.i_version
@@ -70,8 +109,6 @@ from openpyxl.styles import Alignment
 x = PrettyTable()
 
 
-conn = sqlite3.connect('Shop_Database.db')
-c = conn.cursor()
 
 
 button_1 = "Beers & Ciders"
@@ -90,7 +127,7 @@ button_7 = "Brandy"
 ##    Previous_Value = 1
 ##except:
 ##    wb=Workbook()
-##    # save workbook 
+##    # save workbook
 ##    wb.save(filepath)
 ##    Previous_Value = 1
 
@@ -99,7 +136,7 @@ button_7 = "Brandy"
 ##b1 = 14 - (len(a))
 ##print (a1 + (" " * b1) + "|")
 
-    
+
 
 GEN = RSYSS
 GEN.Config1()
@@ -155,14 +192,14 @@ global fontStyle3
 ##        fontStyle = tkFont.Font(size=int(row[2]))
 ##except:
 ##    fontStyle = tkFont.Font(size=int(12))
-##    
+##
 ##try:
 ##    c.execute("SELECT * FROM Settings WHERE ID=2")
 ##    for row in c.fetchall():
 ##        fontStyle2 = tkFont.Font(size=int(row[2]))
 ##except:
 ##    fontStyle2 = tkFont.Font(size=int(12))
-##    
+##
 ##try:
 ##    c.execute("SELECT * FROM Settings WHERE ID=3")
 ##    for row in c.fetchall():
@@ -206,14 +243,14 @@ def RUN1(Logged_In):
 ##            fontStyle = tkFont.Font(root=Page1, size=int(row[2]))
 ##    except:
 ##        fontStyle = tkFont.Font(root=Page1, size=int(12))
-##        
+##
 ##    try:
 ##        c.execute("SELECT * FROM Settings WHERE ID=2")
 ##        for row in c.fetchall():
 ##            fontStyle2 = tkFont.Font(root=Page1, size=int(row[2]))
 ##    except:
 ##        fontStyle2 = tkFont.Font(root=Page1, size=int(12))
-##        
+##
 ##    try:
 ##        c.execute("SELECT * FROM Settings WHERE ID=3")
 ##        for row in c.fetchall():
@@ -261,7 +298,7 @@ def RUN1(Logged_In):
         R3 = Radiobutton(Add_user, text="Cashier", variable=var, value=3,
                           command=sel)
         R3.grid(row=2,column=4,pady=2)
-        
+
         def Commit_user():
             if len(User_Name.get()) <= 0:
                 MsgBox_004 = messagebox.showerror ('ERROR',Error.Error_004,icon = Error.Error_icon)
@@ -293,7 +330,7 @@ def RUN1(Logged_In):
     ##        print(row[1])
             Name = row[1]
             LbName1.insert(1, Name)
-            
+
         def Delete_user_C():
             try:
                 User = LbName1.get(LbName1.curselection())
@@ -327,7 +364,7 @@ def RUN1(Logged_In):
         Label(Add_scale, text="Name", bd=2).grid(row=1,column=0,pady=2,sticky='e')
         Scale_Name = Entry(Add_scale, bd=2)
         Scale_Name.grid(row=1,column=1,pady=2)
-        
+
         Label(Add_scale, text="Price Per KG", bd=2).grid(row=2,column=0,pady=2,sticky='e')
         Scale_PPK = Entry(Add_scale, bd=2)
         Scale_PPK.grid(row=2,column=1,pady=2)
@@ -378,7 +415,7 @@ def RUN1(Logged_In):
     ##        print(row[1])
             Name = row[1]
             LbName1.insert(1, Name)
-            
+
         def Delete_user_C():
             try:
                 Name_scale = LbName1.get(LbName1.curselection())
@@ -396,7 +433,7 @@ def RUN1(Logged_In):
 
 #=========================================================#Help#==================================================================
 
-    def Help():       
+    def Help():
         new = 2
         webbrowser.open("https://www.node-s.co.za/products/easypos/help",new=new)
 ##        webbrowser.open("file://C:/Users/conno/OneDrive/Desktop/Shop/Python totaurials.docx",new=new)
@@ -410,7 +447,7 @@ def RUN1(Logged_In):
         new = 2
         webbrowser.open("https://pay.yoco.com/node-s?reference=Donate",new=new)
 ##        webbrowser.open("file://C:/Users/conno/OneDrive/Desktop/Shop/Python totaurials.docx",new=new)
-    
+
 
 #=========================================================#restorant items#===========================================================
 
@@ -427,7 +464,7 @@ def RUN1(Logged_In):
         Label(PageAM, text="Price", bd=2).place(x=1,y=26)
         Label(PageAM, text="Delete PLU", bd=2).place(x=1,y=90)
         Label(PageAM, text="PLU", bd=2).place(x=280,y=1)
-        
+
         AM1 = Entry(PageAM, bd=2)
         AM1.place(x=100,y=1)
 ##        AM1.insert(0,"NULL")
@@ -445,7 +482,7 @@ def RUN1(Logged_In):
 
         def ER():
             print(var4.get())
-        
+
         Radio_x = 500
         X1 = 250
         X2 = 1
@@ -506,7 +543,7 @@ def RUN1(Logged_In):
                 R7.place(x=Radio_x,y=X2)
                 button_number = button_number + 1
                 X2 = X2 + 30
-                
+
             elif button_number == 8:
                 R8 = Radiobutton(PageAM, text=(row[0]), variable=var4, value=8, command=partial(Value_update_1,row_0,row_1))
                 R8.place(x=Radio_x,y=X2)
@@ -543,8 +580,8 @@ def RUN1(Logged_In):
                 button_number = button_number + 1
                 X2 = X2 + 30
 
-        
-        
+
+
 
 ##        R1 = Radiobutton(PageAM, text=button_1, variable=var4, value=1, command=ER)
 ##        R1.place(x=Radio_x,y=1)
@@ -568,7 +605,7 @@ def RUN1(Logged_In):
 ##        R7.place(x=Radio_x,y=180)
 
 
-        
+
         def Reset2():
             if len(AM3.get()) <= 0:
                 MsgBox_009 = messagebox.showerror ('ERROR',Error.Error_009,icon = Error.Error_icon)
@@ -611,7 +648,7 @@ def RUN1(Logged_In):
         Button(PageAM, text="delete", width=20, height=1, fg="white", bg="green", command=Reset2, bd=2).place(x=1,y=120)
         Button(PageAM, text="delete all", width=20, height=1, fg="Black", bg="Red", command=delete_all, bd=2).place(x=1,y=180)
 
-        
+
 
 
 #==========================================================#Income graph#=======================================================================
@@ -623,7 +660,7 @@ def RUN1(Logged_In):
         PCRJ2.geometry("1480x1080")
 
 #==========================================================#CRJ#=======================================================================
-    
+
     def CRJ1():
 ##        GRAPH()
         def Reset1():
@@ -636,7 +673,7 @@ def RUN1(Logged_In):
                 Create_Tables()
                 PCRJ.destroy()
                 CRJ1()
-                
+
         sqlite3.connect('Shop_Database.db')
         DATE2 = (time.strftime("%d/%m/%Y"))
         PCRJ = Toplevel()
@@ -645,9 +682,9 @@ def RUN1(Logged_In):
         PCRJ.geometry("1530x1080+0+0")
         PCRJ.transient([Page1])
 
-        
+
         Button(PCRJ, text="Clear", width=12, fg="white", bg="red", command=Reset1, bd=2).place(x=1,y=1)
-        
+
         text = Text(PCRJ, width=180)
 
         BZ = PrettyTable()
@@ -658,7 +695,7 @@ def RUN1(Logged_In):
             BZ.add_row((BZB))
         print(BZ)
         text.insert(INSERT, BZ)
-        
+
         text.pack(side="top")
 
         text_I = Text(PCRJ, width=130)
@@ -669,18 +706,18 @@ def RUN1(Logged_In):
         Query_Date_Y = datetime.strftime(modified_date, "%d-%m-%Y")
 
         BZ = PrettyTable()
-        
+
         Total_Tenderd_Cash_Yesterday = 0.0
         Total_Meat_Yesterday = 0.0
         Total_Meat_Today = 0.0
         Total_Tenderd_Cash_Today = 0.0
 
-        
+
         c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_Y,))
         for row in c.fetchall():
             Total_Meat_Yesterday = float(Total_Meat_Yesterday) + float(row[9])
             Total_Tenderd_Cash_Yesterday = float(Total_Tenderd_Cash_Yesterday) + float(row[7])
-        
+
         c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_T,))
         for row in c.fetchall():
             Total_Meat_Today = float(Total_Meat_Today) + float(row[9])
@@ -689,10 +726,10 @@ def RUN1(Logged_In):
         BZ.field_names = ["Total Meat In KG [Yesterday]", "Total Cash Recived [Yesterday]", "Total Meat In KG [Today]", "Total Cash Recived [Today]",]
         BZ.add_row([Total_Meat_Yesterday, Total_Tenderd_Cash_Yesterday, Total_Meat_Today, Total_Tenderd_Cash_Today])
         text_I.insert(INSERT, BZ)
-        
+
         text_I.pack(side="bottom")
 
-        
+
 #==========================================================#Restorant System#===================================================================
 
     def RSYS():
@@ -706,7 +743,7 @@ def RUN1(Logged_In):
         Page21.configure(background="#E9E9E9")
         Page21.geometry("800x350+253+125")
         Page21.transient([Page1])
-        
+
 
         def Cancel():
             Page21.destroy()
@@ -716,7 +753,7 @@ def RUN1(Logged_In):
         e1.place(x=100,y=1)
 
         Button(Page21, text="Cancel", width=12, fg="white", bg="red", command=Cancel, bd=2).place(x=90,y=30)
-        
+
         def data_entry1():
             if len(e1.get()) <= 0:
                 MsgBox_008 = messagebox.showerror ('ERROR',Error.Error_008,icon = Error.Error_icon)
@@ -729,11 +766,11 @@ def RUN1(Logged_In):
                     conn.commit()
                     Page21.destroy()
                     Del_product()
-                    
-            
+
+
         Button(Page21, text="Delete", width=12, fg="white", bg="green", command=data_entry1, bd=2).place(x=1,y=30)
 
-    
+
 
 #==============================================================#product list#============================================================
 
@@ -743,10 +780,10 @@ def RUN1(Logged_In):
         Page22.configure(background="#E9E9E9")
         Page22.geometry("800x350+253+125")
         Page22.transient([Page1])
-        
+
         text4 = Text(Page22)
         text4.insert(INSERT, "|Code        |Price |Name                 |\n")
-        
+
         c.execute("SELECT * FROM Product_List")
         DA22 = c.fetchall()
         for row in DA22:
@@ -754,11 +791,11 @@ def RUN1(Logged_In):
             text4.insert(INSERT, "\n")
         text4.place(x=1,y=1)
 
-    
-        
+
+
 #================================================================#Add Product#==========================================================
 
-    
+
     def New_product():
         sqlite3.connect('Shop_Database.db')
         Page2 = Toplevel()
@@ -785,7 +822,7 @@ def RUN1(Logged_In):
         e33.place(x=320,y=1)
 
         Button(Page2, text="Cancel", width=12, fg="white", bg="red", command=Cancel, bd=2).place(x=90,y=70)
-        
+
         def data_entry2():
             sqlite3.connect('Shop_Database.db')
             B1 = e1.get()
@@ -809,10 +846,10 @@ def RUN1(Logged_In):
                     New_product()
         Button(Page2, text="Add", width=12, fg="white", bg="green", command=data_entry2, bd=2).place(x=1,y=70)
 
-        
+
 
 #=================================================#Shop cart#==================================================================================
-        
+
     def Cart1():
         Till.Login_Page()
 
@@ -841,7 +878,7 @@ def RUN1(Logged_In):
         sheet.column_dimensions['J'].width = 60
         sheet.column_dimensions['K'].width = float('4')
 
-        
+
         c.execute("SELECT * FROM CRJ")
         for row in c.fetchall():
             sheet.append(row)
@@ -849,11 +886,11 @@ def RUN1(Logged_In):
         for row in sheet.iter_rows():
             for cell in row:
                 cell.alignment = Alignment(wrap_text=True)
-                
+
         wb.save(filepath)
         Page1.iconify()
         os.startfile(filepath)
-    
+
 
 #======================================================================================================================================================================
 #========================================================================#Home Layout#=================================================================================
@@ -865,7 +902,7 @@ def RUN1(Logged_In):
 
     Page1.update_idletasks()
     if LEVL == 1:
- 
+
         menubar = Menu(Page1)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Exit", command=Page1_close)
@@ -902,7 +939,7 @@ def RUN1(Logged_In):
         Restaurantmenu.add_separator()
         Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
         menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
-            
+
         Salesmenu = Menu(menubar, tearoff=0)
         submenu = Menu(Salesmenu)
         submenu.add_command(label="Excel", command=ESC)
@@ -917,7 +954,7 @@ def RUN1(Logged_In):
         Salesmenu.add_command(label="Clear Sales", command=donothing)
         menubar.add_cascade(label="Sales Data", menu=Salesmenu)
 
-        
+
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.add_command(label="Help Index", command=Help)
         helpmenu.add_command(label="About...", command=donothing)
@@ -926,14 +963,14 @@ def RUN1(Logged_In):
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         Page1.config(menu=menubar)
-        
+
         F1 = Frame(Page1, height=100, width=(Page1.winfo_width()), bg="#E9E9E9", relief="raise")
         F1.grid(row=0,column=0)
         F1.grid_propagate(0)
-        
+
         Black_F = Frame(Page1, height=23, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
         Black_F.grid(row=1,column=0,sticky='n')
-        
+
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1375,y=1)
 
         F1_1 = LabelFrame(F1, text="Systems", bg="#E9E9E9", relief="raise")
@@ -942,7 +979,7 @@ def RUN1(Logged_In):
         LEVEL1 = Button(F1_1, text="Barcode Cart", width=13, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
         LEVEL2 = Button(F1_1, text="Restorant System", width=13, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
-        
+
     elif LEVL == 2:
         menubar = Menu(Page1)
         filemenu = Menu(menubar, tearoff=0)
@@ -977,7 +1014,7 @@ def RUN1(Logged_In):
         Restaurantmenu.add_separator()
         Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
         menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
-            
+
         Salesmenu = Menu(menubar, tearoff=0)
         submenu = Menu(Salesmenu)
         submenu.add_command(label="Excel", command=ESC)
@@ -991,21 +1028,21 @@ def RUN1(Logged_In):
         Salesmenu.add_command(label="Search Sales By Date", command=donothing)
         menubar.add_cascade(label="Sales Data", menu=Salesmenu)
 
-        
+
         helpmenu = Menu(menubar, tearoff=0)
         helpmenu.add_command(label="Help Index", command=Help)
         helpmenu.add_command(label="About...", command=donothing)
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         Page1.config(menu=menubar)
-        
+
         F1 = Frame(Page1, height=100, width=(Page1.winfo_width()), bg="#E9E9E9", relief="raise")
         F1.grid(row=0,column=0)
         F1.grid_propagate(0)
-        
+
         Black_F = Frame(Page1, height=4, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
         Black_F.grid(row=1,column=0,sticky='n')
-        
+
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
 
 
@@ -1015,7 +1052,7 @@ def RUN1(Logged_In):
         LEVEL1 = Button(F1_1, text="Barcode Cart", width=12, height=1, fg="white", bg="green", command=Cart1, bd=2).grid(row=0,column=0)
         LEVEL2 = Button(F1_1, text="Restorant System", width=12, height=1, fg="white", bg="green", command=RSYS, bd=2).grid(row=1,column=0)
 
-        
+
     elif LEVL == 3:
         menubar = Menu(Page1)
         filemenu = Menu(menubar, tearoff=0)
@@ -1041,16 +1078,16 @@ def RUN1(Logged_In):
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         Page1.config(menu=menubar)
-        
+
         F1 = Frame(Page1, height=100, width=(Page1.winfo_width()), bg="#E9E9E9", relief="raise")
         F1.grid(row=0,column=0)
         F1.grid_propagate(0)
-        
+
         Black_F = Frame(Page1, height=4, width=(Page1.winfo_width()), bg="#AAAAAA", relief="raise")
         Black_F.grid(row=1,column=0,sticky='n')
-        
+
         Label(F1, text=("Made By Connor Hess  V" + str(Version)), fg="white", bg="gray").place(x=1300,y=1)
-        
+
         F1_1 = LabelFrame(F1, text="Systems", bg="#E9E9E9", relief="raise")
         F1_1.grid(row=0,column=0)
 
@@ -1068,7 +1105,7 @@ def RUN1(Logged_In):
     F2 = Frame(m1, width=180, bg="#E9E9E9", relief="raise")
     F2.grid_propagate(0)
     m1.add(F2)
-    
+
 
     m2 = PanedWindow(m1, sashwidth=8, orient=VERTICAL, bg="grey")
     m1.add(m2)
@@ -1095,7 +1132,7 @@ def RUN1(Logged_In):
 ##    F5.grid_propagate(0)
 ##    F5.grid(row=0,column=0,sticky='w')
 
-    
+
     var = StringVar()
     label2 = Label(F1, textvariable=var, relief=RAISED )
     var.set((time.strftime("%H:%M")))
@@ -1104,12 +1141,12 @@ def RUN1(Logged_In):
     label3 = Label(Black_F, textvariable=Message_var,width=230, anchor='w' , relief=RAISED )
     Message_var.set("...")
 
-    
+
 
 ##    Month_query = Entry(F5, bd=2)
 ##    Month_query.grid(row=0,column=0)
 
-    
+
 
     F6 = Frame(tab1, bg="#E9E9E9", relief="raise")
     F6.grid_propagate(0)
@@ -1139,22 +1176,22 @@ def RUN1(Logged_In):
 ##            Col_Inc_2 += 4
 ##            Col_Inc_3 += 4
 ##            Col_Inc_4 += 4
-##            
+##
 ##        Stats = StringVar()
 ##        label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
 ##        label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
 ##
 ##        label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
 ##        label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
-##        
+##
 ##        Stats_Inc = StringVar()
 ##        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
 ##        label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
-##        
+##
 ##        label9 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
 ##        label9.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
 ##        Row_Inc += 1
-##        
+##
 ##        c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
 ##        for row in c.fetchall():
 ##            Total_Meat_Stats += float(row[9])
@@ -1169,13 +1206,13 @@ def RUN1(Logged_In):
 
         label7 = Label(F10, text='', anchor='e', pady=4)
         label7.grid(row=0,column=0,sticky='e')
-        
+
         label8 = Label(F10, text='', anchor='w', pady=4, padx=4)
         label8.grid(row=0,column=0,sticky='w')
-        
+
         label9 = Label(F10, text='', anchor='e', pady=4)
         label9.grid(row=0,column=0,sticky='e')
-        
+
         label6.destroy()
         label7.destroy()
         label8.destroy()
@@ -1196,22 +1233,22 @@ def RUN1(Logged_In):
                 Col_Inc_2 += 4
                 Col_Inc_3 += 4
                 Col_Inc_4 += 4
-                
+
             Stats = StringVar()
             label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
             label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
 
             label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
             label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
-            
+
             Stats_Inc = StringVar()
             label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
             label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
-            
+
             label9 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
             label9.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
             Row_Inc += 1
-            
+
             c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
             for row in c.fetchall():
                 Total_Meat_Stats += float(row[9])
@@ -1220,13 +1257,13 @@ def RUN1(Logged_In):
             Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
 
     Stats_generate()
-    
-    
+
+
     fig = Figure(figsize=(15, 7), dpi=85)
     fig.subplots_adjust(left=0.05, bottom=0.08, right=0.98, top=0.95, wspace=None, hspace=None)
     Fig_plot_1 = fig.add_subplot(111)
-    
-    
+
+
     fig_2 = Figure(figsize=(15, 7), dpi=85)
     fig_2.subplots_adjust(left=0.05, bottom=0.08, right=0.98, top=0.95, wspace=None, hspace=None)
     Fig_plot_2 = fig_2.add_subplot(111)
@@ -1234,7 +1271,7 @@ def RUN1(Logged_In):
     def daterange(start_date, end_date):
         for n in range(int ((end_date - start_date).days)):
             yield start_date + timedelta(n)
-    
+
     def animate(i=1):
         var.set((time.strftime("%H:%M")))
         Fig_plot_1.clear()
@@ -1287,14 +1324,14 @@ def RUN1(Logged_In):
             xList2.append(Date_query_show)
             yList2.append(Total_Day_W)
         Fig_plot_2.plot(xList2,yList2)
-        
-        
-        
+
+
+
 
 ##    Button(F5, text="Refresh", width=12, height=1, fg="white", bg="green", command=animate, bd=2).grid(row=0,column=1)
-    
 
-    
+
+
 
     canvas = FigureCanvasTkAgg(fig, master=F6)  # A tk.DrawingArea.
     canvas.draw()
@@ -1303,7 +1340,7 @@ def RUN1(Logged_In):
 ##    toolbar.update()
     canvas.get_tk_widget().pack(side=TOP, fill=BOTH, expand=1)
 
-    
+
 
     canvas2 = FigureCanvasTkAgg(fig_2, master=F8)  # A tk.DrawingArea.
     canvas2.draw()
@@ -1329,7 +1366,7 @@ def RUN1(Logged_In):
 
     ani = animation.FuncAnimation(fig, animate, interval=60000)
     ani2 = animation.FuncAnimation(fig_2, animate2, interval=60000)
-    
+
 ##    Page1.columnconfigure(0, weight=1)
 ##    Page1.rowconfigure(0, weight=0) # not needed, this is the default behavior
 ##    Page1.rowconfigure(1, weight=1)
@@ -1337,7 +1374,7 @@ def RUN1(Logged_In):
     Page1.mainloop()
 
 
-RUN1("Connor")
+##RUN1("Connor")
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================

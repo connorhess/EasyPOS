@@ -37,36 +37,40 @@ conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
 
 def Create_Tables():
-    c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
-                            "ID"	INTEGER,
-                            "Day"	INTEGER,
-                            "Month"	INTEGER,
-                            "Year"	INTEGER,
-                            "Time"	INTEGER,
-                            "Date"      INTEGER,
-                            "Item"	TEXT,
-                            "Price"	INTEGER,
-                            "Qty"	INTEGER,
-                            "Weight" REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
-    c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
-    def add_account(Name="admin",Password="1234",Perm=1):
-        ID = random.randint(1,1000000000)
-        c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
-        conn.commit()
-    try:
-        c.execute("SELECT * FROM Cashiers WHERE Name=admin")
-        for row in c.fetchall():
-            print(row)
-    except:
-        add_account()
-        f = open("Key.txt", "w")
-        f.close()
+    pass
+
+c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Sales (
+                        "ID"	INTEGER,
+                        "Day"	INTEGER,
+                        "Month"	INTEGER,
+                        "Year"	INTEGER,
+                        "Time"	INTEGER,
+                        "Date"  INTEGER,
+                        "Item"	TEXT,
+                        "Price"	INTEGER,
+                        "Qty"	INTEGER,
+                        "Weight" REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Product_List(Code INT, Price REAL, Item TEXT, Cost_Price REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Customer_List(Code REAL, Name TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS MenuS(Menu_Name TEXT, Menu_Number RAEL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Cashiers(ID REAL, Name TEXT, Password TEXT, Permision REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Scale(Code INTEGER, Name TEXT, Price_per_kg REAL)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Tables(Item_PLU REAL, Item_Name TEXT, Item_Price INT, QTY INT, FPrice INT, Table_No INT)''')
+c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
+def add_account(Name="admin",Password="1234",Perm=1):
+    ID = random.randint(1,1000000000)
+    c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
+    conn.commit()
+try:
+    c.execute("SELECT * FROM Cashiers WHERE Name=admin")
+    for row in c.fetchall():
+        print(row)
+except:
+    add_account()
+    f = open("Key.txt", "w")
+    f.close()
 
 
 
@@ -100,8 +104,8 @@ def Login_Page():
 ##        print(row[1])
         Name = row[1]
         LbN1.insert(1, Name)
-    
-    
+
+
     def K9():
         e1.insert(INSERT, "9")
     def K8():
@@ -126,7 +130,7 @@ def Login_Page():
         e1.insert(INSERT, ".")
     def K10():
         e1.delete(1.0, 1000.0)
-        
+
     F101 = Frame(Login_page, bd=8, bg="grey", relief="raise")
     F101.place(x=X_Distance,y=300)
 
@@ -187,7 +191,7 @@ def Update_manager(TEXT="Checking for update"):
     Update_Manager.configure(background="#BEBEBE")
     Update_Manager.attributes("-topmost", True)
     label = Label(Update_Manager, text=(TEXT+"\n\nMade By Connor Hess  V" + str(version)), fg="white", bg="gray").pack()
-    
+
     response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt')
     data = response.text
     print(data)
@@ -222,9 +226,9 @@ def Validate():
 
         KEY = Entry(PageKey, bd =5, width=30)
         KEY.grid(row=0,column=1)
-        
+
     ##    os.remove("Key.txt")
-        
+
         def Key_enter():
             Prod_Key = KEY.get()
             result = Key.activate(token=auth,\

@@ -75,7 +75,7 @@ def Cart1(Logged_In="admin"):
     global count
     count = 0
 
-    text3 = Text(Page3, bd=8, width=60)    
+    text3 = Text(Page3, bd=8, width=60)
     c.execute("SELECT * FROM Product_List")
     DA22 = c.fetchall()
     for row in DA22:
@@ -85,7 +85,7 @@ def Cart1(Logged_In="admin"):
     text3.place(x=650,y=1)
 
     text = Text(Page3, bd=8, width=60)
-    
+
     e6 = Entry(Page3, bd=2,)
     e6.place(x=510,y=1)
 
@@ -118,8 +118,8 @@ def Cart1(Logged_In="admin"):
     ##        print(row[1])
             Name = row[1]
             LbN1.insert(1, Name)
-        
-        
+
+
         def K9():
             e1.insert(INSERT, "9")
         def K8():
@@ -144,7 +144,7 @@ def Cart1(Logged_In="admin"):
             e1.insert(INSERT, ".")
         def K10():
             e1.delete(0,100)
-            
+
         F101 = Frame(Login_page, bd=8, bg="grey", relief="raise")
         F101.place(x=X_Distance,y=300)
 
@@ -209,7 +209,7 @@ def Cart1(Logged_In="admin"):
 
         e6.delete (0, last=100 )
 
-    def Scale():
+    def Scale2():
         sqlite3.connect('Shop_Database.db')
         s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13 = str(e6.get())
         Code_1 = s1+s2+s3+s4+s5+s6
@@ -248,7 +248,7 @@ def Cart1(Logged_In="admin"):
         text.insert(INSERT, "\nSale_ID: " + str(Sale_ID))
         print (text.get(1.0, 1000.0))       ##add to thermal printer
     text.place(x=1,y=1)
-        
+
     def PAY():
 ##            Page3.destroy()
         Page4 = Tk()
@@ -310,7 +310,7 @@ def Cart1(Logged_In="admin"):
         Button(F102, text="C", width=W, height=H, bg="blue", fg="white", command=K10, bd=2).grid(row=4,column=2)
 
         text2.place(x=60,y=30)
-        
+
         def PAID(Payment_Type):
             EE2 = (text2.get(1.0, 1000.0))
             CHANGE = float(EE2) - float(count)
@@ -355,7 +355,7 @@ def Cart1(Logged_In="admin"):
     ##                EE1 = e7.get()
                 Label(Page5, text=(CHANGE), bd=2).place(x=100,y=1)
                 Button(Page5, text="OK", width=10, height=2, fg="white", bg="green", command=OK1, bd=2).place(x=1,y=70)
-                
+
                 def iprint():
                     Q = (text.get(1.0, 1000.0)) + "\n\nThank you for shopping by us.                Software Made By Connor Hess"
                     filename = tempfile.mktemp(".txt")
@@ -373,7 +373,7 @@ def Cart1(Logged_In="admin"):
 
     text.place(x=1,y=1)
     Button(Page3, text="Add Normal", width=12, fg="white", bg="green", command=ADD1, bd=2).place(x=510,y=25)
-    Button(Page3, text="Add Scale", width=12, fg="white", bg="green", command=Scale, bd=2).place(x=510,y=50)
+    Button(Page3, text="Add Scale", width=12, fg="white", bg="green", command=Scale2, bd=2).place(x=510,y=50)
     Button(Page3, text="Delete_Sale", width=12, fg="white", bg="green", command=Clear_Cart, bd=2).place(x=510,y=100)
     Button(Page3, text="Total", width=15, height=1, fg="white", bg="green", command=Total, bd=2).place(x=510,y=250)
     Button(Page3, text="Pay", width=15, height=1, fg="white", bg="green", command=PAY, bd=2).place(x=510,y=275)
@@ -406,8 +406,8 @@ def Login_Page():
 ##        print(row[1])
         Name = row[1]
         LbN1.insert(1, Name)
-    
-    
+
+
     def K9():
         e1.insert(INSERT, "9")
     def K8():
@@ -432,7 +432,7 @@ def Login_Page():
         e1.insert(INSERT, ".")
     def K10():
         e1.delete(0,100)
-        
+
     F101 = Frame(Login_page, bd=8, bg="grey", relief="raise")
     F101.place(x=X_Distance,y=300)
 
