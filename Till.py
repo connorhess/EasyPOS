@@ -12,7 +12,7 @@ import datetime
 import Error
 from tkinter import messagebox
 
-
+print(type(str(str(('9')) + " x " + str(('y')))))
 
 x = PrettyTable()
 x2 = PrettyTable()
@@ -330,7 +330,12 @@ def Cart1(Logged_In="admin"):
                     Bb4 = (str(EE2))
                     print(Bb4)
                     print(type(Bb4))
-                    Bb6 = (text.get(1.0, 1000.0))
+                    Items = []
+                    c.execute("SELECT * FROM Sales WHERE ID = ?",(Sale_ID,))
+                    for row in c.fetchall():
+                        Items.append(str(str((row[8])) + " x " + str((row[6]))))
+                    Bb6 = str(Items)
+##                    Bb6 = (text.get(1.0, 1000.0))
                     Bb7 = 1
                     Payment_type = Payment_Type
                     c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_type,Logged_In))

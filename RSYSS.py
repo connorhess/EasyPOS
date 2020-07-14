@@ -24,17 +24,17 @@ button_7 = "Brandy"
 
 
 
-try:
-    filepath="CRJ.xlsx"
-    # load demo.xlsx 
-    wb=load_workbook(filepath)
-except:
-    # set file path
-    filepath="CRJ.xlsx"
-    # load demo.xlsx
-    wb=Workbook()
-    # save workbook 
-    wb.save(filepath)
+##try:
+##    filepath="CRJ.xlsx"
+##    # load demo.xlsx 
+##    wb=load_workbook(filepath)
+##except:
+##    # set file path
+##    filepath="CRJ.xlsx"
+##    # load demo.xlsx
+##    wb=Workbook()
+##    # save workbook 
+##    wb.save(filepath)
 
     
 TIME = (time.strftime("%H:%M"))
@@ -223,6 +223,8 @@ def RSYS(Logged_In):
                     B4 = (w1.get())
                     B6 = (row[2]) * int(w1.get())
                     TableNumberAdd(B1,B2,B3,B4,tableNO,B6)
+                    c.execute('''INSERT INTO Sales (ID, Day, Month, Year, Time, Date, Item, Price, QTY, Weight) VALUES(?,?,?,?,?,?,?,?,?,?)''',(tableNO,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), B2, B3, B4, "0"))
+                    conn.commit()
                     a2.destroy()
 
             c.execute("SELECT * FROM Starters WHERE Menu=?",(Menu,))
@@ -440,7 +442,12 @@ def RSYS(Logged_In):
                             Bb3 = "Table" + str(tableNO)
                             Bb4 = str(EE2)
                             Bb5 = str(SUM)
-                            Bb6 = str(Lb1.get(1, 200))
+                            Items = []
+                            c.execute("SELECT * FROM Sales WHERE ID = ?",(tableNO,))
+                            for row in c.fetchall():
+                                Items.append((str((row[8])) + " x " + str((row[6]))))
+                            Bb6 = str(Items)
+##                            Bb6 = str(Lb1.get(1, 200))
                             Bb7 = 1
                             c.execute('''INSERT INTO CRJ(ID, Day, Month, Year, Time, Date, Description, Amount, Bank, Item, QTY,Payment_Type,Cashier) VALUES(?, ? ,? ,? ,? ,? ,?,?,?,?,?,?,?)''',(Bb1,(time.strftime("%d")), (time.strftime("%m")),(time.strftime("%Y")),(time.strftime("%H:%M")),(time.strftime("%d-%m-%Y")), Bb3, Bb4, Bb5, Bb6, Bb7,Payment_Type,Logged_In))
                             conn.commit()

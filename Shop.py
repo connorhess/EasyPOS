@@ -36,6 +36,8 @@ import urllib.parse
 import io
 
 
+
+
 def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS "Sales" (
@@ -63,6 +65,7 @@ Version = Info.i_version
 #not Built In
 from openpyxl import Workbook
 from openpyxl import load_workbook
+from openpyxl.styles import Alignment
 
 x = PrettyTable()
 
@@ -82,19 +85,14 @@ button_7 = "Brandy"
 
 
 
-try:
-    filepath="CRJ.xlsx"
-    # load demo.xlsx 
-    wb=load_workbook(filepath)
-    Previous_Value = 1
-except:
-    # set file path
-    filepath="CRJ.xlsx"
-    # load demo.xlsx
-    wb=Workbook()
-    # save workbook 
-    wb.save(filepath)
-    Previous_Value = 1
+##try:
+##    wb=load_workbook(filepath)
+##    Previous_Value = 1
+##except:
+##    wb=Workbook()
+##    # save workbook 
+##    wb.save(filepath)
+##    Previous_Value = 1
 
 
 ##a1 = (row[0])
@@ -730,7 +728,8 @@ def RUN1(Logged_In):
                     c.execute('''DELETE FROM Product_List WHERE Code=?''',(B1,))
                     conn.commit()
                     Page21.destroy()
-                    Page1.destroy()
+                    Del_product()
+                    
             
         Button(Page21, text="Delete", width=12, fg="white", bg="green", command=data_entry1, bd=2).place(x=1,y=30)
 
@@ -799,7 +798,7 @@ def RUN1(Logged_In):
                 MsgBox_007 = messagebox.showerror ('ERROR',Error.Error_007,icon = Error.Error_icon)
             elif len(e3.get()) <= 0:
                 MsgBox_010 = messagebox.showerror ('ERROR',Error.Error_010,icon = Error.Error_icon)
-            elif len(e33.get) <= 0:
+            elif len(e33.get()) <= 0:
                 MsgBox_011 = messagebox.showerror ('ERROR',Error.Error_011,icon = Error.Error_icon)
             else:
                 MsgBox = messagebox.askquestion ('Warning','Are you sure you want save this Item',icon = 'warning')
@@ -807,8 +806,7 @@ def RUN1(Logged_In):
                     c.execute('''INSERT INTO Product_List(Code, Price, Item, Cost_Price) VALUES(?, ? ,? ,?)''',(B3, B2, B1, B4))
                     conn.commit()
                     Page2.destroy()
-                    Page1.destroy()
-                    RUN1()
+                    New_product()
         Button(Page2, text="Add", width=12, fg="white", bg="green", command=data_entry2, bd=2).place(x=1,y=70)
 
         
@@ -820,18 +818,41 @@ def RUN1(Logged_In):
 
 
     def ESC():
-        print((time.strftime("%m-%Y")))
-        wb=load_workbook(filepath)
+        filepath = os.path.expanduser('~/Documents/EasyPOS_CRJ_' + str(time.strftime("%d_%m_%Y")) + '.xlsx')
         try:
-            sheet = wb[(time.strftime("%m-%Y"))]
+            wb=load_workbook(filepath)
+        except:
+            wb=Workbook()
+
+        print(filepath)
+        try:
+            sheet = wb[(time.strftime("%H-%M"))]
         except KeyError:
-            sheet = wb.create_sheet((time.strftime("%m-%Y")))
-        c.execute("SELECT * FROM Sales")
+            sheet = wb.create_sheet((time.strftime("%H-%M")))
+        Header = ('ID','Day','Month','Year','Time','Date','Description','Amount','Bank','Item','QTY','Payment_Type','Cashier')
+        sheet.append(Header)
+        sheet.column_dimensions['A'].width = float('11.67')
+        sheet.column_dimensions['B'].width = float('6.56')
+        sheet.column_dimensions['C'].width = float('6.56')
+        sheet.column_dimensions['D'].width = float('5.44')
+        sheet.column_dimensions['E'].width = float('5.67')
+        sheet.column_dimensions['F'].width = float('11.22')
+        sheet.column_dimensions['G'].width = float('9.67')
+        sheet.column_dimensions['J'].width = 60
+        sheet.column_dimensions['K'].width = float('4')
+
+        
+        c.execute("SELECT * FROM CRJ")
         for row in c.fetchall():
             sheet.append(row)
-        
+
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.alignment = Alignment(wrap_text=True)
+                
         wb.save(filepath)
-        Page1.destroy()
+        Page1.iconify()
+        os.startfile(filepath)
     
 
 #======================================================================================================================================================================
@@ -1101,44 +1122,104 @@ def RUN1(Logged_In):
     F10 = Frame(tab3, bg="#E9E9E9", relief="raise")
 ##    F10.grid_propagate(0)
     F10.grid(row=1,column=0)
-    Row_Inc = 0
-    Col_Inc = 1
-    Col_Inc_2 = 0
-    Col_Inc_3 = 3
-    Col_Inc_4 = 2
 
-    c.execute("SELECT * FROM Scale")
-    for row in c.fetchall():
-        Total_Meat_Stats = 0
-        PPK = (float(row[2]))
-        if Row_Inc >= 20:
-            Col_Inc += 4
-            Row_Inc = 0
-            Col_Inc_2 += 4
-            Col_Inc_3 += 4
-            Col_Inc_4 += 4
-            
-        Stats = StringVar()
-        label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
-        label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
+##    Row_Inc = 0
+##    Col_Inc = 1
+##    Col_Inc_2 = 0
+##    Col_Inc_3 = 3
+##    Col_Inc_4 = 2
+##
+##    c.execute("SELECT * FROM Scale")
+##    for row in c.fetchall():
+##        Total_Meat_Stats = 0
+##        PPK = (float(row[2]))
+##        if Row_Inc >= 20:
+##            Col_Inc += 4
+##            Row_Inc = 0
+##            Col_Inc_2 += 4
+##            Col_Inc_3 += 4
+##            Col_Inc_4 += 4
+##            
+##        Stats = StringVar()
+##        label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
+##        label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
+##
+##        label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
+##        label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
+##        
+##        Stats_Inc = StringVar()
+##        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
+##        label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
+##        
+##        label9 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
+##        label9.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
+##        Row_Inc += 1
+##        
+##        c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
+##        for row in c.fetchall():
+##            Total_Meat_Stats += float(row[9])
+##
+##        Stats.set(Total_Meat_Stats)
+##        Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
 
-        label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
-        label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
+
+    def Stats_generate():
+        label6 = Label(F10, text='', anchor='w', pady=4)
+        label6.grid(row=0,column=0,sticky='w')
+
+        label7 = Label(F10, text='', anchor='e', pady=4)
+        label7.grid(row=0,column=0,sticky='e')
         
-        Stats_Inc = StringVar()
-        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
-        label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
+        label8 = Label(F10, text='', anchor='w', pady=4, padx=4)
+        label8.grid(row=0,column=0,sticky='w')
         
-        label7 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
-        label7.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
-        Row_Inc += 1
+        label9 = Label(F10, text='', anchor='e', pady=4)
+        label9.grid(row=0,column=0,sticky='e')
         
-        c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
+        label6.destroy()
+        label7.destroy()
+        label8.destroy()
+        label9.destroy()
+        Row_Inc = 0
+        Col_Inc = 1
+        Col_Inc_2 = 0
+        Col_Inc_3 = 3
+        Col_Inc_4 = 2
+
+        c.execute("SELECT * FROM Scale")
         for row in c.fetchall():
-            Total_Meat_Stats += float(row[9])
+            Total_Meat_Stats = 0
+            PPK = (float(row[2]))
+            if Row_Inc >= 20:
+                Col_Inc += 4
+                Row_Inc = 0
+                Col_Inc_2 += 4
+                Col_Inc_3 += 4
+                Col_Inc_4 += 4
+                
+            Stats = StringVar()
+            label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
+            label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
 
-        Stats.set(Total_Meat_Stats)
-        Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
+            label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
+            label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
+            
+            Stats_Inc = StringVar()
+            label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
+            label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
+            
+            label9 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
+            label9.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
+            Row_Inc += 1
+            
+            c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
+            for row in c.fetchall():
+                Total_Meat_Stats += float(row[9])
+
+            Stats.set(Total_Meat_Stats)
+            Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
+
+    Stats_generate()
     
     
     fig = Figure(figsize=(15, 7), dpi=85)
@@ -1184,15 +1265,7 @@ def RUN1(Logged_In):
         except:
             Message_var.set("Ofline")
 
-##        c.execute("SELECT * FROM Scale")
-##        for row in c.fetchall():
-##            Total_Meat_Stats = 0
-##            PPK = (float(row[2]))  
-##            c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
-##            for row in c.fetchall():
-##                Total_Meat_Stats += float(row[9])
-##            Stats.set(Total_Meat_Stats)
-##            Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
+        Stats_generate()
 
     def animate2(i=1):
         Fig_plot_2.clear()
@@ -1247,6 +1320,7 @@ def RUN1(Logged_In):
     def Re_Fresh():
         animate()
         animate2()
+        Stats_generate()
 
     tabControl.pack(expand=1, fill="both")
 
@@ -1263,7 +1337,7 @@ def RUN1(Logged_In):
     Page1.mainloop()
 
 
-##RUN1("Connor")
+RUN1("Connor")
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================
