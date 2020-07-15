@@ -257,12 +257,14 @@ def New_key():
             # an error occurred or the key is invalid or it cannot be activated
             # (eg. the limit of activated devices was achieved)
             print("The license does not work2: {0}".format(result[1]))
+            c.execute("""UPDATE Settings SET Value=1 WHERE ID = 3""")
+            conn.commit()
             PageKey.destroy()
             New_key()
         else:
             # everything went fine if we are here!
             print("The license is valid2!")
-            c.execute("""UPDATE Settings SET OTHER=? WHERE ID = 3""",(str(Prod_Key),))
+            c.execute("""UPDATE Settings SET OTHER=? AND Value=1 WHERE ID = 3""",(str(Prod_Key),))
             conn.commit()
             PageKey.destroy()
             Update_manager()
@@ -285,12 +287,21 @@ if checkInternetHttplib() == True:
             # an error occurred or the key is invalid or it cannot be activated
             # (eg. the limit of activated devices was achieved)
             print("The license does not work1: {0}".format(result[1]))
+            c.execute("""UPDATE Settings SET Value=0 WHERE ID = 3""")
+            conn.commit()
             New_key()
         else:
             # everything went fine if we are here!
             print("The license is valid!1")
+            c.execute("""UPDATE Settings SET Value=1 WHERE ID = 3""")
+            conn.commit()
             Update_manager()
     except:
         New_key()
 elif checkInternetHttplib() == False:
-    Update_manager()
+    c.execute("SELECT * FROM Settings WHERE ID=?",(3,))
+    Last_Veri = (int((c.fetchone())[2]))
+    if Last_Veri >= 1:
+        Update_manager()
+    else:
+        MsgBox_017 = messagebox.showerror ('ERROR',Error.Error_017,icon = Error.Error_icon)

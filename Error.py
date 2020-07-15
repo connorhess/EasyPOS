@@ -38,4 +38,6 @@ Error_014 = "'Price Per KG' Cannot Be Text.\nERROR-014"
 
 Error_015 = "'Price Per KG' Cannot Be Text.\nERROR-015"
 
-Error_016 = "'Cant Add More Menu's. Delete one to add more or contact the creator to add more menu slots.\nERROR-016"
+Error_016 = "Cant Add More Menu's. Delete one to add more or contact the creator to add more menu slots.\nERROR-016"
+
+Error_016 = "You Are Offline and We cannot Verify that your product key is/was valid.\nERROR-016"

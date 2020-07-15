@@ -151,7 +151,7 @@ def RSYS(Logged_In,Page):
     PageR.title("Item Database")
     PageR.configure(background="orange")
     PageR.attributes("-fullscreen", True)
-    PageR.attributes("-topmost", True)
+    #PageR.attributes("-topmost", True)
 
 
     def exit_PageR():
