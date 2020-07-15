@@ -41,6 +41,7 @@ import io
 conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
 
+
 c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
 c.execute('''CREATE TABLE IF NOT EXISTS Sales (
                         "ID"    INTEGER,
@@ -84,18 +85,6 @@ def Create_Tables():
     c.execute('''CREATE TABLE IF NOT EXISTS Settings(ID REAL, Name TEXT, Value REAL, OTHER TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Tables(Item_PLU REAL, Item_Name TEXT, Item_Price INT, QTY INT, FPrice INT, Table_No INT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
-    def add_account(Name="admin",Password="1234",Perm=1):
-        ID = random.randint(1,1000000000)
-        c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
-        conn.commit()
-    try:
-        c.execute("SELECT * FROM Cashiers WHERE Name=admin")
-        for row in c.fetchall():
-            print(row)
-    except:
-        add_account()
-        f = open("Key.txt", "w")
-        f.close()
 
 
 
@@ -228,7 +217,9 @@ def LEV3(Logged_In):
     LEVL = 3
     RUN1(Logged_In)
 
-
+def daterange(start_date, end_date):
+    for n in range(int ((end_date - start_date).days)):
+        yield start_date + timedelta(n)
 
 def RUN1(Logged_In):
     Page1 = Tk()
@@ -258,6 +249,44 @@ def RUN1(Logged_In):
 ##    except:
 ##        fontStyle3 = tkFont.Font(root=Page1, size=int(12))
 
+#=========================================================#Delete_menu_item#==================================================================
+
+    def Delete_menu_item():
+        pass
+
+#=========================================================#Add_menu_item#==================================================================
+
+    def Add_menu_item():
+        Add_Menu_Item = Toplevel()
+        Add_Menu_Item.title("Shop Database")
+        Add_Menu_Item.configure(background="#E9E9E9")
+        Add_Menu_Item.geometry("800x350+253+125")
+        Add_Menu_Item.transient([Page1])
+
+##        Add_user.attributes("-topmost", True)
+
+        Label(Add_Menu_Item, text="Name", bd=2).grid(row=0,column=0,pady=2,sticky='e')
+        Add_menu_item_name = Entry(Add_Menu_Item, bd=2)
+        Add_menu_item_name.grid(row=0,column=1,pady=2)
+
+        c.execute("SELECT MAX(Menu_Number) FROM MenuS")
+        Add_menu_item_number = (int(c.fetchall()[0][0]))
+        Add_menu_item_number_F = Add_menu_item_number + 1
+        print(Add_menu_item_number)
+
+        def Commit_Add_menu_item():
+            if len(Add_menu_item_name.get()) <= 0:
+                MsgBox_004 = messagebox.showerror ('ERROR',Error.Error_004,icon = Error.Error_icon)
+            elif (Add_menu_item_number) >= 14:
+                MsgBox_016 = messagebox.showerror ('ERROR',Error.Error_016,icon = Error.Error_icon)
+            else:
+                c.execute('''INSERT INTO MenuS(Menu_Name, Menu_Number) VALUES(?, ?)''',((Add_menu_item_name.get()), Add_menu_item_number_F))
+                conn.commit()
+                Add_Menu_Item.destroy()
+                Add_menu_item()
+
+
+        Button(Add_Menu_Item, text="Add", width=20, height=1, fg="white", bg="green", command=Commit_Add_menu_item, bd=2).grid(row=2,column=1)
 
 
 #=========================================================#Add_User#==================================================================
@@ -715,13 +744,13 @@ def RUN1(Logged_In):
 
         c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_Y,))
         for row in c.fetchall():
-            Total_Meat_Yesterday = float(Total_Meat_Yesterday) + float(row[9])
-            Total_Tenderd_Cash_Yesterday = float(Total_Tenderd_Cash_Yesterday) + float(row[7])
+            Total_Meat_Yesterday = float(round(Total_Meat_Yesterday, 2)) + float(row[9])
+            Total_Tenderd_Cash_Yesterday = float(round(Total_Tenderd_Cash_Yesterday, 2)) + float(row[7])
 
         c.execute("SELECT * FROM Sales Where Date=?",(Query_Date_T,))
         for row in c.fetchall():
-            Total_Meat_Today = float(Total_Meat_Today) + float(row[9])
-            Total_Tenderd_Cash_Today = float(Total_Tenderd_Cash_Today) + float(row[7])
+            Total_Meat_Today = float(round(Total_Meat_Today, 2)) + float(row[9])
+            Total_Tenderd_Cash_Today = float(round(Total_Tenderd_Cash_Today, 2)) + float(row[7])
 
         BZ.field_names = ["Total Meat In KG [Yesterday]", "Total Cash Recived [Yesterday]", "Total Meat In KG [Today]", "Total Cash Recived [Today]",]
         BZ.add_row([Total_Meat_Yesterday, Total_Tenderd_Cash_Yesterday, Total_Meat_Today, Total_Tenderd_Cash_Today])
@@ -934,8 +963,8 @@ def RUN1(Logged_In):
         Restaurantmenu.add_command(label="New Item", command=Add_Menu1)
         Restaurantmenu.add_command(label="Delete Item", command=Add_Menu1)
         Restaurantmenu.add_separator()
-        Restaurantmenu.add_command(label="Add Menu category", command=donothing)
-        Restaurantmenu.add_command(label="Remove Menu category", command=donothing)
+        Restaurantmenu.add_command(label="Add Menu category", command=Add_menu_item)
+        Restaurantmenu.add_command(label="Remove Menu category", command=Delete_menu_item)
         Restaurantmenu.add_separator()
         Restaurantmenu.add_checkbutton(label="Hotel Mode", onvalue=1, offvalue=0, variable=Hotel_Mode)
         menubar.add_cascade(label="Restaurant Manager", menu=Restaurantmenu)
@@ -1124,7 +1153,7 @@ def RUN1(Logged_In):
 
     tabControl.add(tab1, text='30 Day Income')
     tabControl.add(tab2, text='30 Day Meat Sales')
-    tabControl.add(tab3, text='Statistics')
+    tabControl.add(tab3, text='Last 30 Days Statistics')
 
 
 
@@ -1159,45 +1188,6 @@ def RUN1(Logged_In):
     F10 = Frame(tab3, bg="#E9E9E9", relief="raise")
 ##    F10.grid_propagate(0)
     F10.grid(row=1,column=0)
-
-##    Row_Inc = 0
-##    Col_Inc = 1
-##    Col_Inc_2 = 0
-##    Col_Inc_3 = 3
-##    Col_Inc_4 = 2
-##
-##    c.execute("SELECT * FROM Scale")
-##    for row in c.fetchall():
-##        Total_Meat_Stats = 0
-##        PPK = (float(row[2]))
-##        if Row_Inc >= 20:
-##            Col_Inc += 4
-##            Row_Inc = 0
-##            Col_Inc_2 += 4
-##            Col_Inc_3 += 4
-##            Col_Inc_4 += 4
-##
-##        Stats = StringVar()
-##        label6 = Label(F10, textvariable=Stats, anchor='w', pady=4)
-##        label6.grid(row=Row_Inc,column=Col_Inc,sticky='w')
-##
-##        label7 = Label(F10, text=' |  Income: R', anchor='e', pady=4)
-##        label7.grid(row=Row_Inc,column=Col_Inc_4,sticky='e')
-##
-##        Stats_Inc = StringVar()
-##        label8 = Label(F10, textvariable=Stats_Inc, anchor='w', pady=4, padx=4)
-##        label8.grid(row=Row_Inc,column=Col_Inc_3,sticky='w')
-##
-##        label9 = Label(F10, text=(row[1]) + ' : kg ', anchor='e', pady=4)
-##        label9.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
-##        Row_Inc += 1
-##
-##        c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
-##        for row in c.fetchall():
-##            Total_Meat_Stats += float(row[9])
-##
-##        Stats.set(Total_Meat_Stats)
-##        Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
 
 
     def Stats_generate():
@@ -1249,9 +1239,16 @@ def RUN1(Logged_In):
             label9.grid(row=Row_Inc,column=Col_Inc_2,sticky='e')
             Row_Inc += 1
 
-            c.execute("SELECT * FROM Sales WHERE Item=?",((row[1]),))
-            for row in c.fetchall():
-                Total_Meat_Stats += float(row[9])
+            MEET = (row[1])
+
+            end_date = datetime.today() + timedelta(days=1)
+            start_date = datetime.today() - timedelta(days=30)
+            for single_date in daterange(start_date, end_date):
+                Date_query = (single_date.strftime("%d-%m-%Y"))
+                Date_query_show = (single_date.strftime("%d-%m"))
+                c.execute("SELECT * FROM Sales WHERE Item=? AND Date=?",(MEET,Date_query))
+                for row in c.fetchall():
+                    Total_Meat_Stats += float(row[9])
 
             Stats.set(Total_Meat_Stats)
             Stats_Inc.set(round((float(Total_Meat_Stats) * PPK),2))
@@ -1268,9 +1265,7 @@ def RUN1(Logged_In):
     fig_2.subplots_adjust(left=0.05, bottom=0.08, right=0.98, top=0.95, wspace=None, hspace=None)
     Fig_plot_2 = fig_2.add_subplot(111)
 
-    def daterange(start_date, end_date):
-        for n in range(int ((end_date - start_date).days)):
-            yield start_date + timedelta(n)
+
 
     def animate(i=1):
         var.set((time.strftime("%H:%M")))
@@ -1374,7 +1369,8 @@ def RUN1(Logged_In):
     Page1.mainloop()
 
 
-##RUN1("Connor")
+if __name__ == '__main__':
+    RUN1("Connor")
 
 #state=DISABLED
 #========================================================================================================================================================================================================================================

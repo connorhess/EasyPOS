@@ -13,7 +13,6 @@ import Info
 import Till
 import random
 
-
 from licensing.models import *
 from licensing.methods import Key, Helpers
 
@@ -36,8 +35,6 @@ Downloads_location = os.path.join(home, 'Downloads')
 conn = sqlite3.connect('Shop_Database.db')
 c = conn.cursor()
 
-def Create_Tables():
-    pass
 
 c.execute('''CREATE TABLE IF NOT EXISTS CRJ(ID REAL,Day INTEGER,Month INTEGER,Year INTEGER,Time INTEGER, Date INTEGER, Description TEXT, Amount RAEL, Bank RAEL, Item TEXT, QTY TEXT, Payment_Type TEXT, Cashier TEXT)''')
 c.execute('''CREATE TABLE IF NOT EXISTS Sales (
@@ -62,21 +59,36 @@ c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, 
 def add_account(Name="admin",Password="1234",Perm=1):
     ID = random.randint(1,1000000000)
     c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
+    c.execute('''INSERT INTO Settings(ID, Name, Value, OTHER) VALUES(?, ? ,? ,?)''',(1, 'VAT', 15, True))
+    c.execute('''INSERT INTO Settings(ID, Name, Value, OTHER) VALUES(?, ? ,? ,?)''',(2, 'Details', 0, "null"))
     conn.commit()
-try:
-    c.execute("SELECT * FROM Cashiers WHERE Name=admin")
-    for row in c.fetchall():
-        print(row)
-except:
+c.execute("SELECT rowid FROM Cashiers WHERE Name = ?", ("admin",))
+if len(c.fetchall())==0:
     add_account()
     f = open("Key.txt", "w")
     f.close()
+else:
+    print("Loading")
 
-
+##c.execute("SELECT * FROM Settings WHERE ID=?",(1,))
+##print(str((c.fetchone())[2]))
 
 R = Shop
 
+try:
+    import httplib
+except:
+    import http.client as httplib
 
+def checkInternetHttplib(url="www.google.com", timeout=3):
+    conn = httplib.HTTPConnection(url, timeout=timeout)
+    try:
+        conn.request("HEAD", "/")
+        conn.close()
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
 
 def Login_Page():
@@ -186,75 +198,79 @@ def Update():
     win32api.ShellExecute(0, 'open', '{Downloads_location}\\setup.msi', None, None, 10)
 
 def Update_manager(TEXT="Checking for update"):
-    Update_Manager = Tk()
-    Update_Manager.title(TEXT)
-    Update_Manager.configure(background="#BEBEBE")
-    Update_Manager.attributes("-topmost", True)
-    label = Label(Update_Manager, text=(TEXT+"\n\nMade By Connor Hess  V" + str(version)), fg="white", bg="gray").pack()
+    if checkInternetHttplib() == True:
+        Update_Manager = Tk()
+        Update_Manager.title(TEXT)
+        Update_Manager.configure(background="#BEBEBE")
+        Update_Manager.attributes("-topmost", True)
+        label = Label(Update_Manager, text=(TEXT+"\n\nMade By Connor Hess  V" + str(version)), fg="white", bg="gray").pack()
 
-    response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt')
-    data = response.text
-    print(data)
-    if float(data) > version:
-        MsgBox = messagebox.askquestion ('Update!', f'{_AppName_} {version} needs to update to version {data}',icon = 'warning')
-        if MsgBox == 'yes':
-            webbrowser.open_new_tab('https://github.com/connorhess/EasyPOS/raw/master/'
-                                                'Update/Output/setup.exe?raw=true')
-            Update_Manager.destroy()
-            Update()
+        response = requests.get('https://raw.githubusercontent.com/connorhess/EasyPOS/master/version.txt')
+        data = response.text
+        print(data)
+        if float(data) > version:
+            MsgBox = messagebox.askquestion ('Update!', f'{_AppName_} {version} needs to update to version {data}',icon = 'warning')
+            if MsgBox == 'yes':
+                webbrowser.open_new_tab('https://github.com/connorhess/EasyPOS/raw/master/'
+                                                    'Update/Output/setup.exe?raw=true')
+                Update_Manager.destroy()
+                Update()
+            else:
+                Update_Manager.destroy()
+                Login_Page()
         else:
             Update_Manager.destroy()
             Login_Page()
-    else:
-        Update_Manager.destroy()
+        Update_Manager.mainloop()
+    elif checkInternetHttplib() == False:
         Login_Page()
-    Update_Manager.mainloop()
-
-def Validate():
-    RSAPubKey = '''<RSAKeyValue>
-    <Modulus>hWaA36UiW+Xt+NEqmt6XI1+1WV+hWbi8+C1IgI4NmvNP01Gb7ZjFcUUQZQBxwXfLTvSHJlAlUlbGk26n3Z0n5wrDMIPCB/x/EbI9yIueedKJB9VHMonIpXvAT+oSdoechFvasiE1q7khGUBLfEhsnYP2Q2JbQ2hToZ4eb+LqjuVOc54RkIup1OJ+Dur+WfqN+43QpLFQoFA7ydAg6gKpmGUKTgWR3q5UhDhHwIC1xYFKVnXA3BXVXOwTVa7D5tCCO/SauoetcXwPJwO0QXa7hQAR9fUCq25sy4Nm+hFPUYTs5UAO+H10ysenUqCFddhfrSzAakZzWpAnvZyDxPb5tw==
-    </Modulus><Exponent>AQAB</Exponent></RSAKeyValue>'''
-    auth = "WyIyMzQ5MSIsIk9MY2xicDc5dVE5OUVmc0pFcWUwU2ZNTnB1c1F1dzVkeWtVSG5sTzgiXQ=="
-
-    def New_key():
-        PageKey = Tk()
-        PageKey.title("Shop Database")
-        PageKey.configure(background="#BEBEBE")
-
-        label = Label(PageKey, text="Product key", relief=RAISED)
-        label.grid(row=0,column=0,sticky='e')
-
-        KEY = Entry(PageKey, bd =5, width=30)
-        KEY.grid(row=0,column=1)
-
-    ##    os.remove("Key.txt")
-
-        def Key_enter():
-            Prod_Key = KEY.get()
-            result = Key.activate(token=auth,\
-                               rsa_pub_key=RSAPubKey,\
-                               product_id=6725, \
-                               key=Prod_Key,\
-                               machine_code=Helpers.GetMachineCode())
-
-            if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
-                # an error occurred or the key is invalid or it cannot be activated
-                # (eg. the limit of activated devices was achieved)
-                print("The license does not work2: {0}".format(result[1]))
-                PageKey.destroy()
-                New_key()
-            else:
-                # everything went fine if we are here!
-                print("The license is valid2!")
-                Update_manager()
-                fke = open("Key.txt", "w")
-                fke.write(Prod_Key)
-                fke.close()
-                PageKey.destroy()
-        Button(PageKey, text="Enter", command=Key_enter).grid(row=1,column=1)
-        PageKey.mainloop()
 
 
+RSAPubKey = '''<RSAKeyValue>
+<Modulus>hWaA36UiW+Xt+NEqmt6XI1+1WV+hWbi8+C1IgI4NmvNP01Gb7ZjFcUUQZQBxwXfLTvSHJlAlUlbGk26n3Z0n5wrDMIPCB/x/EbI9yIueedKJB9VHMonIpXvAT+oSdoechFvasiE1q7khGUBLfEhsnYP2Q2JbQ2hToZ4eb+LqjuVOc54RkIup1OJ+Dur+WfqN+43QpLFQoFA7ydAg6gKpmGUKTgWR3q5UhDhHwIC1xYFKVnXA3BXVXOwTVa7D5tCCO/SauoetcXwPJwO0QXa7hQAR9fUCq25sy4Nm+hFPUYTs5UAO+H10ysenUqCFddhfrSzAakZzWpAnvZyDxPb5tw==
+</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>'''
+auth = "WyIyMzQ5MSIsIk9MY2xicDc5dVE5OUVmc0pFcWUwU2ZNTnB1c1F1dzVkeWtVSG5sTzgiXQ=="
+
+def New_key():
+    PageKey = Tk()
+    PageKey.title("Shop Database")
+    PageKey.configure(background="#BEBEBE")
+
+    label = Label(PageKey, text="Product key", relief=RAISED)
+    label.grid(row=0,column=0,sticky='e')
+
+    KEY = Entry(PageKey, bd =5, width=30)
+    KEY.grid(row=0,column=1)
+
+##    os.remove("Key.txt")
+
+    def Key_enter():
+        Prod_Key = KEY.get()
+        result = Key.activate(token=auth,\
+                           rsa_pub_key=RSAPubKey,\
+                           product_id=6725, \
+                           key=Prod_Key,\
+                           machine_code=Helpers.GetMachineCode())
+
+        if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
+            # an error occurred or the key is invalid or it cannot be activated
+            # (eg. the limit of activated devices was achieved)
+            print("The license does not work2: {0}".format(result[1]))
+            PageKey.destroy()
+            New_key()
+        else:
+            # everything went fine if we are here!
+            print("The license is valid2!")
+            fke = open("Key.txt", "w")
+            fke.write(Prod_Key)
+            fke.close()
+            PageKey.destroy()
+            Update_manager()
+    Button(PageKey, text="Enter", command=Key_enter).grid(row=1,column=1)
+    PageKey.mainloop()
+
+
+if checkInternetHttplib() == True:
     try:
         f = open("Key.txt", "r")
         result = Key.activate(token=auth,\
@@ -275,16 +291,5 @@ def Validate():
         f.close()
     except:
         New_key()
-
-
-
-try:
-    c.execute("SELECT * FROM Cashiers")
-    for row in c.fetchall():
-##        print("H")
-        pass
-    Validate()
-except:
-    print("First Time")
-    Create_Tables()
-    Validate()
+elif checkInternetHttplib() == False:
+    Update_manager()

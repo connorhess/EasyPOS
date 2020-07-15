@@ -74,6 +74,8 @@ def Cart1(Logged_In="admin"):
 
     global count
     count = 0
+    global F_Count
+    F_Count = 0
 
     text3 = Text(Page3, bd=8, width=60)
     c.execute("SELECT * FROM Product_List")
@@ -231,12 +233,15 @@ def Cart1(Logged_In="admin"):
             conn.commit()
             count = count + float(Price_1)
             text.insert(INSERT, x)
-
         e6.delete (0, last=100 )
+
 
     TIME1 = (time.strftime("%H:%M"))
     DATE1 = (time.strftime("%d/%m/%Y"))
     def Total():
+        c.execute("SELECT * FROM Settings WHERE ID=?",(1,))
+        VAT = int((c.fetchone())[2])
+        F_Count = count + ((VAT/100)*count)
         text.insert(INSERT, "\n____________________________________________________________\n")
         text.insert(INSERT, "Cashier Name:       Time:        Date:                Total:\n")
         text.insert(INSERT, (Logged_In) + " "*(18-len(Logged_In)))
@@ -245,18 +250,20 @@ def Cart1(Logged_In="admin"):
         text.insert(INSERT, (DATE1))
         text.insert(INSERT, "           R")
         text.insert(END, (round(count, 2)))
-        text.insert(INSERT, "\nSale_ID: " + str(Sale_ID))
+        text.insert(INSERT, ("\nSale_ID: " + str(Sale_ID)) + "      Total With VAT: R" + str(round(F_Count, 2)))
         print (text.get(1.0, 1000.0))       ##add to thermal printer
     text.place(x=1,y=1)
 
     def PAY():
-##            Page3.destroy()
+        c.execute("SELECT * FROM Settings WHERE ID=?",(1,))
+        VAT = int((c.fetchone())[2])
+        F_Count = count + ((VAT/100)*count)
         Page4 = Tk()
         Page4.title("Shop Database")
         Page4.geometry("400x300")
         Page4.attributes('-topmost', True)
-        Label(Page4, text="Total", bd=2).place(x=1,y=1)
-        Label(Page4, text=(round(count, 2)), bd=2).place(x=60,y=1)
+        Label(Page4, text="Total Including VAT", bd=2).place(x=1,y=1)
+        Label(Page4, text=(str(round(F_Count, 2))), bd=2).place(x=60,y=1)
         Label(Page4, text="Cash", bd=2).place(x=1,y=30)
 ##            e7 = Entry(Page4, bd=2)
 ##            e7.place(x=60,y=30)
@@ -313,8 +320,8 @@ def Cart1(Logged_In="admin"):
 
         def PAID(Payment_Type):
             EE2 = (text2.get(1.0, 1000.0))
-            CHANGE = float(EE2) - float(count)
-            if float(EE2) < count:
+            CHANGE = float(EE2) - float(F_Count)
+            if float(EE2) < F_Count:
                 print("error 1")
                 MsgBox_001 = messagebox.showerror ('ERROR',Error.Error_001,icon = Error.Error_icon)
 
@@ -326,7 +333,7 @@ def Cart1(Logged_In="admin"):
                     Bb1 = RR1
                     Bb2 = TimeDate
                     Bb3 = "sales"
-                    Bb5 = (str(round(count,2)))
+                    Bb5 = (str(round(F_Count,2)))
                     Bb4 = (str(EE2))
                     print(Bb4)
                     print(type(Bb4))

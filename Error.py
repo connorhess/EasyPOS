@@ -2,7 +2,7 @@
 
 ##MsgBox_001 = messagebox.showerror ('ERROR',Error.Error_001,icon = Error.Error_icon)
 
-        
+
 
 Error_icon = 'error'
 
@@ -37,3 +37,5 @@ Error_013 = 'No Price Per KG Provided.\nERROR-013'
 Error_014 = "'Price Per KG' Cannot Be Text.\nERROR-014"
 
 Error_015 = "'Price Per KG' Cannot Be Text.\nERROR-015"
+
+Error_016 = "'Cant Add More Menu's. Delete one to add more or contact the creator to add more menu slots.\nERROR-016"

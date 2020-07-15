@@ -26,17 +26,17 @@ button_7 = "Brandy"
 
 ##try:
 ##    filepath="CRJ.xlsx"
-##    # load demo.xlsx 
+##    # load demo.xlsx
 ##    wb=load_workbook(filepath)
 ##except:
 ##    # set file path
 ##    filepath="CRJ.xlsx"
 ##    # load demo.xlsx
 ##    wb=Workbook()
-##    # save workbook 
+##    # save workbook
 ##    wb.save(filepath)
 
-    
+
 TIME = (time.strftime("%H:%M"))
 DATE = (time.strftime("%d-%m-%Y"))
 Day = (time.strftime("%d"))
@@ -65,25 +65,25 @@ def Config1():
     c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
 
 def TableNumberAdd(B1,B2,B3,B4,TableNO,B6):
-##    B1 = 
-##    B2 = 
-##    B3 = 
-##    B4 = 
+##    B1 =
+##    B2 =
+##    B3 =
+##    B4 =
     B5 = TableNO
-    
+
     c.execute('''INSERT INTO Tables(Item_PLU, Item_Name, Item_Price, QTY, Table_No, FPrice) VALUES(?, ? ,? ,? ,? ,?)''',(B1, B2, B3, B4, B5, B6))
     conn.commit()
 
 
 def ItemAdd(B1,B2,B3,B4):
-##    B1 = 
-##    B2 = 
-##    B3 = 
-##    B4 = 
+##    B1 =
+##    B2 =
+##    B3 =
+##    B4 =
     c.execute('''INSERT INTO Starters(Item_PLU, Item_Name, Item_Price, Menu) VALUES(?, ? ,? ,?)''',(B1, B2, B3, B4))
     conn.commit()
 
-    
+
 
 def PASS():
     pass
@@ -92,7 +92,7 @@ def PASS():
 
 
 
-    
+
 
 def print_all():
 ##    Path_1 = filedialog.asksaveasfile(initialdir = "/",title = "select file",filetypes = (("all files",".")))
@@ -101,17 +101,17 @@ def print_all():
     Path_1 =  filedialog.askdirectory(initialdir = "/",title = "Select file")
     print (Path_1)
 
-    
-    
+
+
     x.field_names = ["PLU","Item", "Price", "QTY", "Total Price", "Room Number",]
     x.clear_rows()
-    
-    
+
+
     total_add_up = 0
     cashup_total = 0
-    
+
     Rooms = [4,5,6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,22,201,202,203,204,1001,1002,1003]
-    
+
     for table_no in Rooms:
         F_Name = "Room-" + str(table_no) + "_Print_" + str(time.strftime("%d-%m-%Y"))
         Path_2 = (str(Path_1) + (F_Name)) + ".txt"
@@ -130,17 +130,17 @@ def print_all():
         F.close()
 
 
-        
+
     F = open(Path_2, "r")
     print(F.read())
 
     filename = tempfile.mktemp(".txt")
-    
+
     open (filename, "w").write(F.read())
 ##    os.startfile(filename, "print")
 
     print(F.read())
-    F.close() 
+    F.close()
 
 #56
 
@@ -167,7 +167,7 @@ def RSYS(Logged_In):
     ##        PageR.geometry("1100x800")
     PageR.attributes("-fullscreen", True)
     PageR.attributes("-topmost", True)
-    
+
 
     def exit_PageR():
         PageR.destroy()
@@ -175,7 +175,7 @@ def RSYS(Logged_In):
     def TableNumberGenerate(Title,tableNO):
         conn = sqlite3.connect('Shop_Database.db')
         c = conn.cursor()
-        
+
         c.execute('''CREATE TABLE IF NOT EXISTS Tables(Item_PLU REAL, Item_Name TEXT, Item_Price INT, QTY INT, FPrice INT, Table_No INT)''')
         c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
         a1 = Toplevel()
@@ -187,7 +187,7 @@ def RSYS(Logged_In):
 
 
         top = a1
-        
+
         Lb1 = Listbox(top, width=30)
         Lb1.insert(1, "Item                   Price           QTY")
 
@@ -270,7 +270,7 @@ def RSYS(Logged_In):
                     b3 = Button(a2, text =(row[1]), width=W, height=4, command=partial(add1,(row[1]), w1.get()))
                     b3.grid(row=8,column=1)
                     POSS = POSS + 1
-                    
+
                 elif POSS == 8:
                     print (row[1])
                     b3 = Button(a2, text =(row[1]), width=W, height=4, command=partial(add1,(row[1]), w1.get()))
@@ -343,7 +343,7 @@ def RSYS(Logged_In):
                     b3.grid(row=8,column=3)
                     POSS = POSS + 1
 
-        
+
         c.execute("SELECT * FROM Tables WHERE Table_No=?",(tableNO,))
         DA22 = c.fetchall()
         for row in DA22:
@@ -354,19 +354,21 @@ def RSYS(Logged_In):
 
         def F9():
             print(Lb1.get(0, last = 100))
-
             Page4 = Toplevel()
             Page4.title("Shop Database")
             Page4.geometry("400x300")
             Page4.transient([PageR])
             Page4.attributes("-topmost", True)
-            Label(Page4, text="Total", bd=2).place(x=1,y=1)
+            Label(Page4, text="Total Including VAT", bd=2).place(x=1,y=1)
             c.execute("SELECT SUM(FPrice) FROM Tables WHERE Table_No=?",(tableNO,))
             DA23 = c.fetchall()
             for row in DA23:
                 global SUM
-                SUM = (row[0])            
-            Label(Page4, text=(SUM), bd=2).place(x=60,y=1)
+                SUM = (row[0])
+            c.execute("SELECT * FROM Settings WHERE ID=?",(1,))
+            VAT = int((c.fetchone())[2])
+            F_Count_R = SUM + ((VAT/100)*SUM)
+            Label(Page4, text=(round(F_Count_R, 2)), bd=2).place(x=60,y=1)
             Label(Page4, text="Cash", bd=2).place(x=1,y=30)
             text2 = Text(Page4, height=1, width=10)
 
@@ -395,7 +397,7 @@ def RSYS(Logged_In):
                 text2.insert(INSERT, ".")
             def K10():
                 text2.delete(1.0, 1000.0)
-                
+
             F102 = Frame(Page4, bd=8, bg="grey", relief="raise")
             F102.place(x=150,y=1)
 
@@ -420,18 +422,23 @@ def RSYS(Logged_In):
             text2.place(x=60,y=30)
 
 
-            
+
             def F10(Payment_Type):
-                global SUM
+                c.execute("SELECT * FROM Settings WHERE ID=?",(1,))
+                VAT = int((c.fetchone())[2])
+                F_Count_R = SUM + ((VAT/100)*SUM)
                 EE2 = (text2.get(1.0, 1000.0))
-                CHANGE = float(EE2) - float(SUM)
-                if float(EE2) < float(SUM):
+                CHANGE = float(EE2) - float(F_Count_R)
+                if float(EE2) < float(F_Count_R):
                     print("error 1")
                     MsgBox_001 = messagebox.showerror ('ERROR',Error.Error_001,icon = Error.Error_icon)
 
                 else:
                     Page4.destroy()
-                    def OK1():  
+                    def OK1():
+                        c.execute("SELECT * FROM Settings WHERE ID=?",(1,))
+                        VAT = int((c.fetchone())[2])
+                        F_Count_R = SUM + ((VAT/100)*SUM)
                         c.execute("SELECT SUM(FPrice) FROM Tables WHERE Table_No=?",(tableNO,))
                         DA23 = c.fetchall()
                         for row in DA23:
@@ -441,7 +448,7 @@ def RSYS(Logged_In):
                             Bb1 = RR1
                             Bb3 = "Table" + str(tableNO)
                             Bb4 = str(EE2)
-                            Bb5 = str(SUM)
+                            Bb5 = str(F_Count_R)
                             Items = []
                             c.execute("SELECT * FROM Sales WHERE ID = ?",(tableNO,))
                             for row in c.fetchall():
@@ -455,8 +462,8 @@ def RSYS(Logged_In):
                         conn.commit()
                         Lb1.delete(0, 200)
                         a1.destroy()
-                        Page5.destroy()  
-                    
+                        Page5.destroy()
+
                     SUM = str(SUM)
                     Page5 = Toplevel()
                     Page5.title("Shop Database")
@@ -464,19 +471,19 @@ def RSYS(Logged_In):
                     Page5.geometry("400x300")
                     Page5.transient([PageR])
                     Page5.attributes("-topmost", True)
-                    
-                    
+
+
                     Label(Page5, text=(CHANGE), bd=2).place(x=100,y=1)
                     def iprint():
                         M = Lb1.get(0, last = 1000)
                         print(Lb1.get(0, last = 1000))
 
-                        
+
                         Q = ("\n\nThank you for staying by us.                  Software Made By Connor Hess\n       Mimosa Lodge\nRoom Number: " + tableNO + "\n")
                         filename = tempfile.mktemp(".txt")
                         open (filename, "w").write(Q)
-                        
-                        
+
+
                         c.execute("SELECT Item_PLU,Item_Name,Item_Price,QTY FROM Tables WHERE Table_No=?",(tableNO,))
                         TBL = c.fetchall()
                         x.clear_rows()
@@ -495,12 +502,12 @@ def RSYS(Logged_In):
 
                         os.startfile(filename, "print")
                     Button(Page5, text="Print", width=15, height=1, fg="white", bg="green", command=iprint, bd=2).place(x=1,y=140)
-                    
-                    
-                    
-                        
+
+
+
+
                     Button(Page5, text="OK", width=20, height=2, fg="white", bg="green", command=OK1, bd=2).place(x=1,y=70)
-                
+
             def cancel5():
                 Page4.destroy()
 
@@ -509,7 +516,7 @@ def RSYS(Logged_In):
             Button(Page4, text="PAY - Account", width=20, height=1, fg="white", bg="green", command=partial(F10,"Account"), bd=2).place(x=1,y=60+50)
             Button(Page4, text="Cancel", width=20, height=1, fg="white", bg="green", command=cancel5, bd=2).place(x=1,y=60+100)
 
-        
+
         def Other_price():
             a5 = Toplevel()
             a5.title(Title)
@@ -517,8 +524,8 @@ def RSYS(Logged_In):
             a5.geometry("500x300")
             a5.transient([PageR])
 
-            
-            
+
+
         def F1():
             v9, v10, v11 = (Lb1.get(Lb1.curselection())).split()
             print (v9)
@@ -536,7 +543,7 @@ def RSYS(Logged_In):
 
         def Close_R():
             top.destroy()
-        
+
         b1 = Button(top, text ="Delete selected", command=F1)
         b1.place(x=1,y=1)
 
@@ -548,7 +555,7 @@ def RSYS(Logged_In):
 
         b4 = Button(top, text ="Close", command=Close_R)
         b4.place(x=1,y=250)
-        
+
     ##    c.execute("SELECT * FROM Settings WHERE ID=7")
     ##    for row in c.fetchall():
     ##        print(row[2])
@@ -589,23 +596,23 @@ def RSYS(Logged_In):
     ##                S3 = ((14 - (len(str(row[1])))) * " ")
     ##                S4 = ((10 - (len(str(row[2])))) * " ")
     ##                Lb2.insert(1, ((str(row[1])) + S3 + "  R"  + (str(row[2])) + S4))
-    ##                
+    ##
     ##            Lb2.place(x=1,y=30)
     ##            b3 = Button(a2, text ="Add", command=add1)
     ##            b3.place(x=1,y=1)
-                
+
         def F3():
             BPAGE(button_1,"1")
-            
+
         def F4():
             BPAGE(button_2,"2")
-            
+
         def F5():
             BPAGE(button_3,"3")
-        
+
         def F6():
             BPAGE(button_4,"4")
-        
+
         def F7():
             BPAGE(button_5,"5")
 
@@ -615,7 +622,7 @@ def RSYS(Logged_In):
         def F31():
             BPAGE(button_7,"7")
 
-        
+
 
         X1 = 250
         X2 = 50
@@ -661,7 +668,7 @@ def RSYS(Logged_In):
                 b3.place(x=X1,y=X2)
                 button_number = button_number + 1
                 X2 = X2 + 30
-                
+
             elif button_number == 8:
                 X2 = 50
                 b3 = Button(top, text =(row[0]), command=partial(BPAGE,(row[0]),(row[1])))
@@ -698,8 +705,8 @@ def RSYS(Logged_In):
                 b3.place(x=X3,y=X2)
                 button_number = button_number + 1
                 X2 = X2 + 30
-                
-            
+
+
     ##    b3 = Button(top, text =button_1, command=F3)
     ##    b3.place(x=X1,y=50)
 
@@ -727,9 +734,9 @@ def RSYS(Logged_In):
     ##    b10 = Button(top, text ="Extras", command=F31)
     ##    b10.place(x=X1,y=290)
 
-        
-        
-        
+
+
+
 
 
 
@@ -756,7 +763,7 @@ def RSYS(Logged_In):
         LNVV6 = TBNN + (LN6)
         LNVV7 = TBNN + (LN7)
         LNVV8 = TBNN + (LN8)
-        
+
         RF1 = Frame(PageR, width=100, height=100, bd=8, bg="light grey", relief="raise")
         RF1.grid(row=ROWNUM,column=1)
         Button(PageR, text=LNVV1, width=10, height=4, fg="black", bg="green", command=partial(TableNumberGenerate,LNV1,LN1), bd=2).grid(row=ROWNUM,column=1)
@@ -788,7 +795,7 @@ def RSYS(Logged_In):
         RF8 = Frame(PageR, width=100, height=100, bd=8, bg="light grey", relief="raise")
         RF8.grid(row=ROWNUM,column=8)
         Button(PageR, text=LNVV8, width=10, height=4, fg="black", bg="light green", command=partial(TableNumberGenerate,LNV8,LN8), bd=2).grid(row=ROWNUM,column=8)
-        
+
     #    RF9 = Frame(PageR, width=100, height=100, bd=8, bg="light grey", relief="raise")
     #    RF9.grid(row=ROWNUM,column=9)
     #    Button(PageR, text=LNVV9, width=10, height=4, fg="black", bg="green", command=partial(TableNumberGenerate,LNV9,LN9), bd=2).grid(row=ROWNUM,column=9)
@@ -798,7 +805,7 @@ def RSYS(Logged_In):
     #    Button(PageR, text=LNVV10, width=10, height=4, fg="black", bg="light green", command=partial(TableNumberGenerate,LNV10,LN10), bd=2).grid(row=ROWNUM,column=10)
 
 
-        
+
     Frame1 = Frame(PageR)
     Frame1.grid(row=1,column=1)
 
@@ -824,7 +831,8 @@ def RSYS(Logged_In):
     Frame2 = Frame(PageR)
     Frame2.grid(row=2,column=1)
 
+    PageR.mainloop()
 
 
-
-##RSYS()
+if __name__ == '__main__':
+    RSYS("Connor")
