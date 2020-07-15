@@ -62,6 +62,8 @@ def add_account(Name="admin",Password="1234",Perm=1):
 
 x.field_names = ["Code", "Name", "Price","Weight"]
 x2.field_names = ["Code", "Name", "Price"]
+SIL = PrettyTable()
+
 
 def Cart1(Logged_In="admin"):
     sqlite3.connect('Shop_Database.db')
@@ -82,8 +84,16 @@ def Cart1(Logged_In="admin"):
     DA22 = c.fetchall()
     for row in DA22:
         x2.add_row([(row[0]), (row[2]), (row[1])])
-
     text3.insert(INSERT, x2)
+    text3.insert(INSERT, "\n")
+
+    c.execute("SELECT * FROM Scale")
+    DA22 = c.fetchall()
+    for row in DA22:
+        SIL.field_names = ["Code", "Name", "Price Per Kg"]
+        SIL.add_row((row))
+    text3.insert(INSERT, SIL)
+
     text3.place(x=650,y=1)
 
     text = Text(Page3, bd=8, width=60)

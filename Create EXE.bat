@@ -1,7 +1,7 @@
 @echo off
 echo Starting.........
 
-pyinstaller -w --name "EasyPOS" "C:/Users/conno/OneDrive/Documents/GitHub/EasyPOS/login.py"
+pyinstaller -w --noconfirm --name "EasyPOS" "C:/Users/conno/OneDrive/Documents/GitHub/EasyPOS/login.py"
 
 echo Compiling
 

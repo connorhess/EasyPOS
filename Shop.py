@@ -96,8 +96,8 @@ from openpyxl import load_workbook
 from openpyxl.styles import Alignment
 
 x = PrettyTable()
-
-
+SIL = PrettyTable()
+IL = PrettyTable()
 
 
 button_1 = "Beers & Ciders"
@@ -228,31 +228,35 @@ def RUN1(Logged_In):
     Page1.attributes("-fullscreen", True)
     Page1.attributes("-topmost", True)
 
-##    try:
-##        c.execute("SELECT * FROM Settings WHERE ID=1")
-##        for row in c.fetchall():
-##            fontStyle = tkFont.Font(root=Page1, size=int(row[2]))
-##    except:
-##        fontStyle = tkFont.Font(root=Page1, size=int(12))
-##
-##    try:
-##        c.execute("SELECT * FROM Settings WHERE ID=2")
-##        for row in c.fetchall():
-##            fontStyle2 = tkFont.Font(root=Page1, size=int(row[2]))
-##    except:
-##        fontStyle2 = tkFont.Font(root=Page1, size=int(12))
-##
-##    try:
-##        c.execute("SELECT * FROM Settings WHERE ID=3")
-##        for row in c.fetchall():
-##            fontStyle3 = tkFont.Font(root=Page1, size=int(row[2]))
-##    except:
-##        fontStyle3 = tkFont.Font(root=Page1, size=int(12))
-
 #=========================================================#Delete_menu_item#==================================================================
 
     def Delete_menu_item():
-        pass
+        Delete_Menu_Item = Toplevel()
+        Delete_Menu_Item.title("Shop Database")
+        Delete_Menu_Item.configure(background="#E9E9E9")
+        Delete_Menu_Item.geometry("800x350+253+125")
+        Delete_Menu_Item.transient([Page1])
+
+        LbName1 = Listbox(Delete_Menu_Item)
+        c.execute("SELECT * FROM MenuS")
+        for row in c.fetchall():
+            Name = row[0]
+            LbName1.insert(1, Name)
+
+        def Delete_Menu_Item_C():
+            try:
+                Menu_Name_D = LbName1.get(LbName1.curselection())
+            except:
+                MsgBox_003 = messagebox.showerror ('ERROR',Error.Error_003,icon = Error.Error_icon)
+            print(Menu_Name_D)
+            c.execute('''DELETE FROM MenuS WHERE Menu_Name=?''',(Menu_Name_D,))
+            conn.commit()
+            Delete_Menu_Item.destroy()
+            Delete_menu_item()
+
+
+        Button(Delete_Menu_Item, text="Delete", width=20, height=1, fg="white", bg="green", command=Delete_Menu_Item_C, bd=2).grid(row=2,column=0)
+        LbName1.grid(row=0,column=0)
 
 #=========================================================#Add_menu_item#==================================================================
 
@@ -272,7 +276,6 @@ def RUN1(Logged_In):
         c.execute("SELECT MAX(Menu_Number) FROM MenuS")
         Add_menu_item_number = (int(c.fetchall()[0][0]))
         Add_menu_item_number_F = Add_menu_item_number + 1
-        print(Add_menu_item_number)
 
         def Commit_Add_menu_item():
             if len(Add_menu_item_name.get()) <= 0:
@@ -717,6 +720,7 @@ def RUN1(Logged_In):
         text = Text(PCRJ, width=180)
 
         BZ = PrettyTable()
+        BZ2 = PrettyTable()
         c.execute("SELECT ID, Date,Time,Description,Amount,Bank,Item,Payment_Type,Cashier FROM CRJ")
         for row in c.fetchall():
             BZ.field_names = ["ID", "Date", "Time", "Description", "Amount paid", "Bank", "Item","Payment Type","Cashier"]
@@ -734,7 +738,6 @@ def RUN1(Logged_In):
         modified_date = date1 + timedelta(days=-1)
         Query_Date_Y = datetime.strftime(modified_date, "%d-%m-%Y")
 
-        BZ = PrettyTable()
 
         Total_Tenderd_Cash_Yesterday = 0.0
         Total_Meat_Yesterday = 0.0
@@ -752,9 +755,9 @@ def RUN1(Logged_In):
             Total_Meat_Today = float(round(Total_Meat_Today, 2)) + float(row[9])
             Total_Tenderd_Cash_Today = float(round(Total_Tenderd_Cash_Today, 2)) + float(row[7])
 
-        BZ.field_names = ["Total Meat In KG [Yesterday]", "Total Cash Recived [Yesterday]", "Total Meat In KG [Today]", "Total Cash Recived [Today]",]
-        BZ.add_row([Total_Meat_Yesterday, Total_Tenderd_Cash_Yesterday, Total_Meat_Today, Total_Tenderd_Cash_Today])
-        text_I.insert(INSERT, BZ)
+        BZ2.field_names = ["Total Meat In KG [Yesterday]", "Total Cash Recived [Yesterday]", "Total Meat In KG [Today]", "Total Cash Recived [Today]",]
+        BZ2.add_row([Total_Meat_Yesterday, Total_Tenderd_Cash_Yesterday, Total_Meat_Today, Total_Tenderd_Cash_Today])
+        text_I.insert(INSERT, BZ2)
 
         text_I.pack(side="bottom")
 
@@ -762,7 +765,8 @@ def RUN1(Logged_In):
 #==========================================================#Restorant System#===================================================================
 
     def RSYS():
-        GEN.RSYS(Logged_In)
+        Page1.iconify()
+        GEN.RSYS(Logged_In, Page1)
 
 #===========================================================#Delete product#===============================================================
     def Del_product():
@@ -807,18 +811,28 @@ def RUN1(Logged_In):
         Page22 = Toplevel()
         Page22.title("Item Database")
         Page22.configure(background="#E9E9E9")
-        Page22.geometry("800x350+253+125")
+        Page22.geometry("+253+125")
         Page22.transient([Page1])
 
-        text4 = Text(Page22)
-        text4.insert(INSERT, "|Code        |Price |Name                 |\n")
+        text4 = Text(Page22, width=50)
 
         c.execute("SELECT * FROM Product_List")
         DA22 = c.fetchall()
         for row in DA22:
-            text4.insert(INSERT, (row))
-            text4.insert(INSERT, "\n")
-        text4.place(x=1,y=1)
+            IL.field_names = ["Code", "Price", "Name", "Cost Price"]
+            IL.add_row((row))
+        text4.insert(INSERT, IL)
+        text4.grid(row=0,column=0)
+
+        Scale_text4 = Text(Page22, width=50)
+
+        c.execute("SELECT * FROM Scale")
+        DA22 = c.fetchall()
+        for row in DA22:
+            SIL.field_names = ["Code", "Name", "Price Per Kg"]
+            SIL.add_row((row))
+        Scale_text4.insert(INSERT, SIL)
+        Scale_text4.grid(row=0,column=1)
 
 
 
@@ -931,7 +945,6 @@ def RUN1(Logged_In):
 
     Page1.update_idletasks()
     if LEVL == 1:
-
         menubar = Menu(Page1)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Exit", command=Page1_close)

@@ -65,31 +65,17 @@ def Config1():
     c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, Item_Price REAL, Menu INT)''')
 
 def TableNumberAdd(B1,B2,B3,B4,TableNO,B6):
-##    B1 =
-##    B2 =
-##    B3 =
-##    B4 =
-    B5 = TableNO
-
-    c.execute('''INSERT INTO Tables(Item_PLU, Item_Name, Item_Price, QTY, Table_No, FPrice) VALUES(?, ? ,? ,? ,? ,?)''',(B1, B2, B3, B4, B5, B6))
+    c.execute('''INSERT INTO Tables(Item_PLU, Item_Name, Item_Price, QTY, Table_No, FPrice) VALUES(?, ? ,? ,? ,? ,?)''',(B1, B2, B3, B4, TableNO, B6))
     conn.commit()
 
 
 def ItemAdd(B1,B2,B3,B4):
-##    B1 =
-##    B2 =
-##    B3 =
-##    B4 =
     c.execute('''INSERT INTO Starters(Item_PLU, Item_Name, Item_Price, Menu) VALUES(?, ? ,? ,?)''',(B1, B2, B3, B4))
     conn.commit()
 
 
-
 def PASS():
     pass
-
-
-
 
 
 
@@ -160,16 +146,16 @@ PEE = "2"
 
 ##.transient([PageR])
 
-def RSYS(Logged_In):
+def RSYS(Logged_In,Page):
     PageR = Tk()
     PageR.title("Item Database")
     PageR.configure(background="orange")
-    ##        PageR.geometry("1100x800")
     PageR.attributes("-fullscreen", True)
     PageR.attributes("-topmost", True)
 
 
     def exit_PageR():
+        Page.deiconify()
         PageR.destroy()
 
     def TableNumberGenerate(Title,tableNO):

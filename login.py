@@ -59,8 +59,9 @@ c.execute('''CREATE TABLE IF NOT EXISTS Starters(Item_PLU REAL, Item_Name TEXT, 
 def add_account(Name="admin",Password="1234",Perm=1):
     ID = random.randint(1,1000000000)
     c.execute('''INSERT INTO Cashiers(ID, Name, Password, Permision) VALUES(?, ? ,? ,?)''',(ID, Name, Password, Perm))
-    c.execute('''INSERT INTO Settings(ID, Name, Value, OTHER) VALUES(?, ? ,? ,?)''',(1, 'VAT', 15, True))
+    c.execute('''INSERT INTO Settings(ID, Name, Value, OTHER) VALUES(?, ? ,? ,?)''',(1, 'VAT', 15, "True"))
     c.execute('''INSERT INTO Settings(ID, Name, Value, OTHER) VALUES(?, ? ,? ,?)''',(2, 'Details', 0, "null"))
+    c.execute('''INSERT INTO Settings(ID, Name, Value, OTHER) VALUES(?, ? ,? ,?)''',(3, 'Product Key', 0, ""))
     conn.commit()
 c.execute("SELECT rowid FROM Cashiers WHERE Name = ?", ("admin",))
 if len(c.fetchall())==0:
@@ -81,10 +82,10 @@ except:
     import http.client as httplib
 
 def checkInternetHttplib(url="www.google.com", timeout=3):
-    conn = httplib.HTTPConnection(url, timeout=timeout)
+    conn2 = httplib.HTTPConnection(url, timeout=timeout)
     try:
-        conn.request("HEAD", "/")
-        conn.close()
+        conn2.request("HEAD", "/")
+        conn2.close()
         return True
     except Exception as e:
         print(e)
@@ -261,9 +262,8 @@ def New_key():
         else:
             # everything went fine if we are here!
             print("The license is valid2!")
-            fke = open("Key.txt", "w")
-            fke.write(Prod_Key)
-            fke.close()
+            c.execute("""UPDATE Settings SET OTHER=? WHERE ID = 3""",(str(Prod_Key),))
+            conn.commit()
             PageKey.destroy()
             Update_manager()
     Button(PageKey, text="Enter", command=Key_enter).grid(row=1,column=1)
@@ -272,11 +272,13 @@ def New_key():
 
 if checkInternetHttplib() == True:
     try:
-        f = open("Key.txt", "r")
+        c.execute("SELECT * FROM Settings WHERE ID=?",(3,))
+        KEY_data = (str((c.fetchone())[3]))
+        #print(KEY_data)
         result = Key.activate(token=auth,\
                            rsa_pub_key=RSAPubKey,\
                            product_id=6725, \
-                           key=f.read(),\
+                           key=KEY_data,\
                            machine_code=Helpers.GetMachineCode())
 
         if result[0] == None or not Helpers.IsOnRightMachine(result[0]):
@@ -288,7 +290,6 @@ if checkInternetHttplib() == True:
             # everything went fine if we are here!
             print("The license is valid!1")
             Update_manager()
-        f.close()
     except:
         New_key()
 elif checkInternetHttplib() == False:
